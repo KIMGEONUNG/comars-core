@@ -1,6 +1,5 @@
-
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    "                                     /\                 .__           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                     /\                 .__           "
 "   ____  ____   _____ _____ _______  )/   ______  ___  _|__| _____    "
 " _/ ___\/  _ \ /     \\__  \\_  __ \     /  ___/  \  \/ /  |/     \   "
 " \  \__(  <_> )  Y Y  \/ __ \|  | \/     \___ \    \   /|  |  Y Y  \  "
@@ -11,28 +10,8 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "======================================================================"
-"""""""""""""""""""""""DEBUGGING""""""""""""""""""""""""""""""""""""""""
-"======================================================================"
-
-" source ~/.debug.vim
-" map <F5> :w<enter>:so %<enter>:call Debug()<enter>
-"
-"======================================================================"
-"======================================================================"
-
-
-"======================================================================"
 """""""""""""""""""""""VIM BASIC SETTING""""""""""""""""""""""""""""""""
 "======================================================================"
-
-" Load custom plugins
-let s:root='~/.vim/myplugins/' 
-let s:targets= split(globpath(s:root,'*'),'\n')
-for s:target in s:targets
-    if isdirectory(s:target)
-       exe 'set rtp+=' . s:target 
-    endif
-endfor
 
 set noerrorbells
 
@@ -44,7 +23,6 @@ set expandtab
 set ts=4
 set shiftwidth=4
 set autoindent
-" set nocompatible              " be iMproved, required
 
 set relativenumber
 set nu
@@ -70,19 +48,6 @@ nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>j :wincmd j<CR>
 nnoremap <Leader>k :wincmd k<CR>
 nnoremap <Leader>l :wincmd l<CR>
-
-" auto mkview & loadview
-"augroup remember_folds
-"  autocmd!
-"  autocmd BufWinLeave * mkview
-"  autocmd BufWinEnter * silent! loadview
-"augroup END"
-
-
-" culry plugin
-"map <F4> gg v <S-g> :! curly --allman <return>
-"map <F5> gg v <S-g> :! curly --knr <return>
-
 "======================================================================"
 "======================================================================"
 
@@ -90,6 +55,10 @@ nnoremap <Leader>l :wincmd l<CR>
 "======================================================================"
 """""""""""""""""""""""""""PLUGIN SECTOR""""""""""""""""""""""""""""""""
 "======================================================================"
+
+packadd! gruvbox
+packadd! vim-airline
+packadd! vim-airline-themes
 
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
@@ -105,7 +74,6 @@ Plugin 'puremourning/vimspector'
 Plugin 'VundleVim/Vundle.vim'
 " statusline/tabline
 Plugin 'itchyny/lightline.vim'
-Plugin 'mengelbrecht/lightline-bufferline'
 " auto formatting collection
 Plugin 'Chiel92/vim-autoformat'
 " auto complete tool
@@ -118,8 +86,6 @@ Plugin 'preservim/nerdtree'
 Plugin 'mattn/emmet-vim'
 " programming language syntax checker
 Plugin 'scrooloose/syntastic'
-" copy paste buffer
-Plugin 'rosenfeld/conque-term'
 " vim snippet sets. two plugin need each other
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -162,26 +128,11 @@ map <c-k> <s-v>gc
 "======================================================================"
 "AIRLINE==============================================================="
 "======================================================================"
-" let g:lightline = {
-"       \ 'colorscheme': 'one',
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
-"       \ },
-"       \ 'tabline': {
-"       \   'left': [ ['buffers'] ],
-"       \   'right': [ ['close'] ]
-"       \ },
-"       \ 'component_expand': {
-"       \   'buffers': 'lightline#bufferline#buffers'
-"       \ },
-"       \ 'component_type': {
-"       \   'buffers': 'tabsel'
-"       \ }
-"       \ }
 
-let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='gruvbox'
+let g:airline_powerline_fonts = 1
+"
 " let g:airline#extensions#tabline#show_close_button = 0
 "if !exists('g:airline_symbols')
 "    let g:airline_symbols = {}
@@ -216,9 +167,7 @@ let g:airline_theme='gruvbox'
 "VIM-AUTOFORMAT========================================================"
 "======================================================================"
 noremap <F3> :Autoformat<CR>
-"let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
-"let g:autoformat_remove_trailing_spaces = 0
 "======================================================================"
 "======================================================================"
 
@@ -345,26 +294,3 @@ let g:ctrlp_use_caching = 0
 "======================================================================"
 let g:UltiSnipsExpandTrigger="<tab>"
 "======================================================================"
-
-"======================================================================"
-"HASKELL AUTOCOMPLETE=================================================="
-"======================================================================"
-map <silent> tw :GhcModTypeInsert<CR>
-map <silent> ts :GhcModSplitFunCase<CR>
-map <silent> tq :GhcModType<CR>
-map <silent> te :GhcModTypeClear<CR>
-
-let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
-
-if has("gui_running")
-    imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-else " no gui
-    if has("unix")
-        inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-    endif
-endif
-
-let g:haskellmode_completion_ghc = 1
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-"======================================================================"
-
