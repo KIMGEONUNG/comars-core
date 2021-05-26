@@ -13,6 +13,8 @@
 "======================VIM BASIC SETTING================================
 "======================================================================"
 
+set exrc
+set guicursor=
 set noerrorbells
 
 let mapleader = " "
@@ -27,19 +29,26 @@ set autoindent
 set relativenumber
 set nu
 
-set hidden
+" set hidden
 set nowrap
 set nobackup
 set noswapfile
-set undodir=~/.vim/undodir
-set undofile
+" set undodir=~/.vim/undodir
+" set undofile
 
-set colorcolumn=120
+set colorcolumn=80
 
 " scheme location is /usr/share/vim/vim80/color
 colorscheme gruvbox 
 set background=dark
 let g:gruvbox_contrast_dark ='medium'
+
+
+nnoremap <Leader>ep :w<CR>:!python %<CR>
+nnoremap <Leader>ee :w<CR>:!./%<CR>
+
+nnoremap <Leader>gs ^
+nnoremap <Leader>ge $
 
 nnoremap <Leader>n :bn<CR>
 nnoremap <Leader>b :bf<CR>
@@ -48,6 +57,30 @@ nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>j :wincmd j<CR>
 nnoremap <Leader>k :wincmd k<CR>
 nnoremap <Leader>l :wincmd l<CR>
+nnoremap <Leader>x :wincmd x<CR>
+
+
+nnoremap <Leader>0 10:wincmd +<CR>
+nnoremap <Leader>9 10:wincmd -<CR>
+nnoremap <Leader>= :vertical resize +10<CR>
+nnoremap <Leader>- :vertical resize -10<CR>
+
+nmap <C-a> ^
+nmap <C-e> <ESC>$
+nmap <C-f> W
+nmap <C-b> B
+
+imap <C-a> <C-o>^
+imap <C-e> <C-o>$
+imap <C-f> <C-o>W
+imap <C-b> <C-o>B
+imap <C-h> <C-o>h
+imap <C-j> <C-o>j
+imap <C-k> <C-o>k
+imap <C-l> <C-o>l
+
+imap <C-d> <C-o>diw
+
 "======================================================================"
 "======================================================================"
 
@@ -192,7 +225,7 @@ endfun
 
 let g:vimspector_enable_mappings = 'HUMAN'
 
-nnoremap <leader>dd :call vimspector#Launch()<CR>
+nnoremap <leader>dd :w<CR>:call vimspector#Launch()<CR>
 nnoremap <leader>dc :call GoToWindow(g:vimspector_session_windows.code)<CR>
 nnoremap <leader>dt :call GoToWindow(g:vimspector_session_windows.tagpage)<CR>
 nnoremap <leader>dv :call GoToWindow(g:vimspector_session_windows.variables)<CR>
