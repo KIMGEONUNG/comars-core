@@ -98,6 +98,7 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+Plugin 'tpope/vim-surround'
 
 " Maximizes and restores the current window in Vim. 
 Plugin 'szw/vim-maximizer'
