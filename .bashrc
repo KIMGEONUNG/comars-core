@@ -1,3 +1,16 @@
+cat<<'EOF'
+
+ ______   ______   ___ __ __   ________   ______    ___   ______       __ __ __   ______   ______    __       ______      
+/_____/\ /_____/\ /__//_//_/\ /_______/\ /_____/\  /__/\ /_____/\     /_//_//_/\ /_____/\ /_____/\  /_/\     /_____/\     
+\:::__\/ \:::_ \ \\::\| \| \ \\::: _  \ \\:::_ \ \ \::\ \\::::_\/_    \:\\:\\:\ \\:::_ \ \\:::_ \ \ \:\ \    \:::_ \ \    
+ \:\ \  __\:\ \ \ \\:.      \ \\::(_)  \ \\:(_) ) )_\:_\/ \:\/___/\    \:\\:\\:\ \\:\ \ \ \\:(_) ) )_\:\ \    \:\ \ \ \   
+  \:\ \/_/\\:\ \ \ \\:.\-/\  \ \\:: __  \ \\: __ `\ \      \_::._\:\    \:\\:\\:\ \\:\ \ \ \\: __ `\ \\:\ \____\:\ \ \ \  
+   \:\_\ \ \\:\_\ \ \\. \  \  \ \\:.\ \  \ \\ \ `\ \ \       /____\:\    \:\\:\\:\ \\:\_\ \ \\ \ `\ \ \\:\/___/\\:\/.:| | 
+    \_____\/ \_____\/ \__\/ \__\/ \__\/\__\/ \_\/ \_\/       \_____\/     \_______\/ \_____\/ \_\/ \_\/ \_____\/ \____/_/ 
+                                                                                                                          
+
+EOF
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -134,11 +147,9 @@ unset __conda_setup
 export PATH="/home/comar/bin:$PATH"
 
 function color_my_prompt {
-    local __user_and_host="\[\033[01;32m\]\u@\h"
-    local __cur_location="\[\033[01;34m\]\w"
+    local __user_and_host="\[\033[01;36m\]\u@postech"
+    local __cur_location="\[\033[03;36m\]\w"
     local __git_branch_color="\[\033[31m\]"
-    #local __git_branch="\`ruby -e \"print (%x{git branch 2> /dev/null}.grep(/^\*/).first || '').gsub(/^\* (.+)$/, '(\1) ')\"\`"
-    #local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
     local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`\n'
     local __prompt_tail="\[\033[35m\]$"
     local __last_color="\[\033[00m\]"
@@ -148,3 +159,7 @@ color_my_prompt
 
 export VISUAL="/usr/bin/vim"
 export EDITOR="$VISUAL"
+export CUDA_HOME="/usr/local/cuda-11.3"
+export PATH=$PATH:$CUDA_HOME/bin
+
+export LS_COLORS=$LS_COLORS:'di=0;36' 
