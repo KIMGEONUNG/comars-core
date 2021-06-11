@@ -1,3 +1,4 @@
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                     /\                 .__           "
 "   ____  ____   _____ _____ _______  )/   ______  ___  _|__| _____    "
@@ -65,10 +66,21 @@ nnoremap <Leader>9 10:wincmd -<CR>
 nnoremap <Leader>= :vertical resize +10<CR>
 nnoremap <Leader>- :vertical resize -10<CR>
 
+nnoremap <C-u> 10k 
+nnoremap <C-d> 10j 
+
+imap <C-q> <ESC>
+nmap <C-q> <ESC>
+vmap <C-q> <ESC>
+cmap <C-q> <ESC>
+
 nmap <C-a> ^
 nmap <C-e> <ESC>$
 nmap <C-f> W
 nmap <C-b> B
+
+vmap <C-a> ^
+vmap <C-e> $
 
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
@@ -106,8 +118,6 @@ Plugin 'szw/vim-maximizer'
 Plugin 'puremourning/vimspector'
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-" statusline/tabline
-Plugin 'itchyny/lightline.vim'
 " auto formatting collection
 Plugin 'Chiel92/vim-autoformat'
 " auto complete tool

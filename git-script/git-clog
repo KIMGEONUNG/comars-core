@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# SUMMARY: Pirnt short, clear and more readable commit logs 
+
+# <MOTIVATION>
+# "git log" command prints too much informations that does not need to be read. 
+# In order to shorten this commit log, one need to add flag options that is really tiresome and time consumming.
+# We need to (1)shorten command typing time and (2)print clearcut log results. 
+# 
+# <EXPECTED OUTCOMES>
+# Print short, clear and high readable commit logs with short command, 
+# As a results, reduce working hours and enhance understanding of log.  
+
+countLine=$1
+
+if ! [ -z $countLine ]
+then
+    if ! [[ "$countLine" =~ ^-[0-9]+$ ]]
+    then
+        echo "Invalid line count"
+        exit 1
+    fi
+fi
+
+git log --oneline --all --graph $countLine

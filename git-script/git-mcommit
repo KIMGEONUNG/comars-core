@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# SUMMARY: Execute commit with checking message convention predifined. 
+
+# Whether message exist or not. ..
+
+message=$1
+
+if [ -z "$message" ]
+then
+    echo No commit message
+    exit 1
+fi
+
+echo commit message: $message
+
+# THE CRETERION OF THE VERB USED IS DEPENDENT ON WHAT DATA  IS CHANGE.
+# THERE ARE FOUR TYPES OF DATA
+#
+# 1. PROGRAM CODE   S.A.    *.c, *.cpp    
+# 2. TEST CODE      S.A.    unit test code 
+# 3. DOCUMENTATION  S.A.    readme.md, documentation configuration
+# 4. RESOUCE        S.A.    *.json, *.xml
+#
+# % PROGRAM CODE  
+#
+# refact  (refactoring)
+#           It is for refactoring. Use this verb if the actual code is modified but execution would be maintained.
+#
+# feat    (feature)
+#           It is for new implementation. Use this verb, if you write new function, class, etc.  
+#
+# update    
+#           It is for any kind of modification. 
+#
+# fix    
+#           Use this verb if you fix the bug
+#
+# cmt     (comment)    
+#           Use this verb when you change something about only comment 
+#           
+# % TEST CODE     
+#
+# test     
+#           Use this verb. If you change something about test code
+#
+# % DOCUMENTATION 
+#
+# docs    (document) 
+#           It is for documentation. If you change or fix the documentation, use this verb.
+#           Note that readme.md file for git is treated as document file.
+#
+# % RESOUCE       
+#
+# rsrc    (resource)      
+#           Use this verb. if you change file for resources such as json.           
+# 
+# % E.T.C       
+#
+# messy   
+#           Sometimes, too many code modification exists and you don't want to concern about them, just use this one.
+#           This verb is not recommended because it cab be evidence that you have not managed the "commit" history.
+
+verbs="refact\|docs\|feat\|messy\|test\|rsrc\|fix\|update\|cmt"
+filter=`echo $message | sed "s:^\($verbs\)\:\ .\+$:match:"`
+
+if [ "$filter" != "match" ]
+then
+    echo Fail: Invalid message format
+    echo Valid verbs :  $verbs | sed 's:\\|:, :g'
+    exit 1
+fi
+
+# Send commit.
+
+git commit -m "$message"

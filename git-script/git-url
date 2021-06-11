@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# SUMMARY: Print repository url or start browser
+
+gitdir=`find . -type d | grep .git$`
+if [ -z $gitdir ] 
+then
+    echo There is no '.git' directory.
+    echo Check whether current directory is root of repository.
+    exit 1
+fi
+
+url=`cat .git/config | grep url | sed "s:.\+url = ::"`
+if [ -z $url ]
+then
+    echo URL not found
+fi
+
+system=`uname`
+
+function usage ()
+{
+    echo "Usage :  $0 [options] [--]
+
+    Options:
+    -h|help       Display this message
+    -b|browser    with start to browser"
+}
+
+
+while getopts ":hb" opt
+do
+  case $opt in
+
+    h|help     )  
+        usage
+        exit 0
+        ;;
+
+    b|browser  ) 
+        if [ $system == "Linux" ]
+        then
+            firefox $url &
+        else
+            start chrome $url
+        fi
+        exit 0
+        ;;
+
+    * )  echo -e "\n  Option does not exist : $OPTARG\n"
+          usage; exit 1   ;;
+
+  esac    # --- end of case ---
+done
+
+echo $url
+
+
+
