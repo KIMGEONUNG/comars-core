@@ -11,7 +11,7 @@ then
     chmod +x git*
 fi
 
-if [[ ! -d "~/bin" ]]
+if [[ ! -d "$HOME/bin" ]]
 then
     mkdir ~/bin -v 
 fi
@@ -21,7 +21,6 @@ for scriptPath in $gitScripts
 do
     scriptName=`echo $scriptPath | sed 's:.*\(git-[a-zA-Z]\+\)$:\1:'`
     echo SCRIPT_NAME: $scriptName
-    rm ${targetPath}${scriptName} 2>/dev/null
-    ln -s $(pwd)/${scriptName} ${targetPath}${scriptName}
+    ln -s $(pwd)/${scriptName} ${targetPath}${scriptName} -f
     echo BUILD_LOCATION: ${targetPath}${scriptName}
 done
