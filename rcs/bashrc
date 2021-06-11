@@ -147,7 +147,7 @@ unset __conda_setup
 export PATH="/home/comar/bin:$PATH"
 
 function color_my_prompt {
-    local __user_and_host="\[\033[01;36m\]\u |"
+    local __user_and_host="\[\033[01;36m\]\u@\h"
     local __cur_location="\[\033[03;36m\]\w"
     local __git_branch_color="\[\033[31m\]"
     local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`\n'
