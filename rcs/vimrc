@@ -45,8 +45,20 @@ set background=dark
 let g:gruvbox_contrast_dark ='medium'
 
 
-nnoremap <Leader>ep :w<CR>:!python %<CR>
-nnoremap <Leader>ee :w<CR>:!./%<CR>
+function! ExecuteFile(arg)
+    if !empty(matchstr(a:arg, '.py$'))
+        write
+        !python % 
+    endif
+    if !empty(matchstr(a:arg, '.sh$'))
+        write
+        !bash ./% 
+    endif
+endfunction
+
+nmap <Leader>e :call ExecuteFile(expand('%:t'))<CR>
+nmap <Leader>w :w<CR> 
+nmap <Leader>q :q<CR> 
 
 nnoremap <Leader>gs ^
 nnoremap <Leader>ge $
@@ -86,10 +98,10 @@ imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 imap <C-f> <C-o>W
 imap <C-b> <C-o>B
-imap <C-h> <C-o>h
 imap <C-j> <C-o>j
 imap <C-k> <C-o>k
 imap <C-l> <C-o>l
+
 
 imap <C-d> <C-o>diw
 
