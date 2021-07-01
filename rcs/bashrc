@@ -104,6 +104,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias df='df -h'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -161,3 +162,6 @@ export VISUAL="/usr/bin/vim"
 export EDITOR="$VISUAL"
 export CUDA_HOME="/usr/local/cuda-11.3"
 export PATH=$PATH:$CUDA_HOME/bin
+
+# Key mapping
+xmodmap -e 'keycode 108 = Return' # Alt_Right to Enter
