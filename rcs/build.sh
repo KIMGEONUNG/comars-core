@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rcs=`find . -type f | grep rc$`
+rcs=`find . -type f | grep -e rc$ -e conf$`
 
 for rc in $rcs
 do
