@@ -165,3 +165,6 @@ export PATH=$PATH:$CUDA_HOME/bin
 
 # Key mapping
 xmodmap -e 'keycode 108 = Return' # Alt_Right to Enter
+
+# Tmux configuration
+export TERM=screen-256color
