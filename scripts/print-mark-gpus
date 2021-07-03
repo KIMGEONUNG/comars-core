@@ -1,0 +1,13 @@
+for i in {0..10}
+do
+    if [[ $i == 5 ]]; then
+        echo "Warning: mark5 passed"
+        continue
+    fi
+    echo \# MARK${i}
+    if [[ $i == 9 || $i == 10 ]]; then
+        sshpass -p 90995715 ssh k2woong92@mark8.postech.ac.kr "sshpass -p 90995715 ssh k2woong92@mark${i}.postech.ac.kr "nvidia-smi""
+    else
+        ssh k2woong92@mark${i}.postech.ac.kr 'nvidia-smi'
+    fi
+done
