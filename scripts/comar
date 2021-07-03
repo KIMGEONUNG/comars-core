@@ -1,0 +1,5 @@
+pushd ~/repos/custom-script
+git add -u
+git mcommit "update: auto"
+git push
+popd
