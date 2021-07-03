@@ -1,6 +1,6 @@
 pushd ~/repos/custom-script
 
-if ! [[ -z $(git status | grep clean) ]]; then
+if ! [[ -z $(git status 2>&1 | grep clean) ]]; then
     echo there is no change
 else
     git add -u
