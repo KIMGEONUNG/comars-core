@@ -1,5 +1,11 @@
 pushd ~/repos/custom-script
-git add -u
-git mcommit "update: auto"
-git push
+
+if ! [[ -z $(git status | grep clean) ]]; then
+    echo there is no change
+else
+    git add -u
+    git mcommit "update: auto"
+    git push
+fi
+
 popd
