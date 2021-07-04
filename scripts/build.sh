@@ -8,7 +8,7 @@ targetPath="${HOME}/bin"
 system=`uname`
 
 if [[ -z $(echo $PATH | grep -o ${targetPath}:) ]]; then
-    echo PATH=$PATH:${targetPath}:
+    PATH=$PATH:${targetPath}:
 fi
 
 if [ $system == "Linux" ]  
@@ -21,7 +21,7 @@ then
     mkdir ~/bin -v 
 fi
 
-echo TARGET_PATH: $targetPath
+echo \# Build script programs 
 for script in $scripts
 do
     build_loc=${targetPath}/${script#*/}
