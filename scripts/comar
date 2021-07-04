@@ -7,8 +7,6 @@ git mcommit "update: auto"
 
 if ! [[ -z $(git status | grep origin/master) ]]; then
     git push
-else
-
 fi
 
 popd > /dev/null
