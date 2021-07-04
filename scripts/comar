@@ -2,12 +2,13 @@ pushd ~/repos/custom-script > /dev/null
 
 git pull
 
-if ! [[ -z $(git status | grep clean) ]]; then
-    echo there is no change
-else
-    git add .
-    git mcommit "update: auto"
+git add .
+git mcommit "update: auto"
+
+if ! [[ -z $(git status | grep origin/master) ]]; then
     git push
+else
+
 fi
 
 popd > /dev/null
