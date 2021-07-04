@@ -1,7 +1,7 @@
-pushd ./configs
+pushd ./configs >/dev/null
 bash ./build.sh
-popd
+popd >/dev/null
 
-pushd ./scripts
+pushd ./scripts >/dev/null
 bash ./build.sh
-popd
+popd >/dev/null
