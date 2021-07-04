@@ -3,7 +3,7 @@ pushd ~/repos/custom-script > /dev/null
 if ! [[ -z $(git status | grep clean) ]]; then
     echo there is no change
 else
-    git add -u
+    git add .
     git mcommit "update: auto"
     git push
 fi
