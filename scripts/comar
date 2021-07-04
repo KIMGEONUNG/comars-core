@@ -1,5 +1,7 @@
 pushd ~/repos/custom-script > /dev/null
 
+git pull
+
 if ! [[ -z $(git status | grep clean) ]]; then
     echo there is no change
 else
