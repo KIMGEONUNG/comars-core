@@ -9,4 +9,6 @@ if ! [[ -z $(git status | grep origin/master) ]]; then
     git push
 fi
 
+bash ./build.sh
+
 popd > /dev/null
