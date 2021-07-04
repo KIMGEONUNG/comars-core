@@ -1,6 +1,8 @@
 tmux new-session -d
 tmux splitw -h 'htop'
-tmux splitw -v -p 15
-tmux send-keys neofetch c-m 
+tmux splitw -v 
+tmux resize-pane -D 25
+# tmux send-keys neofetch c-m 
 tmux select-pane -t 0
+tmux send-keys c-l
 tmux attach-session -d
