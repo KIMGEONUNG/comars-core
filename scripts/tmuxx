@@ -1,6 +1,6 @@
 tmux new-session -d
 tmux splitw -h 'htop'
-tmux splitw -v -p 15 'watch cat /etc/os-release'
-# tmux send-keys C-b t 
+tmux splitw -v -p 15
+tmux send-keys neofetch c-m 
 tmux select-pane -t 0
 tmux attach-session -d
