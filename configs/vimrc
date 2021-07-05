@@ -141,28 +141,37 @@ Plugin 'tpope/vim-surround'
 
 " Maximizes and restores the current window in Vim. 
 Plugin 'szw/vim-maximizer'
+
 " vim debugger
 Plugin 'puremourning/vimspector'
+
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+
 " auto formatting collection
 Plugin 'Chiel92/vim-autoformat'
+
 " auto complete tool
 Plugin 'ycm-core/YouCompleteMe'
+
 " html previwer
 Plugin 'turbio/bracey.vim'
+
 " NerdTree
 Plugin 'preservim/nerdtree'
+
 " html css javascript auto completion
 Plugin 'mattn/emmet-vim'
+
 " programming language syntax checker
-Plugin 'scrooloose/syntastic'
+Plugin 'vim-syntastic/syntastic'
+
 " vim snippet sets. two plugin need each other
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 " find files
-Plugin 'kien/ctrlp.vim'
+" Plugin 'kien/ctrlp.vim'
 
 " vim comment plugin
 " shortcut is 'gc'
@@ -248,7 +257,7 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_quiet_messages = { 'regex': 'ES6' }
