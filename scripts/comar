@@ -1,3 +1,5 @@
+#!/bin/bash 
+
 pushd ~/repos/custom-script > /dev/null
 
 git pull
@@ -5,7 +7,7 @@ git pull
 git add .
 git mcommit "update: auto"
 
-if ! [[ -z $(git status | grep origin/master) ]]; then
+if ! [[ -z $(git status | grep 'Changes to be committed') ]]; then
     git push
 fi
 
