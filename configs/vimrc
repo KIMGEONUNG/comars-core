@@ -13,6 +13,11 @@
 "======================VIM BASIC SETTING================================
 "======================================================================"
 
+if has('nvim')
+    set runtimepath^=~/.vim runtimepath+=~/.vim/after
+    let &packpath=&runtimepath
+endif
+
 set exrc
 set guicursor=
 set noerrorbells
@@ -112,14 +117,25 @@ imap <C-d> <C-o>diw
 "##########################PLUGIN SECTOR################################
 "======================================================================"
 
-packadd! gruvbox
-packadd! vim-airline
-packadd! vim-airline-themes
+" packadd! gruvbox
+" packadd! vim-airline
+" packadd! vim-airline-themes
 
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
+if has('nvim')
+    Plugin 'nvim-lua/popup.nvim'
+    Plugin 'nvim-lua/plenary.nvim'
+    Plugin 'nvim-telescope/telescope.nvim'
+    Plugin 'nvim-telescope/telescope-fzy-native.nvim'
+endif
+
+Plugin 'morhetz/gruvbox'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 Plugin 'tpope/vim-surround'
 
@@ -277,3 +293,17 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 "ULTI_SNIPS============================================================"
 "======================================================================"
 let g:UltiSnipsExpandTrigger="<tab>"
+
+if has('nvim')
+    " Find files using Telescope command-line sugar.
+    nnoremap <leader>ff <cmd>Telescope find_files<cr>
+    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+    nnoremap <leader>fb <cmd>Telescope buffers<cr>
+    nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+    " Using lua functions
+    nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+    nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+    nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+    nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+endif

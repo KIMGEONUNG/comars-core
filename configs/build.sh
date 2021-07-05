@@ -11,5 +11,6 @@ do
 	ln -s $target $link_name -f -v
 done
 
-
-
+# shared vimrc and newvimrc
+mkdir -p ~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim -f -v
