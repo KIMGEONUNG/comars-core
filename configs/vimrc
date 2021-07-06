@@ -135,6 +135,9 @@ if has('nvim')
     Plugin 'neovim/nvim-lspconfig'
 
     Plugin 'nvim-lua/completion-nvim'
+else
+    " auto complete tool
+    Plugin 'ycm-core/YouCompleteMe'
 endif
 
 Plugin 'morhetz/gruvbox'
@@ -155,8 +158,6 @@ Plugin 'VundleVim/Vundle.vim'
 " auto formatting collection
 Plugin 'Chiel92/vim-autoformat'
 
-" auto complete tool
-Plugin 'ycm-core/YouCompleteMe'
 
 " html previwer
 Plugin 'turbio/bracey.vim'
@@ -319,4 +320,17 @@ if has('nvim')
     nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
     nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
     nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+
+    lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
+    autocmd BufEnter * lua require'completion'.on_attach()
+    
+    " Use <Tab> and <S-Tab> to navigate through popup menu
+    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+    " Set completeopt to have a better completion experience
+    set completeopt=menuone,noinsert,noselect
+
+    " Avoid showing message extra message when using completion
+    set shortmess+=c
 endif
