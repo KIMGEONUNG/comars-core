@@ -131,6 +131,10 @@ if has('nvim')
     Plugin 'nvim-lua/plenary.nvim'
     Plugin 'nvim-telescope/telescope.nvim'
     Plugin 'nvim-telescope/telescope-fzy-native.nvim'
+
+    Plugin 'neovim/nvim-lspconfig'
+
+    Plugin 'nvim-lua/completion-nvim'
 endif
 
 Plugin 'morhetz/gruvbox'
