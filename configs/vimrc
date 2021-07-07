@@ -171,7 +171,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 " find files
-" Plugin 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 
 " vim comment plugin
 " shortcut is 'gc'
