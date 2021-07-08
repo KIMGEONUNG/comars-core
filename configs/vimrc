@@ -134,6 +134,8 @@ if has('nvim')
 
     Plugin 'neovim/nvim-lspconfig'
 
+    Plugin 'iamcco/markdown-preview.nvim'
+
     Plugin 'nvim-lua/completion-nvim'
 else
     " auto complete tool

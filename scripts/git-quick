@@ -1,0 +1,5 @@
+#!/bin/bash
+
+git add .
+git mcommit "update: trivial" 
+git push
