@@ -27,6 +27,7 @@ def main():
     im = Image.open(path_input)
     im = transforms.Resize(size, method)(im)
     im.save(path_output)
+    print('saved image to %s' % (path_output))
 
 
 if __name__ == '__main__':
