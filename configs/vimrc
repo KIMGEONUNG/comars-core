@@ -19,10 +19,10 @@ if has('nvim')
 endif
 
 set exrc
-set guicursor=
+" set guicursor=
 set noerrorbells
 
-let mapleader = " "
+let mapleader=" "
 set scrolloff=8
 set incsearch
 set hlsearch
@@ -171,7 +171,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'mattn/emmet-vim'
 
 " programming language syntax checker
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 
 " vim snippet sets. two plugin need each other
 Plugin 'SirVer/ultisnips'
@@ -267,7 +267,7 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
-let g:syntastic_quiet_messages = { 'regex': 'ES6' }
+" let g:syntastic_quiet_messages = { 'regex': 'ES6' }
 
 "======================================================================"
 "VIMSPECTOR============================================================"
