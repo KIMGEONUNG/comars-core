@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# SUMMARY: Locate git scripts into executable directory 
 
 scripts=`find . -type f | grep -v build.sh`
 
