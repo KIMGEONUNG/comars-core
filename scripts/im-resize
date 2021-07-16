@@ -6,7 +6,7 @@ from PIL import Image
 
 def parse():
     import argparse
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='Image resize')
     parser.add_argument('-i', '--input', type=str, required=True,
                         help='input path')
     parser.add_argument('-o', '--output', type=str, required=True,
