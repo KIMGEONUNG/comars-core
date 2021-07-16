@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import torchvision.transforms as transforms
 from PIL import Image
 import os
@@ -7,34 +8,26 @@ import os
 def parse():
     import argparse
     parser = argparse.ArgumentParser(description='GIF generation')
-    parser.add_argument('directory', type=str, default='./')
-    parser.add_argument('-p', '--pattern', type=str, 
-            default='.+', help='pattern for filter')
     parser.add_argument('-o', '--output', type=str, 
             default='./animation.gif', help='output path')
+    parser.add_argument('-d', '--duration', type=int, 
+            default=200, help='for each frame time')
     return parser.parse_args()
 
 
 def main():
     args = parse()
 
-    print(args.pattern)
-
-    path_output = args.output
-    target_dir = args.directory
-    target_files = [ os.path.join(target_dir, f) for f in os.listdir(target_dir) ]
-    target_files = list(filter(lambda x : args.pattern in x, target_files))
-    target_files.sort()
-
+    target_files = sys.stdin.read().splitlines()
     print("# Target files")
     for i in target_files:
         print(i)
 
     images = [ Image.open(f) for f in target_files ]
-    images[0].save(path_output, save_all=True, 
-            append_images=images[1:], optimize=False, duration=200, loop=0)
+    images[0].save(args.output, save_all=True, 
+            append_images=images[1:], optimize=False, duration=args.duration, loop=0)
 
-    print('saved GIF to %s' % (path_output))
+    print('saved GIF to %s' % (args.output))
 
 if __name__ == '__main__':
     main()
