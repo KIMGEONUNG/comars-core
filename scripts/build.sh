@@ -23,6 +23,6 @@ fi
 echo \# Build script programs 
 for script in $scripts
 do
-    build_loc=${targetPath}/${script#*/}
+    build_loc=${targetPath}/${script##*/}
     ln -s $(pwd)/${script#*/} ${build_loc} -f -v
 done
