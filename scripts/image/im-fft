@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import os 
 import regex
@@ -44,12 +46,7 @@ def main():
             filename = f.split('/')[-1]
             directory = '/'.join(f.split('/')[:-1])
             target = os.path.join(directory,  args.postfix + filename)
-            print('-------------')
-            print('original:', f)
-            print('directory:', directory)
-            print('filename:', filename)
-            print('target:', target)
-            # plt.savefig(target)
+            plt.savefig(target)
 
 if __name__ == '__main__':
     main()
