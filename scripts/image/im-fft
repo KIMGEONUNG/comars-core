@@ -24,8 +24,9 @@ def main():
     for f in args.input_files:
         dark_image = imread(f)
         dark_image_grey = rgb2gray(dark_image)
-        fourier_spectrum = np.fft.fft2(dark_image_grey)
-        fourier_spectrum_shifted = np.fft.fftshift(fourier_spectrum)
+        fourier_transform = np.fft.fft2(dark_image_grey)
+        fourier_transform_shifted = np.fft.fftshift(fourier_transform)
+        fourier_spectrum_shifted = np.log(abs(fourier_transform_shifted))
 
         fig, ax = plt.subplots(1, 2, figsize=(10, 5), dpi=150)
 
@@ -36,7 +37,7 @@ def main():
 
         i = 1
         ax[i].set_title('Fourier Transformation')
-        ax[i].imshow(np.log(abs(fourier_spectrum_shifted)), cmap='gray');
+        ax[i].imshow(fourier_spectrum_shifted, cmap='gray');
         ax[i].axis('off')
 
 
