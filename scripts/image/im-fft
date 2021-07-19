@@ -25,7 +25,7 @@ def main():
         dark_image_grey = transforms.ToTensor()(im).squeeze()
         fourier_transform = np.fft.fft2(dark_image_grey)
         fourier_transform_shifted = np.fft.fftshift(fourier_transform)
-        fourier_spectrum_shifted = np.log(abs(fourier_transform_shifted))
+        fourier_spectrum_shifted = np.log(abs(fourier_transform_shifted) + 1e-5)
         fourier_spectrum_shifted = torch.from_numpy(fourier_spectrum_shifted)
         fourier_spectrum_shifted = ((fourier_spectrum_shifted 
                 - fourier_spectrum_shifted.min()) 
