@@ -1,4 +1,5 @@
 import argparse
+import os 
 import regex
 import numpy as np
 import matplotlib.pyplot as plt
@@ -40,13 +41,14 @@ def main():
         if args.show:
             plt.show()
         else:
-            target_dir = ''
-            filename = ''
-            target = target_dir + '/' + args.postfix + 'filename'
-            print(f)
-            print(target_dir)
-            print(filename)
-            print(target)
+            filename = f.split('/')[-1]
+            directory = '/'.join(f.split('/')[:-1])
+            target = os.path.join(directory,  args.postfix + filename)
+            print('-------------')
+            print('original:', f)
+            print('directory:', directory)
+            print('filename:', filename)
+            print('target:', target)
             # plt.savefig(target)
 
 if __name__ == '__main__':
