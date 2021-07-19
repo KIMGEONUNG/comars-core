@@ -3,13 +3,9 @@
 import torch
 import argparse
 import os 
-import regex
 import numpy as np
-import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from PIL import Image
-from skimage.io import imread, imshow
-from skimage.color import rgb2gray
 
 def parsearg():
     parse = argparse.ArgumentParser(
@@ -44,6 +40,7 @@ def main():
             directory = '/'.join(f.split('/')[:-1])
             target = os.path.join(directory,  args.postfix + filename)
             im_final.save(target)
+            print('saved results to %s'%(target))
 
 if __name__ == '__main__':
     main()
