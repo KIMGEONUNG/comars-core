@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
+import torch
 import argparse
 import os 
 import regex
 import numpy as np
 import matplotlib.pyplot as plt
+import torchvision.transforms as transforms
+from PIL import Image
 from skimage.io import imread, imshow
 from skimage.color import rgb2gray
 
@@ -22,32 +25,25 @@ def parsearg():
 def main():
     args = parsearg() 
     for f in args.input_files:
-        dark_image = imread(f)
-        dark_image_grey = rgb2gray(dark_image)
+        im = Image.open(f).convert('L')
+        dark_image_grey = transforms.ToTensor()(im).squeeze()
         fourier_transform = np.fft.fft2(dark_image_grey)
         fourier_transform_shifted = np.fft.fftshift(fourier_transform)
         fourier_spectrum_shifted = np.log(abs(fourier_transform_shifted))
-
-        fig, ax = plt.subplots(1, 2, figsize=(10, 5), dpi=150)
-
-        i = 0
-        ax[i].set_title('Gray Image')
-        ax[i].imshow(dark_image_grey, cmap='gray')
-        ax[i].axis('off')
-
-        i = 1
-        ax[i].set_title('Fourier Transformation')
-        ax[i].imshow(fourier_spectrum_shifted, cmap='gray');
-        ax[i].axis('off')
-
+        fourier_spectrum_shifted = torch.from_numpy(fourier_spectrum_shifted)
+        fourier_spectrum_shifted = ((fourier_spectrum_shifted 
+                - fourier_spectrum_shifted.min()) 
+                / fourier_spectrum_shifted.max())
+        im_final = torch.cat([dark_image_grey, fourier_spectrum_shifted], dim=-1)
+        im_final = transforms.ToPILImage()(im_final)
 
         if args.show:
-            plt.show()
+            im_final.show()
         else:
             filename = f.split('/')[-1]
             directory = '/'.join(f.split('/')[:-1])
             target = os.path.join(directory,  args.postfix + filename)
-            plt.savefig(target)
+            im_final.save(target)
 
 if __name__ == '__main__':
     main()
