@@ -132,14 +132,18 @@ if has('nvim')
     Plugin 'nvim-telescope/telescope.nvim'
     Plugin 'nvim-telescope/telescope-fzy-native.nvim'
 
-    Plugin 'neovim/nvim-lspconfig'
-
     Plugin 'iamcco/markdown-preview.nvim'
 
+    Plugin 'neovim/nvim-lspconfig'
     Plugin 'nvim-lua/completion-nvim'
+
+    " Plugin 'neoclide/coc.nvim'
 else
     " auto complete tool
     Plugin 'ycm-core/YouCompleteMe'
+    Plugin 'vim-syntastic/syntastic'
+    " find files
+    Plugin 'kien/ctrlp.vim'
 endif
 
 Plugin 'morhetz/gruvbox'
@@ -171,14 +175,11 @@ Plugin 'preservim/nerdtree'
 Plugin 'mattn/emmet-vim'
 
 " programming language syntax checker
-" Plugin 'vim-syntastic/syntastic'
 
 " vim snippet sets. two plugin need each other
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
-" find files
-Plugin 'kien/ctrlp.vim'
 
 " vim comment plugin
 " shortcut is 'gc'
@@ -239,37 +240,6 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsEditSplit="vertical"
 
 "======================================================================"
-"YOU_COMPLETE_ME======================================================="
-"======================================================================"
-" default shortcut(edit mode): <c-n>
-
-"  The default value is ['<tab>', '<down>']. If so, snippet shortcut key <tab>
-" would not work. So I remap <tab> into <UP>.
-let g:ycm_key_list_select_completion = ['<UP>', '<Down>']
-nnoremap <Leader>gd :YcmCompleter GoTo<CR>
-
-"======================================================================"
-"SYNTASTIC============================================================="
-"======================================================================"
-"
-" See the manual for details about the corresponding supported checkers (:help syntastic-checkers in Vim).
-" Javascript setting vedio : https://www.youtube.com/watch?v=0uw96oNqKRo
-"
-" javascript :jshin
-" html: tidy
-"
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-" let g:syntastic_quiet_messages = { 'regex': 'ES6' }
-
-"======================================================================"
 "VIMSPECTOR============================================================"
 "======================================================================"
 
@@ -300,10 +270,6 @@ nmap <leader>drc <Plug>VimspectorRunToCursor
 nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
 nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
-"======================================================================"
-"CTRLP================================================================="
-"======================================================================"
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 "======================================================================"
 "ULTI_SNIPS============================================================"
@@ -323,16 +289,62 @@ if has('nvim')
     nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
     nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
+    "======================================================================"
+    "COMPLETION-NVIM======================================================="
+    "======================================================================"
+    
     lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
     autocmd BufEnter * lua require'completion'.on_attach()
-    
+
     " Use <Tab> and <S-Tab> to navigate through popup menu
-    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
     " Set completeopt to have a better completion experience
     set completeopt=menuone,noinsert,noselect
 
     " Avoid showing message extra message when using completion
-    set shortmess+=c
+    " set shortmess+=c
+    " let g:completion_enable_snippet = 'UltiSnips'
+    "
+    " let g:completion_enable_auto_hover = 0
+    " let g:completion_enable_auto_signature = 0
+else
+
+    "======================================================================"
+    "YOU_COMPLETE_ME======================================================="
+    "======================================================================"
+    " default shortcut(edit mode): <c-n>
+
+    "  The default value is ['<tab>', '<down>']. If so, snippet shortcut key <tab>
+    " would not work. So I remap <tab> into <UP>.
+    let g:ycm_key_list_select_completion = ['<UP>', '<Down>']
+    nnoremap <Leader>gd :YcmCompleter GoTo<CR>
+
+    "======================================================================"
+    "SYNTASTIC============================================================="
+    "======================================================================"
+    "
+    " See the manual for details about the corresponding supported checkers (:help syntastic-checkers in Vim).
+    " Javascript setting vedio : https://www.youtube.com/watch?v=0uw96oNqKRo
+    "
+    " javascript :jshin
+    " html: tidy
+    "
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 0
+    let g:syntastic_auto_loc_list = 0
+    let g:syntastic_check_on_open = 0
+    let g:syntastic_check_on_wq = 0
+
+    " let g:syntastic_quiet_messages = { 'regex': 'ES6' }
+
+    "======================================================================"
+    "CTRLP================================================================="
+    "======================================================================"
+    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+    
 endif
