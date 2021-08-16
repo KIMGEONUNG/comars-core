@@ -41,13 +41,6 @@ set noswapfile
 " set undodir=~/.vim/undodir
 " set undofile
 
-set colorcolumn=80
-
-" scheme location is /usr/share/vim/vim80/color
-colorscheme gruvbox 
-set background=dark
-let g:gruvbox_contrast_dark ='medium'
-
 
 function! ExecuteFile(arg)
     if !empty(matchstr(a:arg, '.py$'))
@@ -188,6 +181,7 @@ Plugin 'tomtom/tcomment_vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -275,6 +269,21 @@ nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 "ULTI_SNIPS============================================================"
 "======================================================================"
 let g:UltiSnipsExpandTrigger="<tab>"
+
+
+"======================================================================"
+"SCHEME================================================================"
+"======================================================================"
+set termguicolors
+let g:gruvbox_contrast_dark = 'hard'
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+let g:gruvbox_invert_selection='0'
+colorscheme gruvbox 
+set background=dark
+
 
 if has('nvim')
     " Find files using Telescope command-line sugar.
