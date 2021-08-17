@@ -1,0 +1,4 @@
+cat > setup.cfg <<EOF
+[pycodestyle]
+ignore = E402
+EOF
