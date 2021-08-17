@@ -163,6 +163,7 @@ Plugin 'turbio/bracey.vim'
 
 " NerdTree
 Plugin 'preservim/nerdtree'
+Plugin 'ryanoasis/vim-devicons'
 
 " html css javascript auto completion
 Plugin 'mattn/emmet-vim'
@@ -180,6 +181,9 @@ Plugin 'tomtom/tcomment_vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+set encoding=UTF-8
+set guifont=DroidSansMono\ Nerd\ Font\ 11
 
 
 " To ignore plugin indent changes, instead use:
