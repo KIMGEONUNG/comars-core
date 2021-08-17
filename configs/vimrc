@@ -40,6 +40,8 @@ set nobackup
 set noswapfile
 " set undodir=~/.vim/undodir
 " set undofile
+"
+set colorcolumn=80
 
 
 function! ExecuteFile(arg)
