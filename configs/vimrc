@@ -62,9 +62,9 @@ nmap <Leader>q :q<CR>
 nnoremap <Leader>gs ^
 nnoremap <Leader>ge $
 
-nnoremap <Leader>n :bn<CR>
-nnoremap <Leader>b :bf<CR>
-nnoremap <Leader>d :bd<CR>
+nnoremap <Leader>bn :bn<CR>
+nnoremap <Leader>bb :bf<CR>
+nnoremap <Leader>bd :bd<CR>
 
 nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>j :wincmd j<CR>
@@ -131,9 +131,9 @@ if has('nvim')
     Plugin 'iamcco/markdown-preview.nvim'
 
     Plugin 'neovim/nvim-lspconfig'
+    " Plugin 'kabouzeid/nvim-lspinstall'
     Plugin 'nvim-lua/completion-nvim'
 
-    " Plugin 'neoclide/coc.nvim'
 else
     " auto complete tool
     Plugin 'ycm-core/YouCompleteMe'
@@ -281,7 +281,7 @@ let g:UltiSnipsExpandTrigger="<tab>"
 "SCHEME================================================================"
 "======================================================================"
 set termguicolors
-let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_contrast_dark = 'dark'
 if exists('+termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -292,6 +292,15 @@ set background=dark
 
 
 if has('nvim')
+
+    function! Format(arg)
+        if !empty(matchstr(a:arg, '.json$'))
+            :lua vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
+        else
+            :lua vim.lsp.buf.formatting()
+        endif
+    endfunction
+
     " Find files using Telescope command-line sugar.
     " nnoremap <leader>ff <cmd>Telescope find_files<cr>
     nnoremap <leader>ff :Telescope find_files<cr>
@@ -307,8 +316,11 @@ if has('nvim')
     nnoremap <silent> gr :lua vim.lsp.buf.references()<CR>
     nnoremap <silent> K :lua vim.lsp.buf.hover()<CR>
     nnoremap <silent> gi :lua vim.lsp.buf.implementation()<CR>
+    nnoremap <silent> <c-f> :call Format(expand('%:t'))<CR>
 
     lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
+    lua require'lspconfig'.jsonls.setup{cmd={"vscode-json-languageserver", "--stdio"}}
+
     " nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
     " nnoremap <silent> <space>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
     " nnoremap <silent> <space>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
@@ -320,7 +332,6 @@ if has('nvim')
     " nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
     " nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
     " nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-    nnoremap <silent> <c-f> <cmd>lua vim.lsp.buf.formatting()<CR>
 
     "======================================================================"
     "COMPLETION-NVIM======================================================="
