@@ -64,6 +64,7 @@ nnoremap <Leader>ge $
 
 nnoremap <Leader>n :bn<CR>
 nnoremap <Leader>b :bf<CR>
+nnoremap <Leader>d :bd<CR>
 
 nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>j :wincmd j<CR>
