@@ -64,6 +64,7 @@ nnoremap <Leader>ge $
 
 nnoremap <Leader>n :bn<CR>
 nnoremap <Leader>b :bf<CR>
+nnoremap <Leader>d :bd<CR>
 
 nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>j :wincmd j<CR>
@@ -292,27 +293,23 @@ set background=dark
 
 if has('nvim')
     " Find files using Telescope command-line sugar.
-    nnoremap <leader>ff <cmd>Telescope find_files<cr>
-    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-    nnoremap <leader>fb <cmd>Telescope buffers<cr>
-    nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+    " nnoremap <leader>ff <cmd>Telescope find_files<cr>
+    nnoremap <leader>ff :Telescope find_files<cr>
+    nnoremap <leader>fg :Telescope live_grep<cr>
+    nnoremap <leader>fb :Telescope buffers<cr>
+    nnoremap <leader>fh :Telescope help_tags<cr>
 
-    " Using lua functions
-    nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-    nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-    nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-    nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-
-    
     "======================================================================"
     "NVIM-LSPCONFIG========================================================"
     "======================================================================"
-    nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-    nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-    nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-    nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-    nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+    nnoremap <silent> gD :lua vim.lsp.buf.declaration()<CR>
+    nnoremap <silent> gd :lua vim.lsp.buf.definition()<CR>
+    nnoremap <silent> gr :lua vim.lsp.buf.references()<CR>
+    nnoremap <silent> K :lua vim.lsp.buf.hover()<CR>
+    nnoremap <silent> gi :lua vim.lsp.buf.implementation()<CR>
+
     lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
+<<<<<<< HEAD
     " nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
     " nnoremap <silent> <space>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
     " nnoremap <silent> <space>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
@@ -325,6 +322,21 @@ if has('nvim')
     " nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
     " nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
     nnoremap <silent> <c-f> <cmd>lua vim.lsp.buf.formatting()<CR>
+=======
+
+    " nnoremap <silent> <C-k> :lua vim.lsp.buf.signature_help()<CR>
+    " nnoremap <silent> <space>wa :lua vim.lsp.buf.add_workspace_folder()<CR>
+    " nnoremap <silent> <space>wr :lua vim.lsp.buf.remove_workspace_folder()<CR>
+    " nnoremap <silent> <space>wl :lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
+    " nnoremap <silent> <space>D :lua vim.lsp.buf.type_definition()<CR>
+    " nnoremap <silent> <space>rn :lua vim.lsp.buf.rename()<CR>
+    " nnoremap <silent> <space>ca :lua vim.lsp.buf.code_action()<CR>
+    " nnoremap <silent> <space>e :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+    " nnoremap <silent> [d :lua vim.lsp.diagnostic.goto_prev()<CR>
+    " nnoremap <silent> ]d :lua vim.lsp.diagnostic.goto_next()<CR>
+    " nnoremap <silent> <space>q :lua vim.lsp.diagnostic.set_loclist()<CR>
+    " nnoremap <silent> <space>f :lua vim.lsp.buf.formatting()<CR>
+>>>>>>> 130a65b22fd1052846bcfa21fb74d174cfa46495
     "======================================================================"
     "COMPLETION-NVIM======================================================="
     "======================================================================"
