@@ -43,7 +43,7 @@ set noswapfile
 "
 set colorcolumn=80
 
-
+" Fast execution in vim 
 function! ExecuteFile(arg)
     if !empty(matchstr(a:arg, '.py$'))
         write
@@ -52,6 +52,15 @@ function! ExecuteFile(arg)
     if !empty(matchstr(a:arg, '.sh$'))
         write
         !bash ./% 
+    endif
+endfunction
+
+" LSP formatting
+function! Format(arg)
+    if !empty(matchstr(a:arg, '.json$'))
+        :lua vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
+    else
+        :lua vim.lsp.buf.formatting()
     endif
 endfunction
 
@@ -80,6 +89,8 @@ nnoremap <Leader>- :vertical resize -10<CR>
 
 nnoremap <C-u> 10k 
 nnoremap <C-d> 10j 
+vnoremap <C-u> 10k 
+vnoremap <C-d> 10j 
 
 imap <C-q> <ESC>
 nmap <C-q> <ESC>
@@ -293,13 +304,6 @@ set background=dark
 
 if has('nvim')
 
-    function! Format(arg)
-        if !empty(matchstr(a:arg, '.json$'))
-            :lua vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
-        else
-            :lua vim.lsp.buf.formatting()
-        endif
-    endfunction
 
     " Find files using Telescope command-line sugar.
     " nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -319,6 +323,7 @@ if has('nvim')
     nnoremap <silent> <c-f> :call Format(expand('%:t'))<CR>
 
     lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
+    lua require'lspconfig'.vimls.setup{on_attach=require'completion'.on_attach}
     lua require'lspconfig'.jsonls.setup{cmd={"vscode-json-languageserver", "--stdio"}}
 
     " nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
