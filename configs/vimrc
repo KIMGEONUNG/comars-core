@@ -384,4 +384,7 @@ else
     
 endif
 
-
+" Try List 
+" - vimspector console auto-complete
+" - automatic change in go-to-reference 
+" - vimls sipnnet
