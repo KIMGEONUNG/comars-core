@@ -75,6 +75,8 @@ nnoremap <Leader>bn :bn<CR>
 nnoremap <Leader>bb :bf<CR>
 nnoremap <Leader>bd :bd<CR>
 
+nnoremap <Leader>nh :noh<CR>
+
 nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>j :wincmd j<CR>
 nnoremap <Leader>k :wincmd k<CR>
@@ -213,7 +215,7 @@ filetype plugin indent on    " required
 "======================================================================"
 "TCOMMENT=============================================================="
 "======================================================================"
-map <c-k> <s-v>gc
+" map <c-k> <s-v>gc
 
 "======================================================================"
 "AIRLINE==============================================================="
@@ -304,6 +306,9 @@ set background=dark
 
 if has('nvim')
 
+    " movement in quickfix reference 
+    nnoremap <C-j> :cnext<CR>
+    nnoremap <C-k> :cprevious<CR>
 
     " Find files using Telescope command-line sugar.
     " nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -321,6 +326,7 @@ if has('nvim')
     nnoremap <silent> K :lua vim.lsp.buf.hover()<CR>
     nnoremap <silent> gi :lua vim.lsp.buf.implementation()<CR>
     nnoremap <silent> <c-f> :call Format(expand('%:t'))<CR>
+    nnoremap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>
 
     lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
     lua require'lspconfig'.vimls.setup{on_attach=require'completion'.on_attach}
@@ -331,7 +337,6 @@ if has('nvim')
     " nnoremap <silent> <space>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
     " nnoremap <silent> <space>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
     " nnoremap <silent> <space>D <cmd>lua vim.lsp.buf.type_definition()<CR>
-    " nnoremap <silent> <space>rn <cmd>lua vim.lsp.buf.rename()<CR>
     " nnoremap <silent> <space>ca <cmd>lua vim.lsp.buf.code_action()<CR>
     " nnoremap <silent> <space>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
     " nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
@@ -387,5 +392,4 @@ endif
 " Try List 
 " - vimspector console auto-complete
 "       - <c-x><c-o> is work. key mapping needed
-" - automatic change in go-to-reference 
 " - vimls sipnnet
