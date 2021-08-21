@@ -1,4 +1,4 @@
-cat >> .vimspector.json <<EOF
+cat > .vimspector.json <<EOF
 {
     "configurations": {
          "run": {                                                                    
@@ -6,8 +6,8 @@ cat >> .vimspector.json <<EOF
               "configuration": {                                                        
                   "request": "launch",                                                    
                   "type": "python",                                                       
-                  "cwd": "${workspaceRoot}",                                              
-                  "program": "${file}",
+                  "cwd": "\${workspaceRoot}",                                              
+                  "program": "\${file}",
                   "args":[],
                   "stopOnEntry": true,                                                   
                   "console": "integratedTerminal"                                         
