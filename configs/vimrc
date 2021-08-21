@@ -40,18 +40,17 @@ set nobackup
 set noswapfile
 " set undodir=~/.vim/undodir
 " set undofile
-"
 set colorcolumn=80
 
-" Fast execution in vim 
+" File specific fast execution
 function! ExecuteFile(arg)
-    if !empty(matchstr(a:arg, '.py$'))
-        write
+    write
+    if filereadable('vim.run.sh')
+         !bash vim.run.sh
+    elseif !empty(matchstr(a:arg, '.py$'))
         !python % 
-    endif
-    if !empty(matchstr(a:arg, '.sh$'))
-        write
-        !bash ./% 
+    elseif !empty(matchstr(a:arg, '.sh$'))
+        !bash % 
     endif
 endfunction
 
@@ -392,4 +391,4 @@ endif
 " Try List 
 " - vimspector console auto-complete
 "       - <c-x><c-o> is work. key mapping needed
-" - vimls sipnnet
+" - file path auto-complete 
