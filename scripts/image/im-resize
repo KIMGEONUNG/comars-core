@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import torchvision.transforms as transforms
 from PIL import Image
 
@@ -7,10 +8,8 @@ from PIL import Image
 def parse():
     import argparse
     parser = argparse.ArgumentParser(description='Image resize')
-    parser.add_argument('-i', '--input', type=str, required=True,
-                        help='input path')
-    parser.add_argument('-o', '--output', type=str, required=True,
-                        help='output path')
+    parser.add_argument('-r', '--replace', default=False,
+                        action='store_true', help='replace input')
     parser.add_argument('-s', '--size', type=int, required=True,
                         help='target image size')
     return parser.parse_args()
@@ -19,15 +18,27 @@ def parse():
 def main():
     args = parse()
 
-    path_input = args.input
-    path_output = args.output
-    size = args.size
-    method = Image.BILINEAR
+    method = transforms.InterpolationMode.BICUBIC
+    target_files = sys.stdin.read().splitlines()
+    print("# Target files")
+    for target_file in target_files:
+        print(target_file)
 
-    im = Image.open(path_input)
-    im = transforms.Resize(size, method)(im)
-    im.save(path_output)
-    print('saved image to %s' % (path_output))
+    for target_file in target_files:
+        im = Image.open(target_file)
+        im = transforms.Resize(args.size, method)(im)
+
+        path_output = None
+        if args.replace:
+            path_output = target_file
+        else:
+            parts = target_file.split('.')
+            head = ''.join(parts[:-1])
+            ext = parts[-1]
+            path_output = head + '_resize_%04d.' % (args.size) + ext
+
+        im.save(path_output)
+        print('saved image to %s' % (path_output))
 
 
 if __name__ == '__main__':
