@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Check whether argument exists or not
+if [[ -z $1 ]]; then
+    echo 'Error: specify target line as argument' >&2
+    exit 1
+fi
+
+# Check whether argument is nuber or not 
+re='^[0-9]+$'
+if ! [[ $1 =~ $re ]] ; then
+   echo "Error: Not a number" >&2
+   exit 1
+fi
+
+
+target=$1
+num=0
+shift
+
+while read line
+do
+    num=$((1 + $num))
+    if [[ $num -eq $target ]]; then
+        echo "$line"
+        exit 0
+    elif [[ $num -gt $target ]]; then
+        echo "Error: target number is bigger than whole line number" >&2 
+        exit 1
+    fi
+done < "${1:-/dev/stdin}"
