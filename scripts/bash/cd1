@@ -1,0 +1,2 @@
+#!/bin/bash
+cd $(find . -mindepth 1 -maxdepth 1 -type d | sort -rV | head -n 1)
