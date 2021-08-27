@@ -392,3 +392,4 @@ endif
 " - vimspector console auto-complete
 "       - <c-x><c-o> is work. key mapping needed
 " - file path auto-complete 
+" - highlight color
