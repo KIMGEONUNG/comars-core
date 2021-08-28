@@ -403,3 +403,4 @@ endif
 " - vimspector console auto-complete
 "       - <c-x><c-o> is work. key mapping needed
 " - highlight color
+" - x without register
