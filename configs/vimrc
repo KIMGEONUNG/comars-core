@@ -348,6 +348,17 @@ if has('nvim')
     
     set completeopt=menuone,noinsert,noselect
 
+    " Autocomplete file path
+    let g:completion_chain_complete_list = {
+            \ 'default' : {
+            \   'default': [
+            \       {'complete_items': ['lsp', 'snippet']},
+            \       {'mode': '<c-p>'},
+            \       {'mode': '<c-n>'}],
+            \   'comment': [],
+            \   'string' : [
+            \       {'complete_items': ['path']}]
+            \   }}
 else
 
     "======================================================================"
@@ -391,5 +402,4 @@ endif
 " Try List 
 " - vimspector console auto-complete
 "       - <c-x><c-o> is work. key mapping needed
-" - file path auto-complete 
 " - highlight color
