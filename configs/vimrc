@@ -359,13 +359,16 @@ if has('nvim')
             \   'string' : [
             \       {'complete_items': ['path']}]
             \   }}
-else
 
+else
     "======================================================================"
     "YOU_COMPLETE_ME======================================================="
     "======================================================================"
+    
+    " vimspector console autocompletion
+    let g:ycm_semantic_triggers = {'VimspectorPrompt': [ '.', '->', ':', '<' ]}
+    
     " default shortcut(edit mode): <c-n>
-
     "  The default value is ['<tab>', '<down>']. If so, snippet shortcut key <tab>
     " would not work. So I remap <tab> into <UP>.
     let g:ycm_key_list_select_completion = ['<UP>', '<Down>']
