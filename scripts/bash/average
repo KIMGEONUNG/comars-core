@@ -1,0 +1,12 @@
+#!/bin/bash
+
+num=0
+sum=0
+
+while read line
+do
+    num=$((1 + $num))
+    sum=$(echo $sum + $line | bc)
+done < "${1:-/dev/stdin}"
+
+echo "scale=4; $sum / $num" | bc
