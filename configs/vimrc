@@ -42,12 +42,17 @@ set noswapfile
 " set undofile
 set colorcolumn=80
 
-" File specific fast execution
-function! ExecuteFile(arg)
+function! ExecutePredef()
     write
     if filereadable('vim.run.sh')
          !bash vim.run.sh
-    elseif !empty(matchstr(a:arg, '.py$'))
+    endif
+endfunction
+
+" File specific fast execution
+function! ExecuteFile(arg)
+    write
+    if !empty(matchstr(a:arg, '.py$'))
         !python % 
     elseif !empty(matchstr(a:arg, '.sh$'))
         !bash % 
@@ -64,6 +69,7 @@ function! Format(arg)
 endfunction
 
 nmap <Leader>e :call ExecuteFile(expand('%:t'))<CR>
+nmap <Leader>E :call ExecutePredef()<CR>
 nmap <Leader>w :w<CR> 
 nmap <Leader>q :q<CR> 
 
@@ -406,3 +412,4 @@ endif
 " - vimspector console auto-complete
 "       - <c-x><c-o> is work. key mapping needed
 " - highlight color
+" - x without register
