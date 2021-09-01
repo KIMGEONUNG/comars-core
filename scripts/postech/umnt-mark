@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+    echo Error: Specify mark number for access 
+    exit 1
+fi
+
+if [[ $1 == 9 || $1 == 10 ]]; then
+    echo Error: Mark 9 and 10 is not available 
+else
+    umount ./mark${1} 
+    rmdir ./mark${1} 
+fi

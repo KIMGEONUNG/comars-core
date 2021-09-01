@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+    echo Error: Specify mark number for access 
+    exit 1
+fi
+
+if [[ $1 == 9 || $1 == 10 ]]; then
+    echo Error: Mark 9 and 10 is not available 
+else
+    mkdir -p ./mark${1} 
+    sshfs -o reconnect k2woong92@mark${1}.postech.ac.kr:/home/k2woong92 ./mark${1}
+fi
