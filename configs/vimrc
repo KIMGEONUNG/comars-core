@@ -145,6 +145,7 @@ if has('nvim')
     Plugin 'nvim-lua/plenary.nvim'
     Plugin 'nvim-telescope/telescope.nvim'
     Plugin 'nvim-telescope/telescope-fzy-native.nvim'
+    Plugin 'kyazdani42/nvim-web-devicons'
 
     Plugin 'iamcco/markdown-preview.nvim'
 
