@@ -1,4 +1,4 @@
 cat > setup.cfg <<EOF
 [pycodestyle]
-ignore = E402,E128,E111
+ignore = E402,E128,E111,E126
 EOF
