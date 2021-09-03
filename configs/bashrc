@@ -11,6 +11,7 @@ cat<<'EOF'
 
 EOF
 
+# stdout for system
 neofetch
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
@@ -167,4 +168,4 @@ export PATH=$PATH:$CUDA_HOME/bin
 
 
 # Key mapping
-xmodmap -e 'keycode 108 = Return' # Alt_Right to Enter
+# xmodmap -e 'keycode 108 = Return' # Alt_Right to Enter
