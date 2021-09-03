@@ -68,6 +68,10 @@ function! Format(arg)
     endif
 endfunction
 
+
+"Don't use register when simple delete
+nnoremap x v"_d
+
 nmap <Leader>e :call ExecuteFile(expand('%:t'))<CR>
 nmap <Leader>E :call ExecutePredef()<CR>
 nmap <Leader>w :w<CR> 
