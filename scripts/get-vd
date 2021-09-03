@@ -10,7 +10,8 @@ cat > .vimspector.json <<EOF
                   "program": "\${file}",
                   "args":[],
                   "stopOnEntry": true,                                                   
-                  "console": "integratedTerminal"                                         
+                  "console": "integratedTerminal",
+                  "env": {"FOO": "123"}
              },                                                                        
              "breakpoints": {                                                          
                  "exception": {                                                          
