@@ -116,6 +116,9 @@ nmap <C-b> B
 vmap <C-a> ^
 vmap <C-e> $
 
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 imap <C-f> <C-o>W
