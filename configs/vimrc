@@ -129,8 +129,25 @@ imap <C-j> <C-o>j
 imap <C-k> <C-o>k
 imap <C-l> <C-o>l
 
-
 imap <C-d> <C-o>diw
+
+" Keeping it centered
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap J mzJ'z
+
+nnoremap Y y$
+
+" Undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" Jumplist mutation
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+
 
 "======================================================================"
 "======================================================================"
