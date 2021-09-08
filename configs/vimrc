@@ -119,6 +119,8 @@ vmap <C-e> $
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+inoremap <C-@> <C-x><C-o>
+
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 imap <C-f> <C-o>W
@@ -371,7 +373,8 @@ if has('nvim')
     
     set completeopt=menuone,noinsert,noselect
     let g:completion_enable_snippet = 'UltiSnips'
-
+    let g:completion_enable_auto_popup = 0
+    imap <silent> <c-n> <Plug>(completion_trigger)
 
     " Autocomplete file path
     let g:completion_chain_complete_list = {
