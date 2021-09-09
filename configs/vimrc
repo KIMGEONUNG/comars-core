@@ -92,9 +92,8 @@ nnoremap <Leader>k :wincmd k<CR>
 nnoremap <Leader>l :wincmd l<CR>
 nnoremap <Leader>x :wincmd x<CR>
 
-
-nnoremap <Leader>0 10:wincmd +<CR>
-nnoremap <Leader>9 10:wincmd -<CR>
+nnoremap <Leader>0 :resize +10<CR>
+nnoremap <Leader>9 :resize -10<CR>
 nnoremap <Leader>= :vertical resize +10<CR>
 nnoremap <Leader>- :vertical resize -10<CR>
 
