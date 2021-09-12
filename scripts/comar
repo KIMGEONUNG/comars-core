@@ -1,6 +1,8 @@
 #!/bin/bash 
 
-pushd ~/repos/custom-script > /dev/null
+name='comars-core'
+
+pushd ~/repos/$name > /dev/null
 
 git pull
 
