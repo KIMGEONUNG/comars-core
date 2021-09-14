@@ -94,8 +94,7 @@ def main():
         theta = get_random_affine(
             (args.min_t, args.max_t),
             (args.min_s, args.max_s),
-            (args.min_r, args.max_r),
-            batch=args.batch)
+            (args.min_r, args.max_r))
 
         grid = F.affine_grid(theta, x.size())
         x_hat = F.grid_sample(x, grid, padding_mode=args.padding,
@@ -111,7 +110,7 @@ def main():
             parts = target_file.split('.')
             head = ''.join(parts[:-1])
             ext = parts[-1]
-            path_output = head + '_rotate_%04d.' % (args.degree) + ext
+            path_output = head + '_affine.' + ext
 
         im.save(path_output)
         print('saved image to %s' % (path_output))
