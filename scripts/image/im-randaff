@@ -1,0 +1,121 @@
+#!/usr/bin/env python
+
+import torch.nn.functional as F
+import sys
+import torchvision.transforms as transforms
+from PIL import Image
+from random import random as rand
+import torch
+from random import shuffle
+
+
+def parse():
+    import argparse
+    parser = argparse.ArgumentParser(description='Image rotation')
+    parser.add_argument('-r', '--replace', default=False,
+                        action='store_true', help='replace input')
+
+    parser.add_argument('--padding', type=str, default='zeros',
+            help='reflection, border, zeros')
+    parser.add_argument('--min_t', type=float, default=-0.3)
+    parser.add_argument('--max_t', type=float, default=0.3)
+    parser.add_argument('--min_s', type=float, default=0.8)
+    parser.add_argument('--max_s', type=float, default=1.2)
+    parser.add_argument('--min_r', type=float, default=-10.)
+    parser.add_argument('--max_r', type=float, default=10.)
+
+    return parser.parse_args()
+
+
+def get_translation_parameter(x, y):
+    return torch.tensor([[1., 0., x],
+                         [0., 1., y]]).unsqueeze(0)
+
+
+def get_scale_parameter(x, y):
+    return torch.tensor([[1./x, 0., 0],
+                         [0., 1./y, 0]]).unsqueeze(0)
+
+
+def get_rotation_parameter(theta):
+    return torch.tensor([[torch.cos(theta), -torch.sin(theta), 0],
+                         [torch.sin(theta), torch.cos(theta), 0]]).unsqueeze(0)
+
+
+def compose(*args, random=False):
+    mat = torch.eye(3).unsqueeze(0)
+    dummy = torch.tensor([0., 0., 1.]).reshape(1, 1, 3)
+
+    if random:
+        args = list(args)
+        shuffle(args)
+
+    for item in args:
+        mat = mat @ torch.cat([item, dummy], dim=1)
+
+    mat = mat[:, :2, :]
+    return mat
+
+
+def get_random_value(start, end):
+    return start + (end - start) * rand()
+
+
+def get_random_affine(translate, scale, rotate):
+
+    t_sample = lambda: get_random_value(translate[0], translate[1])
+    s_sample = lambda: get_random_value(scale[0], scale[1])
+    r_sample = lambda: get_random_value(rotate[0], rotate[1])
+
+    t = get_translation_parameter(t_sample(), t_sample())
+    scale = s_sample()
+    s = get_scale_parameter(scale, scale)
+    radian = torch.deg2rad(torch.tensor(r_sample()))
+    r = get_rotation_parameter(radian)
+    affine = compose(t, s, r, random=True)
+
+    return affine
+
+
+def main():
+    args = parse()
+
+    target_files = sys.stdin.read().splitlines()
+    print("# Target files")
+    for target_file in target_files:
+        print(target_file)
+
+    for target_file in target_files:
+
+        im = Image.open(target_file)
+        x = transforms.ToTensor()(im)
+        x = x.unsqueeze(0)
+
+        theta = get_random_affine(
+            (args.min_t, args.max_t),
+            (args.min_s, args.max_s),
+            (args.min_r, args.max_r),
+            batch=args.batch)
+
+        grid = F.affine_grid(theta, x.size())
+        x_hat = F.grid_sample(x, grid, padding_mode=args.padding,
+                align_corners=False)
+
+        x_hat = x_hat.squeeze(0)
+        im = transforms.ToPILImage()(x_hat)
+
+        path_output = None
+        if args.replace:
+            path_output = target_file
+        else:
+            parts = target_file.split('.')
+            head = ''.join(parts[:-1])
+            ext = parts[-1]
+            path_output = head + '_rotate_%04d.' % (args.degree) + ext
+
+        im.save(path_output)
+        print('saved image to %s' % (path_output))
+
+
+if __name__ == '__main__':
+    main()
