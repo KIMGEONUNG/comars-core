@@ -388,7 +388,7 @@ if has('nvim')
     
     set completeopt=menuone,noinsert,noselect
     let g:completion_enable_snippet = 'UltiSnips'
-    let g:completion_enable_auto_popup = 0
+    let g:completion_enable_auto_popup = 1
     imap <silent> <c-n> <Plug>(completion_trigger)
 
     " Autocomplete file path
