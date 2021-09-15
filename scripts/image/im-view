@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import torch
 import sys
 import torchvision.transforms as transforms
 from torchvision.utils import make_grid
@@ -9,7 +10,8 @@ from PIL import Image
 def parse():
     import argparse
     parser = argparse.ArgumentParser(description='Image view with grid')
-    parser.add_argument('--num', type=int, default=16)
+    parser.add_argument('--num_row', type=int, default=4)
+    parser.add_argument('--total', type=int, default=16)
     return parser.parse_args()
 
 
@@ -18,21 +20,18 @@ def main():
 
     target_files = sys.stdin.read().splitlines()
     num_total = len(target_files)
-    print("total files: ", num_total)
 
-    num_col = int(num_total ** 0.5)
+    target_files = target_files[:min(num_total, args.total)]
 
+    prep = transforms.Compose([transforms.ToTensor()])
 
+    targets = [Image.open(target) for target in target_files]
+    targets = [prep(target).unsqueeze(0) for target in targets]
+    target = torch.cat(targets, dim=0)
+    target = make_grid(target, args.num_row)
 
-
-
-
-
-
-
-    
-
-
+    im = transforms.ToPILImage()(target)
+    im.show()
 
 
 if __name__ == '__main__':
