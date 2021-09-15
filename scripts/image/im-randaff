@@ -11,7 +11,7 @@ from random import shuffle
 
 def parse():
     import argparse
-    parser = argparse.ArgumentParser(description='Image rotation')
+    parser = argparse.ArgumentParser(description='Image random affine transformation')
     parser.add_argument('-r', '--replace', default=False,
                         action='store_true', help='replace input')
 
