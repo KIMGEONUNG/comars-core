@@ -81,9 +81,7 @@ def main():
     args = parse()
 
     target_files = sys.stdin.read().splitlines()
-    print("# Target files")
-    for target_file in target_files:
-        print(target_file)
+    print("Target files: %d EA" % len(target_files), file=sys.stderr)
 
     for target_file in target_files:
 
@@ -113,7 +111,7 @@ def main():
             path_output = head + '_affine.' + ext
 
         im.save(path_output)
-        print('saved image to %s' % (path_output))
+        print(path_output)
 
 
 if __name__ == '__main__':

@@ -18,16 +18,16 @@ def main():
     args = parse()
 
     target_files = sys.stdin.read().splitlines()
-    print("# Target files")
+    print("# Target files", file=sys.stderr)
     for i in target_files:
-        print(i)
+        print(i, file=sys.stderr)
 
     images = [Image.open(f) for f in target_files]
     images[0].save(args.output, save_all=True,
             append_images=images[1:], optimize=False,
             duration=args.duration, loop=0)
 
-    print('saved GIF to %s' % (args.output))
+    print(args.output)
 
 if __name__ == '__main__':
     main()
