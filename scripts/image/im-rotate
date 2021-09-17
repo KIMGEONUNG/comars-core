@@ -10,7 +10,7 @@ def parse():
     parser = argparse.ArgumentParser(description='Image rotation')
     parser.add_argument('-r', '--replace', default=False,
                         action='store_true', help='replace input')
-    parser.add_argument('-d', '--degree', type=int, required=True,
+    parser.add_argument('-d', '--degree', type=int, default=45, 
                         help='target image degree')
     return parser.parse_args()
 
@@ -19,7 +19,7 @@ def main():
     args = parse()
 
     target_files = sys.stdin.read().splitlines()
-    print("Target files: %d EA" % len(target_files), file=sys.stderr)
+    print("image rotation files: %d EA" % len(target_files), file=sys.stderr)
 
     for target_file in target_files:
         im = Image.open(target_file)
