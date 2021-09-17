@@ -368,6 +368,7 @@ if has('nvim')
 
     lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
     lua require'lspconfig'.vimls.setup{on_attach=require'completion'.on_attach}
+    lua require'lspconfig'.hls.setup{on_attach=require'completion'.on_attach}
     lua require'lspconfig'.jsonls.setup{cmd={"vscode-json-languageserver", "--stdio"}}
     lua require'lspconfig'.bashls.setup{}
 
