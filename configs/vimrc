@@ -186,6 +186,7 @@ else
 endif
 
 Plugin 'morhetz/gruvbox'
+Plugin 'kimgeonung/dracula'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
