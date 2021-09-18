@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-import torchvision.transforms as transforms
 from PIL import Image
 
 
@@ -10,6 +9,8 @@ def parse():
     parser = argparse.ArgumentParser(description='Image resize')
     parser.add_argument('-r', '--replace', default=False,
                         action='store_true', help='replace input')
+    parser.add_argument('--long', default=False,
+                        action='store_true', help='based on long side')
     parser.add_argument('-s', '--size', type=int, default=512,
                         help='target image size')
     return parser.parse_args()
@@ -24,7 +25,20 @@ def main():
 
     for target_file in target_files:
         im = Image.open(target_file)
-        im = transforms.Resize(args.size, method)(im)
+        width, height = im.size
+        len_min = min(width, height)
+        len_max = max(width, height)
+        if args.long:
+            width = width / len_max * args.size
+            height = height / len_max * args.size
+        else:
+            width = width / len_min * args.size
+            height = height / len_min * args.size
+
+        width = int(width)
+        height = int(height)
+
+        im = im.resize((width, height))
 
         path_output = None
         if args.replace:
