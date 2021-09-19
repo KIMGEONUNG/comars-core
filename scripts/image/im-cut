@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+import torch
+import sys
+import torchvision.transforms as transforms
+from torchvision.utils import make_grid
+from PIL import Image
+
+
+def parse():
+    import argparse
+    parser = argparse.ArgumentParser(description='Cut the image')
+    parser.add_argument('-r', '--replace', default=False,
+                        action='store_true', help='replace input')
+    parser.add_argument('--num', type=int, default=10)
+    parser.add_argument('-u', '--up', default=True, action='store_true',
+            help='up')
+    parser.add_argument('-d', '--down', default=False, action='store_true',
+            help='down')
+    parser.add_argument('-l', '--left', default=False, action='store_true',
+            help='left')
+    parser.add_argument('-r', '--right', default=False, action='store_true',
+            help='right')
+    return parser.parse_args()
+
+
+def main():
+    args = parse()
+
+    target_files = sys.stdin.read().splitlines()
+    print("image cutting files: %d EA" % len(target_files), file=sys.stderr)
+
+    for target_file in target_files:
+        im = Image.open(target_file)
+        x = transforms.ToTensor()(im)
+        
+        info='_'
+        if args.up:
+            info += 'u'
+            x = x[:, args.num:, :]
+        if args.down:
+            info += 'd'
+        if args.left:
+            info += 'l'
+        if args.right:
+            info += 'r'
+
+        info += '_%04d'
+
+        im = transforms.ToPILImage()(x)
+
+        path_output = None
+        if args.replace:
+            path_output = target_file
+        else:
+            parts = target_file.split('.')
+            head = ''.join(parts[:-1])
+            ext = parts[-1]
+            path_output = head + info % (args.num) + ext
+
+        im.save(path_output)
+        print(path_output)
+
+
+if __name__ == '__main__':
+    main()
