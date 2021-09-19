@@ -13,13 +13,13 @@ def parse():
     parser.add_argument('-r', '--replace', default=False,
                         action='store_true', help='replace input')
     parser.add_argument('--num', type=int, default=10)
-    parser.add_argument('-u', '--up', default=True, action='store_true',
+    parser.add_argument('-U', '--up', default=True, action='store_true',
             help='up')
-    parser.add_argument('-d', '--down', default=False, action='store_true',
+    parser.add_argument('-D', '--down', default=False, action='store_true',
             help='down')
-    parser.add_argument('-l', '--left', default=False, action='store_true',
+    parser.add_argument('-L', '--left', default=False, action='store_true',
             help='left')
-    parser.add_argument('-r', '--right', default=False, action='store_true',
+    parser.add_argument('-R', '--right', default=False, action='store_true',
             help='right')
     return parser.parse_args()
 
@@ -40,13 +40,15 @@ def main():
             x = x[:, args.num:, :]
         if args.down:
             info += 'd'
+            x = x[:, :args.num, :]
         if args.left:
             info += 'l'
+            x = x[:, :, args.num:]
         if args.right:
             info += 'r'
+            x = x[:, :, :args.num]
 
-        info += '_%04d'
-
+        info = info + '_%04d.' % (args.num)
         im = transforms.ToPILImage()(x)
 
         path_output = None
@@ -56,7 +58,7 @@ def main():
             parts = target_file.split('.')
             head = ''.join(parts[:-1])
             ext = parts[-1]
-            path_output = head + info % (args.num) + ext
+            path_output = head + info + ext
 
         im.save(path_output)
         print(path_output)
