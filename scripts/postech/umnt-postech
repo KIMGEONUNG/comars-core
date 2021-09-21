@@ -7,5 +7,5 @@ fi
 
 name_dir=postech_${1}
 
-mkdir -p ./${name_dir}
-sshfs -p 6000 -o reconnect ${1}@141.223.92.10:/home/${1} ./${name_dir}
+umount ./${name_dir}
+rmdir ./${name_dir}
