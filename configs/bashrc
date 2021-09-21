@@ -169,3 +169,9 @@ export PATH=$PATH:$CUDA_HOME/bin
 
 # Key mapping
 # xmodmap -e 'keycode 108 = Return' # Alt_Right to Enter
+
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    echo 'ssh access'
+else
+    echo 'local access'
+fi
