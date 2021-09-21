@@ -177,6 +177,8 @@ if has('nvim')
     " Plugin 'kabouzeid/nvim-lspinstall'
     Plugin 'nvim-lua/completion-nvim'
 
+    Plugin 'Shougo/neosnippet.vim'
+    Plugin 'Shougo/neosnippet-snippets'
 else
     " auto complete tool
     Plugin 'ycm-core/YouCompleteMe'
@@ -187,9 +189,9 @@ else
 
     " vim snippet sets. two plugin need each other
     Plugin 'SirVer/ultisnips'
+    Plugin 'honza/vim-snippets'
 endif
 
-Plugin 'honza/vim-snippets'
 
 Plugin 'morhetz/gruvbox'
 Plugin 'kimgeonung/dracula'
@@ -386,6 +388,30 @@ if has('nvim')
             \   'string' : [
             \       {'complete_items': ['path']}]
             \   }}
+
+
+    "======================================================================"
+    "NEO-SNIPS============================================================="
+    "======================================================================"
+    " Plugin key-mappings.
+    " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+    imap <tab>     <Plug>(neosnippet_expand_or_jump)
+    smap <tab>     <Plug>(neosnippet_expand_or_jump)
+    xmap <tab>     <Plug>(neosnippet_expand_target)
+
+    " SuperTab like snippets behavior.
+    " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+    "imap <expr><TAB>
+    " \ pumvisible() ? "\<C-n>" :
+    " \ neosnippet#expandable_or_jumpable() ?
+    " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+    " For conceal markers.
+    if has('conceal')
+      set conceallevel=2 concealcursor=niv
+    endif
 
 else
     "======================================================================"
