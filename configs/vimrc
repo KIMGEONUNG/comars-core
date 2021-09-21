@@ -181,9 +181,15 @@ else
     " auto complete tool
     Plugin 'ycm-core/YouCompleteMe'
     Plugin 'vim-syntastic/syntastic'
+
     " find files
     Plugin 'kien/ctrlp.vim'
+
+    " vim snippet sets. two plugin need each other
+    Plugin 'SirVer/ultisnips'
 endif
+
+Plugin 'honza/vim-snippets'
 
 Plugin 'morhetz/gruvbox'
 Plugin 'kimgeonung/dracula'
@@ -204,7 +210,6 @@ Plugin 'VundleVim/Vundle.vim'
 " auto formatting collection
 Plugin 'Chiel92/vim-autoformat'
 
-
 " html previwer
 Plugin 'turbio/bracey.vim'
 
@@ -215,22 +220,11 @@ Plugin 'ryanoasis/vim-devicons'
 " html css javascript auto completion
 Plugin 'mattn/emmet-vim'
 
-" programming language syntax checker
-
-" vim snippet sets. two plugin need each other
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-
-
 " vim comment plugin
-" shortcut is 'gc'
 Plugin 'tomtom/tcomment_vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
-
-
-
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -277,13 +271,6 @@ map <C-n> :NERDTreeToggle<CR>
 map <F2> :Bracey<CR>
 
 "======================================================================"
-"Ultisnips============================================================="
-"======================================================================"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsEditSplit="vertical"
-
-"======================================================================"
 "VIMSPECTOR============================================================"
 "======================================================================"
 
@@ -314,11 +301,6 @@ nmap <leader>drc <Plug>VimspectorRunToCursor
 nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
 nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
-
-"======================================================================"
-"ULTI_SNIPS============================================================"
-"======================================================================"
-let g:UltiSnipsExpandTrigger="<tab>"
 
 
 "======================================================================"
@@ -389,7 +371,7 @@ if has('nvim')
     "======================================================================"
     
     set completeopt=menuone,noinsert,noselect
-    let g:completion_enable_snippet = 'UltiSnips'
+    " let g:completion_enable_snippet = 'UltiSnips'
     let g:completion_enable_auto_popup = 1
     imap <silent> <c-n> <Plug>(completion_trigger)
 
@@ -445,6 +427,12 @@ else
     "======================================================================"
     let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
     
+    "======================================================================"
+    "ULTI_SNIPS============================================================"
+    "======================================================================"
+    let g:UltiSnipsEditSplit="vertical"
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
 endif
 
 " Try List 
