@@ -9,15 +9,14 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"======================================================================"
-"======================VIM BASIC SETTING================================
-"======================================================================"
-
+" # VIM AND NVIM SHARE SAME CONFIG ===========================================  
 if has('nvim')
     set runtimepath^=~/.vim runtimepath+=~/.vim/after
     let &packpath=&runtimepath
 endif
 
+
+" # BASIC CONFIGS ============================================================ 
 set exrc
 " set guicursor=
 set noerrorbells
@@ -42,6 +41,8 @@ set noswapfile
 " set undofile
 set colorcolumn=80
 
+
+" # FUNCTIONS ================================================================
 function! ExecutePredef()
     write
     if filereadable('vim.run.sh')
@@ -69,6 +70,7 @@ function! Format(arg)
 endfunction
 
 
+" # KEY MAPS =================================================================
 "Don't use register when simple delete
 nnoremap x v"_d
 
@@ -124,8 +126,6 @@ inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
 inoremap <C-f> <C-o>W
 inoremap <C-b> <C-o>B
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
 inoremap <C-l> <C-o>l
 
 inoremap <C-d> <C-o>diw
@@ -147,18 +147,7 @@ inoremap ? ?<c-g>u
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
-"======================================================================"
-"======================================================================"
-
-
-"======================================================================"
-"##########################PLUGIN SECTOR################################
-"======================================================================"
-
-" packadd! gruvbox
-" packadd! vim-airline
-" packadd! vim-airline-themes
-
+" # PLUGINS ==================================================================
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -191,7 +180,6 @@ else
     Plugin 'SirVer/ultisnips'
     Plugin 'honza/vim-snippets'
 endif
-
 
 Plugin 'morhetz/gruvbox'
 Plugin 'kimgeonung/dracula'
@@ -227,55 +215,25 @@ Plugin 'tomtom/tcomment_vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-"
-"======================================================================"
-"TCOMMENT=============================================================="
-"======================================================================"
-" nnoremap gc gcc
 
-"======================================================================"
-"AIRLINE==============================================================="
-"======================================================================"
+" # AIRLINE===================================================================
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 
-"======================================================================"
-"======================================================================"
-
-"======================================================================"
-"VIM-AUTOFORMAT========================================================"
-"======================================================================"
+" # VIM-AUTOFORMAT============================================================
 noremap <F3> :Autoformat<CR>
 let g:autoformat_retab = 0
 
-"======================================================================"
-"NERD-TREE============================================================="
-"======================================================================"
+" # NERD-TREE=================================================================
 map <C-n> :NERDTreeToggle<CR>
 " set guifont=DroidSansMono\ Nerd\ Font\ 11
 
-"======================================================================"
-"BRACEY================================================================"
-"======================================================================"
+" # BRACEY====================================================================
 " default command: bracey
 map <F2> :Bracey<CR>
 
-"======================================================================"
-"VIMSPECTOR============================================================"
-"======================================================================"
-
+" # VIMSPECTOR================================================================
 fun GoToWindow(id)
     call win_gotoid(a:id)
 endfun
@@ -303,11 +261,7 @@ nmap <leader>drc <Plug>VimspectorRunToCursor
 nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
 nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
-
-
-"======================================================================"
-"SCHEME================================================================"
-"======================================================================"
+" # SCHEME====================================================================
 set termguicolors
 let g:gruvbox_contrast_dark = 'dark'
 if exists('+termguicolors')
@@ -319,8 +273,8 @@ colorscheme gruvbox
 set background=dark
 
 
+" # VIM ONLY OR NVIM ONLY=====================================================
 if has('nvim')
-
     " movement in quickfix reference 
     nnoremap <C-j> :cnext<CR>
     nnoremap <C-k> :cprevious<CR>
@@ -339,10 +293,8 @@ if has('nvim')
             \'%.pkl'}
         \}
     \}
-
-    "======================================================================"
-    "NVIM-LSPCONFIG========================================================"
-    "======================================================================"
+    
+    " # NVIM-LSPCONFIG========================================================
     nnoremap <silent> gD :lua vim.lsp.buf.declaration()<CR>
     nnoremap <silent> gd :lua vim.lsp.buf.definition()<CR>
     nnoremap <silent> gr :lua vim.lsp.buf.references()<CR>
@@ -367,11 +319,8 @@ if has('nvim')
     " nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
     " nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
     " nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-
-    "======================================================================"
-    "COMPLETION-NVIM======================================================="
-    "======================================================================"
     
+    " # COMPLETION-NVIM=======================================================
     set completeopt=menuone,noinsert,noselect
     " let g:completion_enable_snippet = 'UltiSnips'
     let g:completion_enable_auto_popup = 1
@@ -389,15 +338,11 @@ if has('nvim')
             \       {'complete_items': ['path']}]
             \   }}
 
-
-    "======================================================================"
-    "NEO-SNIPS============================================================="
-    "======================================================================"
-    " Plugin key-mappings.
+    " # NEO-SNIPS=============================================================
     " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-    imap <tab>     <Plug>(neosnippet_expand_or_jump)
-    smap <tab>     <Plug>(neosnippet_expand_or_jump)
-    xmap <tab>     <Plug>(neosnippet_expand_target)
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k>     <Plug>(neosnippet_expand_target)
 
     " SuperTab like snippets behavior.
     " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -411,13 +356,10 @@ if has('nvim')
     " For conceal markers.
     if has('conceal')
       set conceallevel=2 concealcursor=niv
-    endif
+    endif 
 
-else
-    "======================================================================"
-    "YOU_COMPLETE_ME======================================================="
-    "======================================================================"
-    
+else "Only used in vim
+    " # YOU_COMPLETE_ME=======================================================
     " vimspector console autocompletion
     let g:ycm_semantic_triggers = {'VimspectorPrompt': [ '.', '->', ':', '<' ]}
     
@@ -426,17 +368,8 @@ else
     " would not work. So I remap <tab> into <UP>.
     let g:ycm_key_list_select_completion = ['<UP>', '<Down>']
     nnoremap <Leader>gd :YcmCompleter GoTo<CR>
-
-    "======================================================================"
-    "SYNTASTIC============================================================="
-    "======================================================================"
-    "
-    " See the manual for details about the corresponding supported checkers (:help syntastic-checkers in Vim).
-    " Javascript setting vedio : https://www.youtube.com/watch?v=0uw96oNqKRo
-    "
-    " javascript :jshin
-    " html: tidy
-    "
+    
+    "# SYNTASTIC==============================================================
     set statusline+=%#warningmsg#
     set statusline+=%{SyntasticStatuslineFlag()}
     set statusline+=%*
@@ -445,23 +378,12 @@ else
     let g:syntastic_auto_loc_list = 0
     let g:syntastic_check_on_open = 0
     let g:syntastic_check_on_wq = 0
-
-    " let g:syntastic_quiet_messages = { 'regex': 'ES6' }
-
-    "======================================================================"
-    "CTRLP================================================================="
-    "======================================================================"
+    
+    " # CTRLP=================================================================
     let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
     
-    "======================================================================"
-    "ULTI_SNIPS============================================================"
-    "======================================================================"
+    " # ULTI_SNIPS============================================================
     let g:UltiSnipsEditSplit="vertical"
     let g:UltiSnipsExpandTrigger="<tab>"
     let g:UltiSnipsJumpForwardTrigger="<tab>"
 endif
-
-" Try List 
-" - vimspector console auto-complete
-"       - <c-x><c-o> is work. key mapping needed
-"
