@@ -1,0 +1,7 @@
+#!/bin/bash
+
+git mcommit "update: trivial" 
+
+if [[ -z $(git url | grep 'URL not found') ]]; then
+    git push
+fi
