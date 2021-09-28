@@ -72,7 +72,7 @@ endfunction
 
 " # KEY MAPS =================================================================
 "Don't use register when simple delete
-nnoremap x v"_d
+" nnoremap x v"_d " too slow
 
 nnoremap <Leader>e :call ExecuteFile(expand('%:t'))<CR>
 nnoremap <Leader>E :call ExecutePredef()<CR>
