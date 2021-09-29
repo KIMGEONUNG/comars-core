@@ -1,8 +1,19 @@
 #!/bin/bash
 
-if [ -z ${1} || -z ${2} ]; then
-
+if [ -z ${1} ] || [ -z ${2} ]; then
     echo Error: enter two arguments
     exit 1
-
 fi
+
+if ! [ -f ${1} ]; then
+    echo Error: ${1} is not file 
+fi
+
+if ! [ -f ${2} ]; then
+    echo Error: ${2} is not file 
+fi
+
+alt=$(sha256sum ${1} | awk '{printf $1}')
+mv ${1} ${alt}
+mv ${2} ${1}
+mv ${alt} ${2}
