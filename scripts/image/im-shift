@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+
+import sys
+import torchvision.transforms as transforms
+from PIL import Image
+
+
+def parse():
+    import argparse
+    parser = argparse.ArgumentParser(description='Image rotation')
+    parser.add_argument('-r', '--replace', default=False,
+                        action='store_true', help='replace input')
+    parser.add_argument('-t', '--translation', type=int, default=100, 
+                        help='target image degree')
+    parser.add_argument('-z', '--zero', action='store_true', default=False,
+                        help='packing with zero')
+    parser.add_argument('-h', '--horizontal', action='store_false', default=True,
+                        help='horizontal shift')
+    parser.add_argument('-v', '--vertical', action='store_true', default=False,
+                        help='vertical shift')
+    return parser.parse_args()
+
+
+def main():
+    args = parse()
+
+    target_files = sys.stdin.read().splitlines()
+    print("image rotation files: %d EA" % len(target_files), file=sys.stderr)
+
+    for target_file in target_files:
+        im = Image.open(target_file)
+        im = transforms.ToTensor()(im)
+        im_copy = im.clone()
+
+        if args.horisontal:
+            im[:, :, args.translation :]
+
+            pass
+        if args.vertical:
+            pass
+
+        im = transforms.functional.rotate(im, args.degree)
+
+        path_output = None
+        if args.replace:
+            path_output = target_file
+        else:
+            parts = target_file.split('.')
+            head = ''.join(parts[:-1])
+            ext = parts[-1]
+            path_output = head + '_rotate_%04d.' % (args.degree) + ext
+
+        im.save(path_output)
+        print(path_output)
+
+
+if __name__ == '__main__':
+    main()
