@@ -1,3 +1,19 @@
 #!/bin/bash
 
-echo dkdkdk
+if [ -z ${1} ]; then
+    echo Error: get filepath as first argument 
+fi
+
+if [ -z ${2} ]; then
+    echo Error: get addition as second argument 
+fi
+
+extension=${1##*.}
+path=${1%.*}${2}
+
+# if not no extension
+if ! [ ${1} == ${extension} ]; then
+    path=${path}.${extension}
+fi
+
+mv ${1} ${path} -v
