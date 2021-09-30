@@ -115,7 +115,7 @@ nnoremap <C-f> W
 nnoremap <C-b> B
 
 vnoremap <C-a> ^
-vnoremap <C-e> $
+vnoremap <C-e> $h
 
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
