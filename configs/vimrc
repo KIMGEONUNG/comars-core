@@ -74,6 +74,8 @@ endfunction
 "Don't use register when simple delete
 " nnoremap x v"_d " too slow
 
+nnoremap <s-f> #*
+
 nnoremap <Leader>e :call ExecuteFile(expand('%:t'))<CR>
 nnoremap <Leader>E :call ExecutePredef()<CR>
 nnoremap <Leader>w :w<CR> 
