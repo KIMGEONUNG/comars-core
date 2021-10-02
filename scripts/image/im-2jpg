@@ -20,14 +20,10 @@ def main():
         im = Image.open(target_file)
         im = im.convert('RGB')
 
-        path_output = None
-        if args.replace:
-            path_output = target_file
-        else:
-            parts = target_file.split('.')
-            head = ''.join(parts[:-1])
-            ext = 'jpg'
-            path_output = head + '.' + ext
+        parts = target_file.split('.')
+        head = ''.join(parts[:-1])
+        ext = 'jpg'
+        path_output = head + '.' + ext
 
         im.save(path_output)
         print(path_output)
