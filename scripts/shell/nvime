@@ -5,4 +5,5 @@ if [ -z ${1} ]; then
     exit 1
 fi
 
-touche ${1} $$ nvim ${1}
+touche ${1}
+nvim ${1}
