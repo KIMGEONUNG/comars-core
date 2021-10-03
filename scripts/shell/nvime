@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z ${1} ]; then
+    echo "Error: enter file name"  
+    exit 1
+fi
+
+touche ${1} $$ nvim ${1}
