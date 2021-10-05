@@ -177,6 +177,9 @@ export PATH=$PATH:$CUDA_HOME/bin
 # xmodmap : change keymap
 # xev : check keymap
 # xmodmap -e 'keycode  66 = Control_L NoSymbol Control_L'
+xmodmap -e 'keycode 37 = ' # Control_L
+xmodmap -e 'keycode 36 = ' # Enter
+xmodmap -e 'keycode 22 = ' # Backspace
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     # echo 'ssh access'
