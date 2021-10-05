@@ -121,6 +121,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # custom 
 alias xsel='xsel -ib'
 alias cdcomar='cd ~/repos/comars-core/'
+alias cdh='cd ~'
 
 
 if [ -f ~/.bash_aliases ]; then
