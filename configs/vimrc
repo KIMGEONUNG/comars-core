@@ -69,18 +69,42 @@ function! Format(arg)
     endif
 endfunction
 
+function! DeleteTo()
+    " let char = nr2char(getchar()) " or
+    let c = getcharstr()
 
-function! Getsome(a)
-    g:
-    echo a:n
+    let col_current = col('.')
+    let cnt = 0
+    let touch = 0
+
+    while col_current < col('$') - 1
+      let col_current += 1
+      let cnt += 1
+      if getline('.')[col_current - 1] ==? c 
+        let touch = 1
+        break
+      endif
+    endwhile
+
+    if touch == 0
+      return ''
+    endif
+      
+    normal v
+    while cnt > 0
+        let cnt -= 1
+        normal l
+    endwhile
+    normal x
 endfunction
+
 
 
 " # KEY MAPS =================================================================
 "Don't use register when simple delete
 " nnoremap x v"_d " too slow
 
-nnoremap <Leader>D :call Getsome()<CR>
+nnoremap <Leader>D :call DeleteTo()<CR>
 
 nnoremap <s-f> #*
 
