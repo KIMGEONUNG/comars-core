@@ -70,9 +70,17 @@ function! Format(arg)
 endfunction
 
 
+function! Getsome(a)
+    g:
+    echo a:n
+endfunction
+
+
 " # KEY MAPS =================================================================
 "Don't use register when simple delete
 " nnoremap x v"_d " too slow
+
+nnoremap <Leader>D :call Getsome()<CR>
 
 nnoremap <s-f> #*
 
