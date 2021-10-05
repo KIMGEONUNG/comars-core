@@ -106,10 +106,10 @@ nnoremap <C-d> 10j
 vnoremap <C-u> 10k 
 vnoremap <C-d> 10j 
 
-" inoremap <C-q> <ESC>
-" nnoremap <C-q> <ESC>
-" vnoremap <C-q> <ESC>
-" cnoremap <C-q> <ESC>
+inoremap <C-q> <ESC>
+nnoremap <C-q> <ESC>
+vnoremap <C-q> <ESC>
+cnoremap <C-q> <ESC>
 
 nnoremap <C-a> ^
 nnoremap <C-e> <ESC>$
