@@ -98,13 +98,45 @@ function! DeleteTo()
     normal x
 endfunction
 
+function! DeleteChar()
+    let c = getcharstr()
+    let num_end = col('$')
+    let num_col = col('.')
+    let num_line = line('.')
+    let targets = []
 
+    echo num_end
+
+    let i = 0
+    while i < num_end - 1
+        let c_cur = getline('.')[i]
+        if c == c_cur
+            let targets += [i]
+        endif
+        let i += 1
+    endwhile
+
+    call reverse(targets)
+
+    for i in targets
+        let idx = i + 1
+        call cursor(num_line, idx)
+        normal x
+
+        " adjustment for final column number 
+        if idx < num_col
+            let num_col -= 1
+        endif
+    endfor
+    call cursor(num_line, num_col)
+endfunction
 
 " # KEY MAPS =================================================================
 "Don't use register when simple delete
 " nnoremap x v"_d " too slow
 
-nnoremap <Leader>D :call DeleteTo()<CR>
+nnoremap <Leader>D :call DeleteChar()<CR>
+nnoremap <Leader>x :call DeleteTo()<CR>
 
 nnoremap <s-f> #*
 
@@ -126,7 +158,7 @@ nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>j :wincmd j<CR>
 nnoremap <Leader>k :wincmd k<CR>
 nnoremap <Leader>l :wincmd l<CR>
-nnoremap <Leader>x :wincmd x<CR>
+" nnoremap <Leader>x :wincmd x<CR>
 
 nnoremap <Leader>0 :resize +10<CR>
 nnoremap <Leader>9 :resize -10<CR>
