@@ -21,7 +21,11 @@ set exrc
 " set guicursor=
 set noerrorbells
 
-let mapleader=" "
+" leader as space and remove original space map
+" let mapleader=" "
+map <SPACE> <Nop>
+let mapleader="\<Space>"
+
 set scrolloff=8
 set incsearch
 set hlsearch
