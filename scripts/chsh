@@ -1,2 +1,3 @@
 #!/bin/bash
-curl cht.sh$@
+
+curl https://github.com/KIMGEONUNG/comars-core/blob/master/cheatsheet/$@.md
