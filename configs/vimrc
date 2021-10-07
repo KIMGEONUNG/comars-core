@@ -361,6 +361,19 @@ if has('nvim')
     \}
     
     " # NVIM-LSPCONFIG========================================================
+    
+
+    " Off the underline which occurs when warning or error exit
+lua << EOF
+    vim.lsp.handlers["textDocument/publishDiagnostics"] =
+      vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics,
+      {
+        underline = false 
+      }
+    )
+EOF
+
     nnoremap <silent> gD :lua vim.lsp.buf.declaration()<CR>
     nnoremap <silent> gd :lua vim.lsp.buf.definition()<CR>
     nnoremap <silent> gr :lua vim.lsp.buf.references()<CR>
@@ -421,7 +434,8 @@ if has('nvim')
 
     " For conceal markers.
     if has('conceal')
-      set conceallevel=2 concealcursor=niv
+      set conceallevel=0 
+      " set concealcursor=niv
     endif 
 
 else "Only used in vim

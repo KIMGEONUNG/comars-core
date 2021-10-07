@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl https://raw.githubusercontent.com/KIMGEONUNG/comars-core/blob/master/cheatsheet/$@.md
+curl https://raw.githubusercontent.com/KIMGEONUNG/comars-core/master/cheatsheet/$@.md
