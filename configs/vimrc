@@ -139,15 +139,15 @@ endfunction
 "Don't use register when simple delete
 " nnoremap x v"_d " too slow
 
-nnoremap <Leader>D :call DeleteChar()<CR>
-nnoremap <Leader>x :call DeleteTo()<CR>
+nmap <Leader>D :call DeleteChar()<CR>
+nmap <Leader>x :call DeleteTo()<CR>
 
 nnoremap <s-f> #*
 
-nnoremap <Leader>e :call ExecuteFile(expand('%:t'))<CR>
-nnoremap <Leader>E :call ExecutePredef()<CR>
-nnoremap <Leader>w :w<CR> 
-nnoremap <Leader>q :q<CR> 
+nmap <Leader>e :call ExecuteFile(expand('%:t'))<CR>
+nmap <Leader>E :call ExecutePredef()<CR>
+nmap <Leader>w :w<CR> 
+nmap <Leader>q :q<CR> 
 
 nnoremap <Leader>gs ^
 nnoremap <Leader>ge $
