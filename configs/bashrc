@@ -156,6 +156,30 @@ unset __conda_setup
 
 export PATH="/home/comar/bin:$PATH"
 
+
+# Color definition (with printf) 
+## TC is terminal color
+## Example
+## printf "I ${RED}love${NC} Stack Overflow\n" 
+## echo -e "I ${RED}love${NC} Stack Overflow" 
+export TC_BLACK='\033[0;30'
+export TC_DARKGRAY='\033[1;30'
+export TC_RED='\033[0;31'
+export TC_LIGHTRED='\033[1;31'
+export TC_GREEN='\033[0;32'
+export TC_LIGHTGREEN='\033[1;32'
+export TC_BROWN_ORANGE='\033[0;33'
+export TC_YELLOW='\033[1;33'
+export TC_BLUE='\033[0;34'
+export TC_LIGHTBLUE='\033[1;34'
+export TC_PURPLE='\033[0;35'
+export TC_LIGHTPURPLE='\033[1;35'
+export TC_CYAN='\033[0;36'
+export TC_LIGHTCYAN='\033[1;36'
+export TC_LIGHTGRAY='\033[0;37'
+export TC_WHITE='\033[1;37'
+export TC_NC='\033[0m' # No Color
+
 function color_my_prompt {
     local __user_and_host="\[\033[01;36m\]\u@\h"
     local __cur_location="\[\033[03;36m\]\w"
