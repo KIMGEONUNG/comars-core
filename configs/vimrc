@@ -169,10 +169,10 @@ nnoremap <Leader>9 :resize -10<CR>
 nnoremap <Leader>= :vertical resize +10<CR>
 nnoremap <Leader>- :vertical resize -10<CR>
 
-nnoremap <C-u> 10k 
-nnoremap <C-d> 10j 
-vnoremap <C-u> 10k 
-vnoremap <C-d> 10j 
+nnoremap <C-u> 10kzz 
+nnoremap <C-d> 10jzz 
+vnoremap <C-u> 10kzz 
+vnoremap <C-d> 10jzz 
 
 inoremap <C-q> <ESC>
 nnoremap <C-q> <ESC>
