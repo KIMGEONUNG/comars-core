@@ -548,3 +548,4 @@ else "Only used in vim
     let g:UltiSnipsExpandTrigger="<tab>"
     let g:UltiSnipsJumpForwardTrigger="<tab>"
 endif
+
