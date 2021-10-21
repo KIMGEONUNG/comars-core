@@ -437,7 +437,7 @@ if has('nvim')
     \defaults = {
         \file_ignore_patterns = {'%.pyc', '.git/*', '__pycache__/*',
             \'%.jpeg', '%.jpg', '%.JPEG', '%.png', '%.gif',
-            \'%.pkl'}
+            \'%.pkl', '%.ckpt', '%.pickle'}
         \}
     \}
     
@@ -476,8 +476,8 @@ EOF
     " nnoremap <silent> <space>D <cmd>lua vim.lsp.buf.type_definition()<CR>
     " nnoremap <silent> <space>ca <cmd>lua vim.lsp.buf.code_action()<CR>
     " nnoremap <silent> <space>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-    " nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-    " nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+    nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+    nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
     " nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
     
     " # COMPLETION-NVIM=======================================================
