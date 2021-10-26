@@ -482,6 +482,7 @@ EOF
     
     " # COMPLETION-NVIM=======================================================
     set completeopt=menuone,noinsert,noselect
+    set shortmess+=c
     " let g:completion_enable_snippet = 'UltiSnips'
     let g:completion_enable_auto_popup = 1
     imap <silent> <c-n> <Plug>(completion_trigger)
