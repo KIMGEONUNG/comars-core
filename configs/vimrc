@@ -214,6 +214,9 @@ endfunction
 "Don't use register when simple delete
 " nnoremap x v"_d " too slow
 
+nnoremap <c-o> <c-o>zz
+nnoremap <c-i> <c-i>zz
+
 nnoremap ci, :call DeleteInnerArg()<CR>
 
 nmap <Leader>D :call DeleteChar()<CR>
@@ -437,7 +440,12 @@ if has('nvim')
     \defaults = {
         \file_ignore_patterns = {'%.pyc', '.git/*', '__pycache__/*',
             \'%.jpeg', '%.jpg', '%.JPEG', '%.png', '%.gif',
-            \'%.pkl', '%.ckpt', '%.pickle'}
+            \'%.pkl', '%.ckpt', '%.pickle', 'events.*'}
+        \},
+        \pickers = {
+            \find_files = {
+                \theme = "dropdown",
+            \}
         \}
     \}
     
@@ -455,8 +463,8 @@ lua << EOF
     )
 EOF
 
-    nnoremap <silent> gD :lua vim.lsp.buf.declaration()<CR>
-    nnoremap <silent> gd :lua vim.lsp.buf.definition()<CR>
+    nnoremap <silent> gD :lua vim.lsp.buf.declaration()<CR>zz
+    nnoremap <silent> gd :lua vim.lsp.buf.definition()<CR>zz
     nnoremap <silent> gr :lua vim.lsp.buf.references()<CR>
     nnoremap <silent> K :lua vim.lsp.buf.hover()<CR>
     nnoremap <silent> gi :lua vim.lsp.buf.implementation()<CR>
