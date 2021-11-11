@@ -91,7 +91,7 @@
       "KC_DOWN",
       "KC_LEFT",
       "KC_NO",
-      "KC_RBRC",
+      "MT(MOD_RSFT,KC_RBRC)",
       "KC_LBRC",
       "KC_PLUS",
       "KC_PMNS",
