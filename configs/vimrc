@@ -47,6 +47,27 @@ set colorcolumn=80
 
 
 " # FUNCTIONS ================================================================
+function! DeleteBackward() abort
+    let num_line = line('.')
+    let num_start = col('.')
+    let num_col = col('.')
+    let num_end = 1
+
+    while num_col >= num_end 
+        let num_col -= 1
+        let c_cur = getline('.')[num_col]
+        if c_cur == ' ' || c_cur == '_'
+            let num_end = num_col + 1
+            break
+        endif
+    endwhile
+
+    normal v
+    call cursor(num_line, num_end)
+    normal x
+
+endfunction
+
 function! ExecutePredef()
     write
     if filereadable('vim.run.sh')
@@ -278,7 +299,8 @@ inoremap <C-f> <C-o>W
 inoremap <C-b> <C-o>B
 inoremap <C-l> <C-o>l
 
-inoremap <C-d> <C-o>diw
+" inoremap <C-d> <C-o>diw
+inoremap <C-d> <esc>:call DeleteBackward()<cr>a
 
 " Keeping it centered
 nnoremap n nzz
