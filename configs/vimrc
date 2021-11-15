@@ -56,7 +56,7 @@ function! DeleteBackward() abort
     while num_col >= num_end 
         let num_col -= 1
         let c_cur = getline('.')[num_col]
-        if c_cur == ' ' || c_cur == '_'
+        if c_cur == ' ' || c_cur == '_' || c_cur == '.'
             let num_end = num_col + 1
             break
         endif
