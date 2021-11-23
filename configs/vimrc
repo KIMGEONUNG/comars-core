@@ -280,12 +280,12 @@ nnoremap <C-q> <ESC>
 vnoremap <C-q> <ESC>
 cnoremap <C-q> <ESC>
 
-nnoremap <C-a> ^
+" nnoremap <C-a> ^
 nnoremap <C-e> <ESC>$
 nnoremap <C-f> W
 nnoremap <C-b> B
 
-vnoremap <C-a> ^
+" vnoremap <C-a> ^
 vnoremap <C-e> $h
 
 vnoremap J :m '>+1<CR>gv=gv
@@ -293,7 +293,7 @@ vnoremap K :m '<-2<CR>gv=gv
 
 inoremap <C-@> <C-x><C-o>
 
-inoremap <C-a> <C-o>^
+" inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
 inoremap <C-f> <C-o>W
 inoremap <C-b> <C-o>B
