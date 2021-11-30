@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [[ -z $1 ]]; then
     echo Error: Specify mark number for access 
     exit 1
@@ -6,5 +8,6 @@ fi
 if [[ $1 == 9 || $1 == 10 ]]; then
     ssh -t k2woong92@mark8.postech.ac.kr ssh -i /home/k2woong92/.ssh/mark k2woong92@mark${1}.postech.ac.kr
 else
-    ssh k2woong92@mark${1}.postech.ac.kr
+    ssh -o ServerAliveInterval=15 \
+        k2woong92@mark${1}.postech.ac.kr
 fi
