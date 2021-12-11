@@ -14,7 +14,7 @@ def parse():
     parser.add_argument('--pad_value', type=int, default=0)
     parser.add_argument('--padding', type=int, default=2)
     parser.add_argument('--total', type=int, default=16)
-    parser.add_argument('--save', type=str, default='None')
+    parser.add_argument('--save', type=str, default=None)
     return parser.parse_args()
 
 
