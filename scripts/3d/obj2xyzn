@@ -29,7 +29,7 @@ def main():
         mesh = trimesh.load(target_file)
         res = mesh_to_sdf.get_surface_point_cloud(mesh,
                 surface_point_method='scan', bounding_radius=3,
-                scan_count=100, scan_resolution=400, sample_point_count=10000,
+                scan_count=100, scan_resolution=400, sample_point_count=20000,
                 calculate_normals=True)
 
         pcd = o3d.geometry.PointCloud()
@@ -46,13 +46,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-# mesh=o3d.io.read_triangle_mesh(fn)
-# mesh.compute_vertex_normals()
-#
-# o3d.io.write_triangle_mesh(fn,mesh)
-#
-# ply=o3d.io.read_point_cloud(fn)
-#
-# o3d.io.write_point_cloud(fn.replace('ply','xyzn'),ply)
