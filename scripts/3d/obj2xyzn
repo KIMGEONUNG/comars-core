@@ -2,11 +2,13 @@
 
 import sys
 import open3d as o3d
+import trimesh
+import mesh_to_sdf
 
 
 def parse():
     import argparse
-    parser = argparse.ArgumentParser(description='Convert ply to xyz')
+    parser = argparse.ArgumentParser(description='Convert obj to xyzn')
     parser.add_argument('--scale', type=float, default=None)
     parser.add_argument('--without_normal', action='store_true')
     return parser.parse_args()
@@ -18,27 +20,26 @@ def main():
     target_files = sys.stdin.read().splitlines()
     print("target files: %d EA" % len(target_files), file=sys.stderr)
 
+    ext = '.xyzn'
     for target_file in target_files:
 
         parts = target_file.split('.')
         head = ''.join(parts[:-1])
-        if args.without_normal:
-            ext = '.xyz'
-        else:
-            mesh=o3d.io.read_triangle_mesh(target_file)
-            mesh.compute_vertex_normals()
-            target_file = '_' + target_file
-            o3d.io.write_triangle_mesh(target_file, mesh)
-            ext = '.xyzn'
 
-        ply=o3d.io.read_point_cloud(target_file)
-        if args.scale is not None:
-            ply.scale(args.scale, [0,0,0])
+        mesh = trimesh.load(target_file)
+        res = mesh_to_sdf.get_surface_point_cloud(mesh,
+                surface_point_method='scan', bounding_radius=3,
+                scan_count=100, scan_resolution=400, sample_point_count=10000,
+                calculate_normals=True)
+
+        pcd = o3d.geometry.PointCloud()
+        pcd.points = o3d.utility.Vector3dVector(res.points)
+        pcd.normals = o3d.utility.Vector3dVector(res.normals)
 
         path_output = head + ext
         print(path_output)
 
-        success = o3d.io.write_point_cloud(path_output, ply)
+        success = o3d.io.write_point_cloud(path_output, pcd)
         if not success:
             print("Fail", file=sys.stderr)
 
