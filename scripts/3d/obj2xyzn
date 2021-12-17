@@ -29,7 +29,7 @@ def main():
         mesh = trimesh.load(target_file)
         res = mesh_to_sdf.get_surface_point_cloud(mesh,
                 surface_point_method='scan', bounding_radius=3,
-                scan_count=100, scan_resolution=400, sample_point_count=20000,
+                scan_count=100, scan_resolution=400, sample_point_count=10000,
                 calculate_normals=True)
 
         pcd = o3d.geometry.PointCloud()

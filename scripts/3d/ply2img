@@ -1,0 +1,13 @@
+#!/bin/bash
+
+while read path 
+do
+    target=${path%%.ply}.png
+    exit
+    
+    
+    f3d $path --output=$target \
+              --camera-position=-5,5,-5 \
+              --camera-view-angle=25
+
+done < "${1:-/dev/stdin}"
