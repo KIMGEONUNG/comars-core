@@ -17,9 +17,9 @@ def parse():
     parser.add_argument('--position', default='lb',
                         choices=['lb', 'rb', 'lt', 'rt', 'ct', 'cb'],
                         help='caption position')
-    parser.add_argument('--scale', default=2,
+    parser.add_argument('--scale', default=2, type=int,
                         help='font scale')
-    parser.add_argument('--thickness', default=2,
+    parser.add_argument('--thickness', default=2, type=int,
                         help='font thickness')
     return parser.parse_args()
 
@@ -51,7 +51,7 @@ def main():
         else:
             raise Exception('Invalid position argument')
 
-        fontFace = cv.FONT_HERSHEY_PLAIN
+        fontFace = cv.FONT_HERSHEY_SIMPLEX
         fontscale = args.scale
         color = (0, 0, 0) 
 
