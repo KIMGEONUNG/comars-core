@@ -4,7 +4,7 @@ while read path
 do
     target=${path%%.ply}.png
     f3d $path --output=$target \
-              --camera-position=-5,5,-5 \
+              --camera-position=-3,3,-3 \
               --camera-view-angle=25
 
 done < "${1:-/dev/stdin}"

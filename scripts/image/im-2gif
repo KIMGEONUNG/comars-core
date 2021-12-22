@@ -11,6 +11,8 @@ def parse():
             default='./animation.gif', help='output path')
     parser.add_argument('-d', '--duration', type=int,
             default=200, help='for each frame time')
+    parser.add_argument('--loop', type=int,
+            default=0, help='number of loop')
     return parser.parse_args()
 
 
@@ -25,7 +27,7 @@ def main():
     images = [Image.open(f) for f in target_files]
     images[0].save(args.output, save_all=True,
             append_images=images[1:], optimize=False,
-            duration=args.duration, loop=0)
+            duration=args.duration, loop=args.loop)
 
     print(args.output)
 
