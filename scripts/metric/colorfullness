@@ -15,6 +15,7 @@ def parse():
     parser.add_argument('path', nargs='+')
     parser.add_argument('--verbose', action='store_true')
     parser.add_argument('--resize', type=int, default=None)
+    parser.add_argument('--with_path', action='store_true')
     return parser.parse_args()
 
 
@@ -45,18 +46,7 @@ for path in paths:
         shape = shape.astype(int)
         im = cv2.resize(im, shape)
     c = image_colorfulness(im)
-    print(c)
-exit()
-#
-# if args.verbose:
-#     print('1st path: %s' % (path1))
-#     print('2nd path: %s' % (path2))
-#
-# im1 = Image.open(path1)
-# im2 = Image.open(path2)
-#
-# x1 = ToTensor()(im1).permute(2, 1, 0).numpy()
-# x2 = ToTensor()(im2).permute(2, 1, 0).numpy()
-#
-# psnr = compare_psnr(x1, x2)
-# print(psnr)
+    if args.with_path:
+        print(path, c)
+    else:
+        print(c)
