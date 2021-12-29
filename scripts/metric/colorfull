@@ -4,6 +4,8 @@ from skimage.metrics import peak_signal_noise_ratio as compare_psnr
 
 from PIL import Image
 from torchvision.transforms import ToTensor
+import cv2.cv2 as cv2
+import numpy as np
 
 import argparse
 
@@ -12,13 +14,38 @@ def parse():
     parser = argparse.ArgumentParser(description='Calculate PSNR')
     parser.add_argument('path', nargs='+')
     parser.add_argument('--verbose', action='store_true')
+    parser.add_argument('--resize', type=int, default=None)
     return parser.parse_args()
+
+
+def image_colorfulness(image):
+    # split the image into its respective RGB components
+    (B, G, R) = cv2.split(image.astype("float"))
+    # compute rg = R - G
+    rg = np.absolute(R - G)
+    # compute yb = 0.5 * (R + G) - B
+    yb = np.absolute(0.5 * (R + G) - B)
+    # compute the mean and standard deviation of both `rg` and `yb`
+    (rbMean, rbStd) = (np.mean(rg), np.std(rg))
+    (ybMean, ybStd) = (np.mean(yb), np.std(yb))
+    # combine the mean and standard deviations
+    stdRoot = np.sqrt((rbStd ** 2) + (ybStd ** 2))
+    meanRoot = np.sqrt((rbMean ** 2) + (ybMean ** 2))
+    # derive the "colorfulness" metric and return it
+    return stdRoot + (0.3 * meanRoot)
 
 
 args = parse()
 paths  = args.path
 for path in paths:
-    print(path)
+    im = cv2.imread(path)
+    shape = im.shape[:2]
+    if args.resize is not None:
+        shape = np.array(shape) / shape[0] * args.resize
+        shape = shape.astype(int)
+        im = cv2.resize(im, shape)
+    c = image_colorfulness(im)
+    print(c)
 exit()
 #
 # if args.verbose:
