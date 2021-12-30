@@ -11,7 +11,7 @@ def parse():
                         action='store_true', help='replace input')
     parser.add_argument('--long', default=False,
                         action='store_true', help='based on long side')
-    parser.add_argument('-s', '--size', type=int, default=512,
+    parser.add_argument('-s', '--size', nargs='+', type=int, default=[512],
                         help='target image size')
     return parser.parse_args()
 
@@ -19,24 +19,30 @@ def parse():
 def main():
     args = parse()
 
-    method = Image.BICUBIC
+    if len(args.size) > 2:
+        raise Exception('Invalid image size')
+
     target_files = sys.stdin.read().splitlines()
     print("image resize target files: %d EA" % len(target_files), file=sys.stderr)
 
     for target_file in target_files:
         im = Image.open(target_file)
-        width, height = im.size
-        len_min = min(width, height)
-        len_max = max(width, height)
-        if args.long:
-            width = width / len_max * args.size
-            height = height / len_max * args.size
-        else:
-            width = width / len_min * args.size
-            height = height / len_min * args.size
 
-        width = int(width)
-        height = int(height)
+        if len(args.size) == 2:
+            width, height = args.size
+        else:
+            width, height = im.size
+            len_min = min(width, height)
+            len_max = max(width, height)
+            if args.long:
+                width = width / len_max * args.size
+                height = height / len_max * args.size
+            else:
+                width = width / len_min * args.size
+                height = height / len_min * args.size
+
+            width = int(width)
+            height = int(height)
 
         im = im.resize((width, height))
 
@@ -47,7 +53,8 @@ def main():
             parts = target_file.split('.')
             head = ''.join(parts[:-1])
             ext = parts[-1]
-            path_output = head + '_resize_%04d.' % (args.size) + ext
+            info = '_'.join([str(i) for i in args.size])
+            path_output = head + '_resize_' + info + '.' + ext
 
         im.save(path_output)
         print(path_output)
