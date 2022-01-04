@@ -1,0 +1,3 @@
+#!/bin/bash
+
+PGPASSWORD=1234 psql -h localhost -U kkw -c "${1:-"select path from imagenet_train order by colorfullness limit 100"}"
