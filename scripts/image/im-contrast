@@ -34,7 +34,7 @@ def main():
             parts = target_file.split('.')
             head = ''.join(parts[:-1])
             ext = parts[-1]
-            path_output = head + '_enhance' + '.' + ext
+            path_output = head + '_contrast' + '.' + ext
 
         cv2.imwrite(path_output, img2)
 
