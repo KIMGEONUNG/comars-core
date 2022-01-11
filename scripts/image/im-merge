@@ -2,8 +2,9 @@
 
 import argparse 
 import os
-import numpy as np
 from os.path import join
+from os import listdir
+import numpy as np
 from random import shuffle
 from cv2 import cv2 as cv
 from torchvision.utils import make_grid
@@ -16,9 +17,7 @@ import matplotlib.pyplot as plt
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--targets', type=str, nargs='+')
-    parser.add_argument('--mode', type=str, default='sequential',
-            choices=['random', 'sequential'])
+    parser.add_argument('targets', type=str, nargs='+')
     parser.add_argument('--target_ids', type=str, nargs='+', default=None)
     parser.add_argument('--caption_id', action='store_false')
     parser.add_argument('--caption_type', action='store_false')
@@ -32,36 +31,42 @@ def parse():
 def cv2torch(x):
     x = x / 255
     x = np.flip(x, -1).copy()
-    x = torch.Tensor(x).permute(0,3,1,2)
+    x = torch.Tensor(x).permute(0, 3, 1, 2)
     return x
 
-def main(args):
-    ids = ['%05d' % i for i in range(50000)]
-    num_iter = int(len(ids) / args.length)
-    if args.mode == 'sequential':
-        pass
-    elif args.mode == 'random':
-        shuffle(ids)
-    elif args.mode == 'specify':
-        ids = args.target_ids
-        if ids is None:
-            raise Exception('No targets are specified')
 
-        args.length = len(ids)
-        num_iter = 1
-    else:
-        raise Exception('Invalid mode')
+def main(args):
+
+    print('targets:', args.targets)
+    if len(args.targets) < 2:
+        raise Exception('target must be bigger than 1')
+
+    num_ids = len(listdir(args.targets[0]))
+    print('total ids:', num_ids)
+
+    for i in range(1, len(args.targets)):
+        if num_ids != len(listdir(args.targets[i])):
+            raise Exception('The number of files in each directory \
+                                must be same')
+
+    if not os.path.exists(args.path_out):
+        os.mkdir(args.path_out)
+
+    names = {}
+    for t in args.targets:
+        names[t] = sorted(listdir(t))
+    num_iter = int(num_ids / args.length)
 
     for i in tqdm(range(num_iter)):
-        id_group = ids[i * args.length: (i + 1) * args.length]
+        id_from, id_start = i * args.length, (i + 1) * args.length
 
         paths = []
         for target in args.targets:
-            for id in id_group:
-                path = join(target, id + '.' + config[target]['ext'])
+            ids = names[target][id_from:id_start]
+            for id in ids:
+                path = join(target, id)
                 paths.append(path)
         
-        # imgs = [cv.imread(path) for path in paths]
         imgs = [cv.resize(cv.imread(path), (args.resolution, args.resolution))
             for path in paths]
 
@@ -71,24 +76,10 @@ def main(args):
         grid = make_grid(imgs, nrow=args.length)
 
 
+
         fontFace = cv.FONT_HERSHEY_SIMPLEX
         fontscale = 1.2 
         color = (0, 0, 0) 
-        # cv.putText(im, args.caption, org, fontFace, fontscale , color,
-        #         thickness=args.thickness)
-        if args.caption_id:
-            buff = 80 
-            _, _, length = grid.shape
-            unit = int(length / len(id_group)) 
-            paper = np.ones((buff, length, 3)) * 255
-            for j in range(len(id_group)):
-                cv.putText(paper, str(id_group[j]), (unit * j + 50, buff // 2),
-                           fontFace, fontscale, color, thickness=2)
-
-            paper = paper / 255
-            paper = np.flip(paper, -1).copy()
-            paper = torch.Tensor(paper).permute(2,0,1)
-            grid = torch.cat([grid, paper], 1)
         if args.caption_type:
             buff = 310 
             _, length, _ = grid.shape
@@ -106,10 +97,10 @@ def main(args):
 
 
         grid = ToPILImage()(grid)
-        # grid.show()
         grid.save(join(args.path_out, '%05d.jpg' % i))
         if args.only_one:
             exit()
+
 
 if __name__ == '__main__':
     args = parse()
