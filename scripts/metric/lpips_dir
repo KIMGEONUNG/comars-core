@@ -1,0 +1,71 @@
+#!/usr/bin/env python
+
+import lpips
+from PIL import Image
+from torchvision.transforms import ToTensor
+import argparse
+import contextlib
+import sys
+import os
+from os.path import join
+from os import listdir
+
+
+def parse():
+    parser = argparse.ArgumentParser(description='Calculate LPIPS')
+    parser.add_argument('path', nargs=2)
+    parser.add_argument('--verbose', action='store_true')
+    parser.add_argument('--net', type=str, default='vgg',
+                        choices=['vgg', 'alex'])
+    parser.add_argument('--device', default='cuda:0')
+    # parser.add_argument('--size_batch', type=int,
+    #                     default=100)
+    return parser.parse_args()
+
+
+class DummyFile(object):
+    def write(self, x): pass
+
+
+@contextlib.contextmanager
+def nostdout():
+    save_stdout = sys.stdout
+    sys.stdout = DummyFile()
+    yield
+    sys.stdout = save_stdout
+
+
+def main():
+    args = parse()
+
+    num_path = len(args.path)
+    if num_path != 2:
+        raise Exception('It must have two path')
+    path1, path2 = args.path
+    names1 = os.listdir(path1)
+    names2 = os.listdir(path2)
+    print(namee1)
+    exit()
+
+    with nostdout():
+        loss_fn = lpips.LPIPS(net=args.net).to(args.device)
+    print('model loaded', file=sys.stderr)
+
+    for i in range(0, num_path, 2):
+        path1, path2 = args.path[i], args.path[i + 1]
+
+        if args.verbose:
+            print(path1, path2)
+
+        im1 = Image.open(path1)
+        im2 = Image.open(path2)
+
+        x1 = ToTensor()(im1).unsqueeze(0).mul(2).sub(1).to(args.device)
+        x2 = ToTensor()(im2).unsqueeze(0).mul(2).sub(1).to(args.device)
+
+        d = loss_fn(x1, x2).reshape(-1)
+        print(d.item())
+
+
+if __name__ == '__main__':
+    main()
