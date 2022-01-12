@@ -50,6 +50,9 @@ def main():
     for i in range(0, num_path, 2):
         path1, path2 = args.path[i], args.path[i + 1]
 
+        if args.verbose:
+            print(path1, path2)
+
         im1 = Image.open(path1)
         im2 = Image.open(path2)
 
