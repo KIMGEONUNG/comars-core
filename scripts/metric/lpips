@@ -41,8 +41,11 @@ def main():
     if num_path % 2 == 1:
         raise Exception('The number of path must be even number')
 
+    print("target  files: %d EA" % num_path, file=sys.stderr)
+
     with nostdout():
         loss_fn = lpips.LPIPS(net=args.net).to(args.device)
+    print('model loaded', file=sys.stderr)
 
     for i in range(0, num_path, 2):
         path1, path2 = args.path[i], args.path[i + 1]
