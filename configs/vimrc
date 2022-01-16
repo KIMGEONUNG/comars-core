@@ -82,6 +82,8 @@ function! ExecuteFile(arg)
         !python % 
     elseif !empty(matchstr(a:arg, '.sh$'))
         !bash % 
+    elseif !empty(matchstr(a:arg, '.vim$'))
+        so % 
     endif
 endfunction
 
