@@ -78,6 +78,15 @@ endfunction
 " File specific fast execution
 function! ExecuteFile(arg)
     write
+
+    " check shebang 
+    let line = getline(1)
+    if line[:1] == '#!'
+        let cmd = line[2:]
+        execute "!" . cmd  "%"
+        return ''
+    endif
+
     if !empty(matchstr(a:arg, '.py$'))
         !python % 
     elseif !empty(matchstr(a:arg, '.sh$'))
