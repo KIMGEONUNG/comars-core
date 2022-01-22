@@ -267,6 +267,9 @@ nnoremap <Leader>ge $
 nnoremap <Leader>bn :bn<CR>
 nnoremap <Leader>bp :bp<CR>
 nnoremap <Leader>bw :bw<CR>
+" close all buffers except current one
+command! BufCurOnly execute '%bdelete|edit#|bdelete#'
+nnoremap <Leader>bd :BufCurOnly<CR>
 
 nnoremap <Leader>nh :noh<CR>
 
