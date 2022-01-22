@@ -512,7 +512,7 @@ EOF
     lua require'lspconfig'.vimls.setup{on_attach=require'completion'.on_attach}
     lua require'lspconfig'.hls.setup{on_attach=require'completion'.on_attach}
     lua require'lspconfig'.jsonls.setup{cmd={"vscode-json-languageserver", "--stdio"}}
-    lua require'lspconfig'.bashls.setup{}
+    lua require'lspconfig'.bashls.setup{on_attach=require'completion'.on_attach}
 
     " nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
     " nnoremap <silent> <space>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
@@ -520,7 +520,7 @@ EOF
     " nnoremap <silent> <space>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
     " nnoremap <silent> <space>D <cmd>lua vim.lsp.buf.type_definition()<CR>
     " nnoremap <silent> <space>ca <cmd>lua vim.lsp.buf.code_action()<CR>
-    " nnoremap <silent> <space>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+    nnoremap <silent> [e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
     nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
     nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
     " nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
