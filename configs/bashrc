@@ -213,12 +213,14 @@ export TC_NC_MISTAKE='\033[9m'
 
 function color_my_prompt {
     local __user_and_host="${TC_CYAN_BOLD}\u@\h"
+    local __cur_location=""
     local __cur_location="${TC_LIGHTCYAN}\w"
     local __git_branch_color="${TC_RED}"
-    local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`\n'
+    local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
+    local __new_line=""
     local __prompt_tail="${TC_PURPLE}$"
     local __last_color="${TC_NC}"
-    export PS1="$__user_and_host $__cur_location $__git_branch_color$__git_branch$__prompt_tail$__last_color "
+    export PS1="$__user_and_host $__cur_location $__git_branch_color$__git_branch$__new_line$__prompt_tail$__last_color "
 }
 color_my_prompt
 
@@ -242,3 +244,5 @@ if [ $(cat /etc/hostname) == 'comar-laptop' ]; then
     # xmodmap -e 'keycode 36 = ' # Enter
     xmodmap -e 'keycode 64 = Control_L' # Alt_L 
 fi
+
+# export LC_ALL="en_US.UTF-8"
