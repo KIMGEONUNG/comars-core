@@ -159,6 +159,7 @@ unset __conda_setup
 
 export PATH="/home/comar/bin:$PATH"
 
+# export PROMPT_DIRTRIM=2
 
 # Color definition (with printf) 
 ## TC is terminal color
@@ -214,7 +215,8 @@ export TC_NC_MISTAKE='\[\033[9m\]'
 function color_my_prompt {
     # local __user_and_host="${TC_CYAN_BOLD}\u@\h"
     local __user_and_host="${TC_CYAN_BOLD}\u"
-    local __cur_location="${TC_LIGHTCYAN}\w"
+    # local __cur_location="${TC_LIGHTCYAN}\w"
+    local __cur_location='`pwd | sed -e "s:$HOME:~:" -e "s:\(.\)[^/]*/:\1/:g"`'
     local __git_branch_color="${TC_RED}"
     local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
     local __prompt_tail="${TC_PURPLE}$"
