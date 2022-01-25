@@ -22,9 +22,15 @@ def parse():
     return parser.parse_args()
 
 
+def rm_last_slash(s: str):
+    if s[-1:] == '/':
+        s = s[:-1]
+    return s
+
+
 def main():
     args = parse()
-    path_out = args.path_dir + '_grid'
+    path_out = rm_last_slash(args.path_dir) + '_grid'
 
     # Load file
     if not os.path.exists(args.path_dir):
