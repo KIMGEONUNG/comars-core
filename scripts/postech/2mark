@@ -6,8 +6,15 @@ if [[ -z $1 ]]; then
 fi
 
 if [[ $1 == 9 || $1 == 10 ]]; then
-    ssh -t k2woong92@mark8.postech.ac.kr ssh -i /home/k2woong92/.ssh/mark k2woong92@mark${1}.postech.ac.kr
+    ssh -o ServerAliveInterval=15 \
+        -t k2woong92@mark8.postech.ac.kr ssh \
+            -i /home/k2woong92/.ssh/mark k2woong92@mark${1}.postech.ac.kr
+elif [[ $1 == 12 ]]; then
+    ssh -o ServerAliveInterval=15 \
+        -t k2woong92@mark11.postech.ac.kr ssh \
+            -i /home/k2woong92/.ssh/mark k2woong92@mark${1}.postech.ac.kr
 else
     ssh -o ServerAliveInterval=15 \
         k2woong92@mark${1}.postech.ac.kr
 fi
+

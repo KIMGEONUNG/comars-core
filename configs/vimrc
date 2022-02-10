@@ -476,7 +476,7 @@ if has('nvim')
     \defaults = {
         \file_ignore_patterns = {'%.pyc', '.git/*', '__pycache__/*',
             \'%.jpeg', '%.jpg', '%.JPEG', '%.png', '%.gif',
-            \'%.pkl', '%.ckpt', '%.pickle', 'events.*',
+            \'%.pkl', '%.ckpt', '%.pickle', 'events.*', '%.tfrecords',
             \'%.xyzn', '%.xyz', '%.obj', '%.ply'}
         \},
         \pickers = {
