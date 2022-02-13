@@ -25,7 +25,6 @@ def main():
     for target_file in target_files:
         im = Image.open(target_file)
 
-        size = args.size
         size = min(im.size)
 
         if args.mode == 'resize':
