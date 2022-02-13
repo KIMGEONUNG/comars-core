@@ -16,17 +16,10 @@ import matplotlib.pyplot as plt
 
 def parse():
     parser = argparse.ArgumentParser()
+    parser.add_argument('targets', type=str, nargs='+')
     parser.add_argument('--mode', type=str, default='sequential',
             choices=['random', 'sequential', 'specify'])
     parser.add_argument('--target_ids', type=str, nargs='+', default=None)
-    parser.add_argument('--targets', type=str, nargs='+',
-            default=[
-                    'gray',
-                    '01',
-                    '08',
-                    '16',
-                    '32',
-                    ])
     parser.add_argument('--no_caption_id', action='store_true')
     parser.add_argument('--no_caption_type', action='store_true')
     parser.add_argument('--only_one', action='store_true')
@@ -49,6 +42,8 @@ def cv2torch(x):
 def main(args):
     ids = ['%05d' % i for i in range(args.iter_max)]
     num_iter = int(len(ids) / args.length)
+
+
     if args.mode == 'sequential':
         pass
     elif args.mode == 'random':
@@ -65,6 +60,9 @@ def main(args):
         os.mkdir(args.path_out)
 
 
+    if len(ids) % args.length != 0:
+        num_iter += 1
+
     if args.transpose:
         grid_row = len(args.targets)
         cap_id_dim = 2
@@ -76,7 +74,6 @@ def main(args):
 
     for i in tqdm(range(num_iter)):
         id_group = ids[i * args.length: (i + 1) * args.length]
-
         if args.transpose:
             paths = [join(target, id + '.jpg') for id in id_group
                                            for target in args.targets]

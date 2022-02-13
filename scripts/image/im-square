@@ -2,6 +2,7 @@
 
 import sys
 import torchvision.transforms as transforms
+from torchvision.transforms import Resize, CenterCrop
 from PIL import Image
 
 
@@ -10,12 +11,10 @@ def parse():
     parser = argparse.ArgumentParser(description='Image center crop')
     parser.add_argument('-r', '--replace', action='store_true',
                         help='replace input')
-    parser.add_argument('--short', action='store_true',
-                        help='use short length')
-    parser.add_argument('-s', '--size', type=int, default=100,
-                        help='target image size')
-    return parser.parse_args()
+    parser.add_argument('-m', '--mode', default='resize',
+                        choices=['resize', 'crop'])
 
+    return parser.parse_args()
 
 def main():
     args = parse()
@@ -27,10 +26,14 @@ def main():
         im = Image.open(target_file)
 
         size = args.size
-        if args.short:
-            size = min(im.size)
+        size = min(im.size)
 
-        im = transforms.CenterCrop(size)(im)
+        if args.mode == 'resize':
+            im = Resize((size, size))(im)
+        elif args.mode == 'crop':
+            im = CenterCrop(size)(im)
+        else:
+            raise NotImplementedError('Invalid Mode')
 
         path_output = None
         if args.replace:
@@ -39,7 +42,7 @@ def main():
             parts = target_file.split('.')
             head = ''.join(parts[:-1])
             ext = parts[-1]
-            path_output = head + '_ccrop_%04d.' % (size) + ext
+            path_output = head + '_square_%04d.' % (size) + ext
 
         im.save(path_output)
         print(path_output)
