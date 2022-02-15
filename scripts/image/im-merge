@@ -22,6 +22,7 @@ def parse():
     parser.add_argument('--target_ids', type=str, nargs='+', default=None)
     parser.add_argument('--no_caption_id', action='store_true')
     parser.add_argument('--no_caption_type', action='store_true')
+    parser.add_argument('--ccrop', action='store_true')
     parser.add_argument('--only_one', action='store_true')
     parser.add_argument('--transpose', action='store_true')
     parser.add_argument('--resolution', type=int, default=256) 
@@ -38,6 +39,18 @@ def cv2torch(x):
     x = np.flip(x, -1).copy()
     x = torch.Tensor(x).permute(0,3,1,2)
     return x
+
+
+def ccrop(x):
+    h, w, _ = x.shape
+    short = min(h, w)
+
+    h_edge = (h - short) // 2
+    w_edge = (w - short) // 2
+
+    x_crop = x[h_edge:h_edge + short, w_edge:w_edge + short, :]
+    return x_crop
+
 
 def main(args):
     ids = ['%05d' % i for i in range(args.iter_max)]
@@ -81,9 +94,12 @@ def main(args):
             paths = [join(target, id + '.jpg') for target in args.targets
                                            for id in id_group]
 
-        imgs = [cv.resize(cv.imread(path), (args.resolution, args.resolution))
-            for path in paths]
+        imgs = [cv.imread(path) for path in paths]
 
+        if args.ccrop:
+            imgs = [ccrop(img) for img in imgs]
+        imgs = [cv.resize(img, (args.resolution, args.resolution))
+                for img in imgs]
         imgs = [np.expand_dims(img, 0) for img in imgs]
         imgs = np.vstack(imgs)
         imgs = cv2torch(imgs)
