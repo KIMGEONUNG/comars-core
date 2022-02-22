@@ -3,7 +3,6 @@
 import argparse 
 import os
 import numpy as np
-from os.path import join
 from random import shuffle
 from cv2 import cv2 as cv
 from torchvision.utils import make_grid
@@ -11,52 +10,23 @@ from torchvision.transforms import ToPILImage
 from PIL import Image
 from tqdm import tqdm
 import torch
-import matplotlib.pyplot as plt
+from os.path import join
+from os import listdir
 
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('targets', type=str, nargs='+')
-    parser.add_argument('--mode', type=str, default='sequential',
-            choices=['random', 'sequential', 'specify'])
-    parser.add_argument('--target_ids', type=str, nargs='+', default=None)
-    parser.add_argument('--no_caption_id', action='store_true')
-    parser.add_argument('--no_caption_type', action='store_true')
-    parser.add_argument('--ccrop', action='store_true')
-    parser.add_argument('--only_one', action='store_true')
-    parser.add_argument('--transpose', action='store_true')
-    parser.add_argument('--print_random_id', action='store_true')
-    parser.add_argument('--resolution', type=int, default=256) 
-    parser.add_argument('--length', type=int, default=10) 
-    parser.add_argument('--path_out', type=str, default='out')
-    parser.add_argument('--iter_max', type=int, default=5000)
-    parser.add_argument('--num_sample', type=int, default=50000)
-    parser.add_argument('--pad_val', type=int, default=1)
-    parser.add_argument('--pad', type=int, default=0)
+    parser.add_argument('--light', type=str, required=True)
+    parser.add_argument('--ab', type=str, required=True)
+    parser.add_argument('--path_out', type=str, default=None)
     return parser.parse_args()
-
-
-def cv2torch(x):
-    x = x / 255
-    x = np.flip(x, -1).copy()
-    x = torch.Tensor(x).permute(0,3,1,2)
-    return x
-
-
-def ccrop(x):
-    h, w, _ = x.shape
-    short = min(h, w)
-
-    h_edge = (h - short) // 2
-    w_edge = (w - short) // 2
-
-    x_crop = x[h_edge:h_edge + short, w_edge:w_edge + short, :]
-    return x_crop
 
 
 def main(args):
     ids = ['%05d' % i for i in range(args.num_sample)]
     num_iter = int(len(ids) / args.length)
+
+    exit()
 
 
     if args.mode == 'sequential':
