@@ -21,7 +21,7 @@ def parse():
 
     parser.add_argument('-n', '--num_row', type=int, default=10)
     parser.add_argument('--pad_value', type=int, default=0)
-    parser.add_argument('--padding', type=int, default=2)
+    parser.add_argument('--padding', type=int, default=0)
     parser.add_argument('--postfix', type=str, default='grid')
     return parser.parse_args()
 
