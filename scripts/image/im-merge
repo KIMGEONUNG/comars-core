@@ -19,6 +19,8 @@ def parse():
     parser.add_argument('targets', type=str, nargs='+')
     parser.add_argument('--mode', type=str, default='sequential',
             choices=['random', 'sequential', 'specify'])
+    parser.add_argument('--format', type=str, default='jpg',
+            choices=['jpg', 'pdf', 'png'])
     parser.add_argument('--target_ids', type=str, nargs='+', default=None)
     parser.add_argument('--no_caption_id', action='store_true')
     parser.add_argument('--no_caption_type', action='store_true')
@@ -183,7 +185,7 @@ def main(args):
 
         grid = ToPILImage()(grid)
         # grid.show()
-        grid.save(join(args.path_out, '%05d.jpg' % i))
+        grid.save(join(args.path_out, '%05d.%s' % (i, args.format)))
         if args.only_one:
             exit()
 
