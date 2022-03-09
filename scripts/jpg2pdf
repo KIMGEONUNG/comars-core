@@ -1,0 +1,3 @@
+#!/bin/bash
+
+convert -compress jpeg *.jpg my-jpegs.pdf
