@@ -1,3 +1,17 @@
 #!/bin/bash
 
-convert -compress jpeg *.jpg my-jpegs.pdf
+target=$1
+
+if [ -z "$(echo $target | grep \.jpg$)" ]; then
+    echo Invalid input $target
+    exit 1
+fi
+
+if ! [ -f "$target" ]; then
+    echo $target is not file
+    exit 1
+fi
+
+name=${target%%.jpg}
+
+convert -compress jpeg $target $name.pdf
