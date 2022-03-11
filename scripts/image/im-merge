@@ -83,7 +83,6 @@ def main(args):
     if not os.path.exists(args.path_out):
         os.mkdir(args.path_out)
 
-
     if len(ids) % args.length != 0:
         num_iter += 1
 
