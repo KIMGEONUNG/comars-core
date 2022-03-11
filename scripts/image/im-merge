@@ -28,6 +28,7 @@ def parse():
     parser.add_argument('--only_one', action='store_true')
     parser.add_argument('--transpose', action='store_true')
     parser.add_argument('--print_random_id', action='store_true')
+    parser.add_argument('--no_resize', action='store_true')
     parser.add_argument('--resolution', type=int, default=256) 
     parser.add_argument('--length', type=int, default=10) 
     parser.add_argument('--path_out', type=str, default='out')
@@ -110,8 +111,10 @@ def main(args):
 
         if args.ccrop:
             imgs = [ccrop(img) for img in imgs]
-        imgs = [cv.resize(img, (args.resolution, args.resolution))
-                for img in imgs]
+
+        if not args.no_resize:
+            imgs = [cv.resize(img, (args.resolution, args.resolution))
+                    for img in imgs]
         imgs = [np.expand_dims(img, 0) for img in imgs]
         imgs = np.vstack(imgs)
         imgs = cv2torch(imgs)

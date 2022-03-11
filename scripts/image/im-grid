@@ -21,7 +21,9 @@ def parse():
                         choices=['sort', 'random'])
     parser.add_argument('--seed', type=int, default=None)
 
-    parser.add_argument('-n', '--num_row', type=int, default=10)
+    parser.add_argument('--num_row', type=int, default=10)
+    parser.add_argument('--num_col', type=int, default=10)
+    parser.add_argument('--max_iter', type=int, default=100000)
     parser.add_argument('--pad_value', type=int, default=0)
     parser.add_argument('--padding', type=int, default=0)
     parser.add_argument('--postfix', type=str, default='grid')
@@ -58,7 +60,7 @@ def main():
     else:
         raise Exception('Invalid mode')
 
-    num_unit = args.num_row ** 2
+    num_unit = args.num_row * args.num_col
     num_iter = len(paths) // num_unit
 
     if args.ccrop:
@@ -70,6 +72,9 @@ def main():
         prep = Compose([ToTensor(),
             Resize((args.size, args.size))])
     for i in tqdm(range(num_iter)):
+        if i >= args.max_iter:
+            break
+
         target_files = paths[i * num_unit:(i + 1) * num_unit]
         targets = [Image.open(target) for target in target_files]
         targets = [prep(target).unsqueeze(0) for target in targets]
