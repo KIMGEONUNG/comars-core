@@ -1,0 +1,3 @@
+#!/bin/bash
+
+qpdf $1 --pages 18- -- split_$1
