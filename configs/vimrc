@@ -475,7 +475,7 @@ if has('nvim')
     lua require('telescope').setup{
     \defaults = {
         \file_ignore_patterns = {'%.pyc', '.git/*', '__pycache__/*',
-            \'%.jpeg', '%.jpg', '%.JPEG', '%.png', '%.gif',
+            \'%.jpeg', '%.jpg', '%.JPEG', '%.png', '%.gif', '%.dat',
             \'%.pkl', '%.ckpt', '%.pickle', 'events.*', '%.tfrecords',
             \'%.xyzn', '%.xyz', '%.obj', '%.ply'}
         \},
