@@ -44,7 +44,7 @@ p2=$((100 - (100 * $p1) / (100 - $p1)))
 tmux split-window -h -p 23
 tmux select-pane -L
 tmux split-window -h -p 70
-tmux split-window -v -p 20
+tmux split-window -v -p 30
 tmux select-pane -U
 
 
