@@ -402,6 +402,9 @@ Plugin 'tomtom/tcomment_vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+" # PYTHON PROVIDER===========================================================
+let g:python3_host_prog = '/home/comar/anaconda3/bin/python3'
+
 " # AIRLINE===================================================================
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='gruvbox'
@@ -615,3 +618,4 @@ if !empty(matchstr(expand('%:t'), '.debugvim$'))
     nnoremap <c-s> :so .nvimrc<cr>
 endif
 " DEBUG ONLY===============================================================END
+
