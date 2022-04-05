@@ -254,7 +254,8 @@ nnoremap ci, :call DeleteInnerArg()<CR>
 nmap <Leader>D :call DeleteChar()<CR>
 nmap <Leader>x :call DeleteTo()<CR>
 
-nnoremap <s-f> #*
+" Shift + f
+" nnoremap <s-f> #*
 
 nmap <Leader>e :call ExecuteFile(expand('%:t'))<CR>
 nmap <Leader>E :call ExecutePredef()<CR>
