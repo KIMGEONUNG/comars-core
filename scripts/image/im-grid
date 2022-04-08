@@ -76,7 +76,7 @@ def main():
             break
 
         target_files = paths[i * num_unit:(i + 1) * num_unit]
-        targets = [Image.open(target) for target in target_files]
+        targets = [Image.open(target).convert('RGB') for target in target_files]
         targets = [prep(target).unsqueeze(0) for target in targets]
         target = torch.cat(targets, dim=0)
         target = make_grid(target, args.num_row,
