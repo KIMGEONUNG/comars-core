@@ -546,6 +546,7 @@ EOF
     lua require'lspconfig'.hls.setup{on_attach=require'completion'.on_attach}
     lua require'lspconfig'.jsonls.setup{cmd={"vscode-json-languageserver", "--stdio"}}
     lua require'lspconfig'.bashls.setup{on_attach=require'completion'.on_attach}
+    lua require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
 
     " nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
     " nnoremap <silent> <space>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
