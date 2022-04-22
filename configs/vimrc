@@ -91,6 +91,14 @@ function! ExecuteFile(arg)
         !python % 
     elseif !empty(matchstr(a:arg, '.sh$'))
         !bash % 
+    elseif !empty(matchstr(a:arg, '.cpp$'))
+        let target = 'doit.sh'
+        if filereadable(target)
+            terminal ./doit.sh
+        else
+            echo "No target file:" target
+        endif
+
     elseif !empty(matchstr(a:arg, '.vim$'))
         so % 
     endif
