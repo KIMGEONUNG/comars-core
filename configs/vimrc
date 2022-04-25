@@ -91,10 +91,10 @@ function! ExecuteFile(arg)
         !python % 
     elseif !empty(matchstr(a:arg, '.sh$'))
         !bash % 
-    elseif !empty(matchstr(a:arg, '.cpp$'))
+    elseif !empty(matchstr(a:arg, '.cpp$')) || !empty(matchstr(a:arg, '.h$'))
         let target = 'doit.sh'
         if filereadable(target)
-            terminal ./doit.sh
+            !bash doit.sh
         else
             echo "No target file:" target
         endif
