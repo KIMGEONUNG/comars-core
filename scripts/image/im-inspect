@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+
+import sys
+import torchvision.transforms as transforms
+from PIL import Image
+from os.path import exists
+from torchvision.transforms import ToPILImage, ToTensor
+import matplotlib.pyplot as plt
+import torch 
+
+
+def parse():
+    import argparse
+    parser = argparse.ArgumentParser(description='Inspect image')
+    parser.add_argument('path')
+    return parser.parse_args()
+
+
+class Counter(object):
+
+    def __init__(self):
+        self.num = 0
+
+    def next(self):
+        self.num += 1
+        return self.num
+
+
+def main():
+    args = parse()
+    counter = Counter()
+
+    if not exists(args.path):
+        print("No such file %s" % args.path, file=sys.stderr)
+        return 2
+
+    im = Image.open(args.path)
+
+    rgb = ToTensor()(im)
+    r, g, b = torch.split(rgb, 1, dim=0)
+    r, g, b = r.squeeze(), g.squeeze(), b.squeeze()
+
+
+    plt.rcParams["figure.figsize"] = (19,8)
+    n_col = 1
+    n_row = 4
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("RGB")
+    plt.imshow(im)
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("R")
+    plt.imshow(r, cmap="gray")
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("G")
+    plt.imshow(g, cmap="gray")
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("B")
+    plt.imshow(b, cmap="gray")
+
+    plt.tight_layout()
+    plt.show()
+
+
+if __name__ == '__main__':
+    main()
+
