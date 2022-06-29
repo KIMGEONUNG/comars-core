@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [[ -z ${1} ]]; then
+    echo Error: enter user name as first argument
+fi
+ssh ${1}@119.202.90.14 -p 9999
