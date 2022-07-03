@@ -24,7 +24,7 @@ def main():
     for i in target_files:
         print(i, file=sys.stderr)
 
-    images = [Image.open(f) for f in target_files]
+    images = [Image.open(f).convert('P') for f in target_files]
     images[0].save(args.output, save_all=True,
             append_images=images[1:], optimize=False,
             duration=args.duration, loop=args.loop)
