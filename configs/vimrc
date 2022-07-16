@@ -48,8 +48,32 @@ set colorcolumn=80
 
 " # FUNCTIONS ================================================================
 function! DeleteBackward() abort
+
+    return
+    let num_cur = col('.') - 2
+    " what are you trying to do.
+    " insert dkdk <c-h>
+
+    echom num_cur
+    return
+    while num_cur >= 0
+        let num_cur = col('.') - 2
+        let char_cur = getline('.')[num_cur]
+        echo num_cur
+        echo char_cur
+        echo "hel"
+        break
+        if char_cur == ' ' || char_cur == '_' || char_cur == '.'
+            break
+        endif
+        normal X
+    endwhile
+
+    " echo num_cur
+    " echo char_cur 
+    " echo "hell" 
+    return
     let num_line = line('.')
-    let num_start = col('.')
     let num_col = col('.')
     let num_end = 1
 
@@ -322,7 +346,10 @@ inoremap <C-b> <C-o>B
 inoremap <C-l> <C-o>l
 
 " inoremap <C-d> <C-o>diw
-inoremap <C-d> <esc>:call DeleteBackward()<cr>a
+" inoremap <C-d> <esc>:call DeleteBackward()<cr>a
+" inoremap <C-d> <BS>
+" inoremap <expr> <C-d> DeleteBackward()
+inoremap <C-d> <c-o>:call DeleteBackward()<cr>
 
 " Keeping it centered
 nnoremap n nzz
