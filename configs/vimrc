@@ -113,6 +113,8 @@ function! ExecuteFile(arg)
 
     if !empty(matchstr(a:arg, '.py$'))
         !python % 
+    elseif !empty(matchstr(a:arg, '.html$'))
+        !firefox % 
     elseif !empty(matchstr(a:arg, '.sh$'))
         !bash % 
     elseif !empty(matchstr(a:arg, '.cpp$')) || !empty(matchstr(a:arg, '.h$'))
