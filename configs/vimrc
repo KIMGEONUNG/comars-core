@@ -114,7 +114,11 @@ function! ExecuteFile(arg)
     if !empty(matchstr(a:arg, '.py$'))
         !python % 
     elseif !empty(matchstr(a:arg, '.html$'))
-        !firefox % 
+        !google-chrome %
+    elseif !empty(matchstr(a:arg, '.js$'))
+        !google-chrome index.html 
+    elseif !empty(matchstr(a:arg, '.css$'))
+        !google-chrome index.html 
     elseif !empty(matchstr(a:arg, '.sh$'))
         !bash % 
     elseif !empty(matchstr(a:arg, '.cpp$')) || !empty(matchstr(a:arg, '.h$'))
@@ -578,13 +582,33 @@ EOF
     nnoremap <silent> <c-f> :call Format(expand('%:t'))<CR>
     nnoremap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>
 
-    lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
-    lua require'lspconfig'.vimls.setup{on_attach=require'completion'.on_attach}
-    lua require'lspconfig'.hls.setup{on_attach=require'completion'.on_attach}
-    lua require'lspconfig'.jsonls.setup{cmd={"vscode-json-languageserver", "--stdio"}}
-    lua require'lspconfig'.bashls.setup{on_attach=require'completion'.on_attach}
-    lua require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
+lua << EOF
+require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
+require'lspconfig'.vimls.setup{on_attach=require'completion'.on_attach}
+require'lspconfig'.hls.setup{on_attach=require'completion'.on_attach}
+require'lspconfig'.jsonls.setup{cmd={"vscode-json-languageserver", "--stdio"}}
+require'lspconfig'.bashls.setup{on_attach=require'completion'.on_attach}
+require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
 
+
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.html.setup{on_attach=require'completion'.on_attach, 
+capabilities = capabilities,
+cmd={ "vscode-html-language-server", "--stdio" },
+init_options={
+      configurationSection = { "html", "css", "javascript" },
+      embeddedLanguages = {
+        css = true,
+        javascript = true
+      },
+      provideFormatter = true
+    }
+}
+
+EOF
     " nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
     " nnoremap <silent> <space>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
     " nnoremap <silent> <space>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
