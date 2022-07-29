@@ -380,33 +380,20 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-if has('nvim')
-    Plugin 'nvim-lua/popup.nvim'
-    Plugin 'nvim-lua/plenary.nvim'
-    Plugin 'nvim-telescope/telescope.nvim'
-    Plugin 'nvim-telescope/telescope-fzy-native.nvim'
-    Plugin 'kyazdani42/nvim-web-devicons'
+Plugin 'nvim-lua/popup.nvim'
+Plugin 'nvim-lua/plenary.nvim'
+Plugin 'nvim-telescope/telescope.nvim'
+Plugin 'nvim-telescope/telescope-fzy-native.nvim'
+Plugin 'kyazdani42/nvim-web-devicons'
 
-    Plugin 'iamcco/markdown-preview.nvim'
+Plugin 'iamcco/markdown-preview.nvim'
 
-    Plugin 'neovim/nvim-lspconfig'
-    " Plugin 'kabouzeid/nvim-lspinstall'
-    Plugin 'nvim-lua/completion-nvim'
+Plugin 'neovim/nvim-lspconfig'
+" Plugin 'kabouzeid/nvim-lspinstall'
+Plugin 'nvim-lua/completion-nvim'
 
-    Plugin 'Shougo/neosnippet.vim'
-    Plugin 'Shougo/neosnippet-snippets'
-else
-    " auto complete tool
-    Plugin 'ycm-core/YouCompleteMe'
-    Plugin 'vim-syntastic/syntastic'
-
-    " find files
-    Plugin 'kien/ctrlp.vim'
-
-    " vim snippet sets. two plugin need each other
-    Plugin 'SirVer/ultisnips'
-    Plugin 'honza/vim-snippets'
-endif
+Plugin 'Shougo/neosnippet.vim'
+Plugin 'Shougo/neosnippet-snippets'
 
 Plugin 'morhetz/gruvbox'
 Plugin 'kimgeonung/dracula'
@@ -504,10 +491,8 @@ set background=dark
 
 
 " # VIM ONLY OR NVIM ONLY=====================================================
-if has('nvim')
-    " movement in quickfix reference 
-    nnoremap <C-j> :cnext<CR>
-    nnoremap <C-k> :cprevious<CR>
+nnoremap <C-j> :cnext<CR>
+nnoremap <C-k> :cprevious<CR>
 
     " TELESCOPE CONFIG =======================================================
 lua << EOF
@@ -609,86 +594,56 @@ init_options={
 }
 
 EOF
-    " nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-    " nnoremap <silent> <space>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
-    " nnoremap <silent> <space>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
-    " nnoremap <silent> <space>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
-    " nnoremap <silent> <space>D <cmd>lua vim.lsp.buf.type_definition()<CR>
-    " nnoremap <silent> <space>ca <cmd>lua vim.lsp.buf.code_action()<CR>
-    nnoremap <silent> [e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-    nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-    nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-    " nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-    
-    " # COMPLETION-NVIM=======================================================
-    set completeopt=menuone,noinsert,noselect
-    set shortmess+=c
-    " let g:completion_enable_snippet = 'UltiSnips'
-    let g:completion_enable_auto_popup = 1
-    imap <silent> <c-n> <Plug>(completion_trigger)
+" nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> <space>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
+" nnoremap <silent> <space>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
+" nnoremap <silent> <space>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
+" nnoremap <silent> <space>D <cmd>lua vim.lsp.buf.type_definition()<CR>
+" nnoremap <silent> <space>ca <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> [e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+" nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 
-    " Autocomplete file path
-    let g:completion_chain_complete_list = {
-            \ 'default' : {
-            \   'default': [
-            \       {'complete_items': ['lsp', 'snippet']},
-            \       {'mode': '<c-p>'},
-            \       {'mode': '<c-n>'}],
-            \   'comment': [],
-            \   'string' : [
-            \       {'complete_items': ['path']}]
-            \   }}
+" # COMPLETION-NVIM=======================================================
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+" let g:completion_enable_snippet = 'UltiSnips'
+let g:completion_enable_auto_popup = 1
+imap <silent> <c-n> <Plug>(completion_trigger)
 
-    " # NEO-SNIPS=============================================================
-    " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k>     <Plug>(neosnippet_expand_target)
+" Autocomplete file path
+let g:completion_chain_complete_list = {
+        \ 'default' : {
+        \   'default': [
+        \       {'complete_items': ['lsp', 'snippet']},
+        \       {'mode': '<c-p>'},
+        \       {'mode': '<c-n>'}],
+        \   'comment': [],
+        \   'string' : [
+        \       {'complete_items': ['path']}]
+        \   }}
 
-    " SuperTab like snippets behavior.
-    " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-    "imap <expr><TAB>
-    " \ pumvisible() ? "\<C-n>" :
-    " \ neosnippet#expandable_or_jumpable() ?
-    " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" # NEO-SNIPS=============================================================
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-    " For conceal markers.
-    if has('conceal')
-      set conceallevel=0 
-      " set concealcursor=niv
-    endif 
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-else "Only used in vim
-    " # YOU_COMPLETE_ME=======================================================
-    " vimspector console autocompletion
-    let g:ycm_semantic_triggers = {'VimspectorPrompt': [ '.', '->', ':', '<' ]}
-    
-    " default shortcut(edit mode): <c-n>
-    "  The default value is ['<tab>', '<down>']. If so, snippet shortcut key <tab>
-    " would not work. So I remap <tab> into <UP>.
-    let g:ycm_key_list_select_completion = ['<UP>', '<Down>']
-    nnoremap <Leader>gd :YcmCompleter GoTo<CR>
-    
-    "# SYNTASTIC==============================================================
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-
-    let g:syntastic_always_populate_loc_list = 0
-    let g:syntastic_auto_loc_list = 0
-    let g:syntastic_check_on_open = 0
-    let g:syntastic_check_on_wq = 0
-    
-    " # CTRLP=================================================================
-    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-    
-    " # ULTI_SNIPS============================================================
-    let g:UltiSnipsEditSplit="vertical"
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<tab>"
-endif
+" For conceal markers.
+if has('conceal')
+  set conceallevel=0 
+  " set concealcursor=niv
+endif 
 
 
 " DEBUG ONLY==================================================================
