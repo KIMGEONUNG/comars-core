@@ -3,7 +3,7 @@
 # SUMMARY: Print repository url or start browser
 
 gitdir=`find . -type d | grep .git$`
-if [ -z $gitdir ] 
+if [ -z "${gitdir}" ] 
 then
     echo There is no '.git' directory.
     echo Check whether current directory is root of repository.

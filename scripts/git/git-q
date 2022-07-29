@@ -4,6 +4,5 @@ git add .
 git mcommit "update: trivial" 
 
 if [ -z "$(git url | grep 'URL not found')" ]; then
-    echo heelo
-    # git push
+    git push
 fi
