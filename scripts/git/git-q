@@ -3,6 +3,6 @@
 git add .
 git mcommit "update: trivial" 
 
-if [[ -z $(git url | grep 'URL not found') ]]; then
+if [ -z $(git url | grep 'URL not found') ]; then
     git push
 fi
