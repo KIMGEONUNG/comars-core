@@ -16,12 +16,9 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-nvim-lua'
 
   -- SNIPS
-  -- use 'Shougo/neosnippet.vim'
-  -- use 'Shougo/neosnippet-snippets'
-  -- use 'hrsh7th/cmp-vsnip'
-  -- use 'hrsh7th/vim-vsnip'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'L3MON4D3/LuaSnip'
+  use 'L3MON4D3/LuaSnip' -- SNIPPET FRAMEWORK
+  use 'saadparwaiz1/cmp_luasnip' -- CONNECT LUASNIP TO NVIM-CMP
+  use "rafamadriz/friendly-snippets" -- ACTUAL SNIPPET DEFINITIONS
 
   -- NAVIGATION
   use {
