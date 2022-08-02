@@ -1,6 +1,6 @@
 vim.opt.scrolloff=8
-vim.opt.ts=4
-vim.opt.shiftwidth=4
+vim.opt.ts=2
+vim.opt.shiftwidth=2
 
 vim.opt.exrc = true
 

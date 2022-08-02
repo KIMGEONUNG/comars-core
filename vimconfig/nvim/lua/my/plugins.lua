@@ -1,5 +1,11 @@
 -- PLUSGINS -------------------------------------------------------------------
 
+
+-- This file can be loaded by calling `lua require('plugins')` from your init.vim
+
+-- Only required if you have packer configured as `opt`
+
+
 vim.cmd([[
 
 filetype off                  " required
@@ -17,7 +23,7 @@ Plugin 'iamcco/markdown-preview.nvim'
 
 Plugin 'neovim/nvim-lspconfig'
 " Plugin 'kabouzeid/nvim-lspinstall'
-Plugin 'nvim-lua/completion-nvim'
+" Plugin 'nvim-lua/completion-nvim'
 
 Plugin 'Shougo/neosnippet.vim'
 Plugin 'Shougo/neosnippet-snippets'
