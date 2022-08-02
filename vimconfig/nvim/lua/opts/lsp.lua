@@ -27,7 +27,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 
   -- UNKNOWN USAGES BELOWS
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
 
   -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
   -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -45,8 +45,7 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
-  -- debounce_text_changes = 150,
-  debounce_text_changes = 20,
+  debounce_text_changes = 150,
 }
 
 require('lspconfig').pylsp.setup{
@@ -55,49 +54,15 @@ require('lspconfig').pylsp.setup{
     capabilities = capabilities,
 }
 
-require'lspconfig'.bashls.setup{}
-require'lspconfig'.vimls.setup{}
-require'lspconfig'.hls.setup{}
-require'lspconfig'.jsonls.setup{}
-require'lspconfig'.bashls.setup{}
-require'lspconfig'.clangd.setup{}
+require'lspconfig'.clangd.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
 
--- require'lspconfig'.sumneko_lua.setup {
---   settings = {
---     Lua = {
---       runtime = {
---         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
---         version = 'LuaJIT',
---       },
---       diagnostics = {
---         -- Get the language server to recognize the `vim` global
---         globals = {'vim'},
---       },
---       workspace = {
---         -- Make the server aware of Neovim runtime files
---         library = vim.api.nvim_get_runtime_file("", true),
---       },
---       -- Do not send telemetry data containing a randomized but unique identifier
---       telemetry = {
---         enable = false,
---       },
---     },
---   },
--- }
---
---
--- --Enable (broadcasting) snippet capability for completion
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
---
--- require'lspconfig'.html.setup{on_attach=require'completion'.on_attach, 
--- capabilities = capabilities,
--- cmd={ "vscode-html-language-server", "--stdio" },
--- init_options={
---       configurationSection = { "html", "css", "javascript" },
---       embeddedLanguages = {
---         css = true,
---         javascript = true
---       },
---       provideFormatter = true
---     }
--- }
+require'lspconfig'.sumneko_lua.setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
+require'lspconfig'.bashls.setup{}

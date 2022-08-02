@@ -247,3 +247,5 @@ if [ $(cat /etc/hostname) == 'comar-laptop' ]; then
 fi
 
 # export LC_ALL="en_US.UTF-8"
+alias luamake=/home/comar/.config/lsp/lua-language-server/3rd/luamake/luamake
+export PATH="${HOME}/.config/lsp/lua-language-server/bin:${PATH}"

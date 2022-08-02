@@ -1,28 +1,18 @@
-require("my.opts")
-require("my.functions")
-require("my.maps")
+require("set")
+require("remap")
+require("functions")
 require("plugins")
-require("my.scheme")
-require("my.debug")
+require("scheme")
+require("debug")
 
 -- NAVIGATION UTILITIES
-require("popts.telescope")
+require("opts.telescope")
 
 -- LANGUAGE SERVER PROTOCOL
-require("popts.lsp")
+require("opts.lsp")
 
 -- AUTOCOMPLETE, SNIPPET
-require("popts.autocomplete")
--- require("popts.snippet")
+require("opts.autocomplete")
 
 -- DEBBUGER
--- require("popts.vimspector")
-
---- ETC -----------------------------------------------------------------------
-vim.cmd([[
-
-" # NERD-TREE=================================================================
-map <C-n> :NERDTreeToggle<CR>
-" set guifont=DroidSansMono\ Nerd\ Font\ 11
-
-]])
+require("opts.vimspector")
