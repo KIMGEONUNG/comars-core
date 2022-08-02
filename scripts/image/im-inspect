@@ -4,9 +4,11 @@ import sys
 import torchvision.transforms as transforms
 from PIL import Image
 from os.path import exists
-from torchvision.transforms import ToPILImage, ToTensor
+from torchvision.transforms import ToPILImage, ToTensor, Grayscale
 import matplotlib.pyplot as plt
 import torch 
+from pycomar.utils import Counter
+from pycomar.images.colorspace import rgb2yuv
 
 
 def parse():
@@ -16,19 +18,18 @@ def parse():
     return parser.parse_args()
 
 
-class Counter(object):
-
-    def __init__(self):
-        self.num = 0
-
-    def next(self):
-        self.num += 1
-        return self.num
+def tofourier(x):
+    a: torch.Tensor = torch.fft.fftshift(torch.fft.fft2(x))
+    spectrum = a.abs().log()
+    spectrum = spectrum - spectrum.min()
+    spectrum = spectrum / spectrum.max()
+    return spectrum
 
 
 def main():
     args = parse()
     counter = Counter()
+    fontsize = 25
 
     if not exists(args.path):
         print("No such file %s" % args.path, file=sys.stderr)
@@ -37,29 +38,65 @@ def main():
     im = Image.open(args.path)
 
     rgb = ToTensor()(im)
+    yuv = rgb2yuv(rgb)
+    y, u, v = [item.squeeze() for item in torch.split(yuv, 1, dim=0)]
+    u += 0.5
+    v += 0.5
+
     r, g, b = torch.split(rgb, 1, dim=0)
     r, g, b = r.squeeze(), g.squeeze(), b.squeeze()
 
+    fs_y = tofourier(y)
+    fs_u = tofourier(u)
+    fs_v = tofourier(v)
 
-    plt.rcParams["figure.figsize"] = (19,8)
-    n_col = 1
+    plt.rcParams["figure.figsize"] = (24, 20)
+    n_col = 3
     n_row = 4
 
     plt.subplot(n_col, n_row, counter.next())
-    plt.title("RGB")
+    plt.title("RGB", fontsize=fontsize)
     plt.imshow(im)
 
     plt.subplot(n_col, n_row, counter.next())
-    plt.title("R")
+    plt.title("R", fontsize=fontsize)
     plt.imshow(r, cmap="gray")
 
     plt.subplot(n_col, n_row, counter.next())
-    plt.title("G")
+    plt.title("G", fontsize=fontsize)
     plt.imshow(g, cmap="gray")
 
     plt.subplot(n_col, n_row, counter.next())
-    plt.title("B")
+    plt.title("B", fontsize=fontsize)
     plt.imshow(b, cmap="gray")
+
+    counter.next()
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("GRAY", fontsize=fontsize)
+    plt.imshow(Grayscale()(im), cmap="gray")
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("U", fontsize=fontsize)
+    plt.imshow(u, cmap="gray")
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("V", fontsize=fontsize)
+    plt.imshow(v, cmap="gray")
+
+    counter.next()
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("FS of Gray", fontsize=fontsize)
+    plt.imshow(fs_y, cmap="gray")
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("FS_U", fontsize=fontsize)
+    plt.imshow(fs_u, cmap="gray")
+
+    plt.subplot(n_col, n_row, counter.next())
+    plt.title("FS_V", fontsize=fontsize)
+    plt.imshow(fs_v, cmap="gray")
 
     plt.tight_layout()
     plt.show()
