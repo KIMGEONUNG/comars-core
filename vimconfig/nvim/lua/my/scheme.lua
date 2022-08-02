@@ -11,4 +11,9 @@ let g:gruvbox_invert_selection='0'
 colorscheme gruvbox 
 set background=dark
 
+" # AIRLINE===================================================================
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='gruvbox'
+let g:airline_powerline_fonts = 1
+
 ]])
