@@ -18,7 +18,7 @@ return require('packer').startup(function(use)
   -- SNIPS
   use 'L3MON4D3/LuaSnip' -- SNIPPET FRAMEWORK
   use 'saadparwaiz1/cmp_luasnip' -- CONNECT LUASNIP TO NVIM-CMP
-  use "rafamadriz/friendly-snippets" -- ACTUAL SNIPPET DEFINITIONS
+  use "rafamadriz/friendly-snippets" -- SNIPPETS COLLECTION
 
   -- NAVIGATION
   use {
@@ -34,7 +34,7 @@ return require('packer').startup(function(use)
 
   -- PREVIEW
   use 'turbio/bracey.vim' -- HTML PREVIEW
-  use 'iamcco/markdown-preview.nvim'
+  use { 'iamcco/markdown-preview.nvim', run = 'cd app && ./install.sh' }
 
   -- BRAKET CONTROL UTILITIES
   use 'tpope/vim-surround'

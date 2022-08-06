@@ -53,7 +53,8 @@ cmp.setup({
   },
 })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+-- USE CMDLINE & PATH SOURCE FOR ':'
+-- IF YOU ENABLED `NATIVE_MENU`, THIS WON'T WORK ANYMORE.
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
@@ -65,3 +66,4 @@ cmp.setup.cmdline(':', {
 
 
 require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").load({ paths = { "./my-snippets" } })

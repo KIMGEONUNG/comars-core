@@ -52,7 +52,19 @@ require('lspconfig').pylsp.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    settings = {
+      pylsp = {
+        configurationSources = {"flake8"},
+        plugins = {
+          flake8 = {
+            indentSize = 2,
+          }
+        }
+      }
+    }
 }
+-- pylsp.plugins.flake8.indentSize
+
 
 require'lspconfig'.clangd.setup{
     on_attach = on_attach,
