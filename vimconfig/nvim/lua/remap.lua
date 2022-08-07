@@ -40,12 +40,12 @@ remap('n', '<leader>E', ':call ExecutePredef()<CR>',
 { noremap = true, silent = false })
 
 -- BUFFER CONTORL
-remap('n', '<leader>bn', ':bn<CR>', { noremap = true, silent = true })
-remap('n', '<leader>bp', ':bp<CR>', { noremap = true, silent = true })
-remap('n', '<leader>bw', ':bw<CR>', { noremap = true, silent = true })
+remap('n', '<leader>bn', ':bnext<CR>', { noremap = true, silent = true })
+remap('n', '<leader>bp', ':bprevious<CR>', { noremap = true, silent = true })
+remap('n', '<leader>bw', ':bwipe<CR>', { noremap = true, silent = true })
 vim.cmd([[
 " close all buffers except current one
-command! BufCurOnly execute '%bd|e#'
+command! BufCurOnly execute '%bdelete|edit#|bdelete#'
 ]])
 remap('n', '<leader>bd', ':BufCurOnly<CR>', { noremap = true, silent = true })
 
