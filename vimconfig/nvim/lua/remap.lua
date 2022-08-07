@@ -46,8 +46,8 @@ remap('n', '<leader>bw', ':bw<CR>', { noremap = true, silent = true })
 vim.cmd([[
 " close all buffers except current one
 command! BufCurOnly execute '%bd|e#'
-nnoremap <Leader>bd :BufCurOnly<CR>
 ]])
+remap('n', '<leader>bd', ':BufCurOnly<CR>', { noremap = true, silent = true })
 
 -- KEEPING IT CENTERED
 remap('n', 'n', 'nzz', { noremap = true, silent = true })

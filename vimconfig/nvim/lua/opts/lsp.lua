@@ -21,7 +21,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
 
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<c-f>', vim.lsp.buf.formatting, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -54,8 +54,15 @@ require('lspconfig').pylsp.setup{
     capabilities = capabilities,
     settings = {
       pylsp = {
-        configurationSources = {"flake8"},
+        -- configurationSources = {"flake8"},
         plugins = {
+          autopep8 = {
+            enabled = false,
+          },
+          yapf = {
+            enabled = true,
+          },
+
           flake8 = {
             indentSize = 2,
           }

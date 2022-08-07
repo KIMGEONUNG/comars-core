@@ -2,8 +2,12 @@
 
 set -e
 
-echo \# Build vim configuration
+echo \# BUILD VIM CONFIGURATION
 
-# shared vimrc and newvimrc
+# SHARED VIMRC AND NEWVIMRC
 mkdir -p ~/.config
 ln -s $(pwd)/nvim ~/.config/ -f -v
+
+# LINK FOR CONFIGS
+ln -sfv $(pwd)/pycodestyle ~/.config/pycodestyle
+ln -sfv $(pwd)/.style.yapf ~/.style.yapf
