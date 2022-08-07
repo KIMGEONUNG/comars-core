@@ -1,10 +1,9 @@
-
 -- OFF THE UNDERLINE WHEN WARNING OR ERROR EXIT
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-      vim.lsp.with(
-          vim.lsp.diagnostic.on_publish_diagnostics,
-          { underline = false }
-      )
+vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics,
+  { underline = false }
+)
 
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
@@ -12,7 +11,7 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
 
@@ -24,19 +23,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<c-f>', vim.lsp.buf.formatting, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 
+  -- SHOW ME THE DOCUMENTATION
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-
-  -- UNKNOWN USAGES BELOWS
-  -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-
-  -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  -- vim.keymap.set('n', '<space>wl', function()
-  --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  -- end, bufopts)
-  --
-  -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
 end
 
 -- UNKNOWN
@@ -48,40 +36,61 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
-require('lspconfig').pylsp.setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-    settings = {
-      pylsp = {
-        -- configurationSources = {"flake8"},
-        plugins = {
-          autopep8 = {
-            enabled = false,
-          },
-          yapf = {
-            enabled = true,
-          },
+require('lspconfig').pylsp.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  settings = {
+    pylsp = {
+      -- configurationSources = {"flake8"},
+      plugins = {
+        autopep8 = {
+          enabled = false,
+        },
+        yapf = {
+          enabled = true,
+        },
 
-          flake8 = {
-            indentSize = 2,
-          }
+        flake8 = {
+          indentSize = 2,
         }
       }
     }
+  }
 }
 -- pylsp.plugins.flake8.indentSize
 
 
-require'lspconfig'.clangd.setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
+require 'lspconfig'.clangd.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
 }
 
-require'lspconfig'.sumneko_lua.setup {
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
+require 'lspconfig'.sumneko_lua.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = vim.split(package.path, ';'),
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = {
+          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+        },
+      },
+    },
+  }
 }
-require'lspconfig'.bashls.setup{}
+require 'lspconfig'.bashls.setup {}
