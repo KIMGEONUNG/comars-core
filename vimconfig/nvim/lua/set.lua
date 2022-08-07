@@ -30,11 +30,9 @@ vim.g.python3_host_prog = '/home/comar/anaconda3/bin/python3'
 -- FOR SOME REASON, CERTAIN OPTIONS IN PYTHON CANNOT BE CHANGED USING A NAIVE 
 -- ASSIGNMENT. SO WE USE AUTOMCD TRICK LIKE BELOW.
 vim.cmd([[
-" :au BufEnter *.py setlocal tabstop=2
-" :au BufEnter *.py setlocal shiftwidth=2
-
 autocmd FileType python set shiftwidth=2
 autocmd FileType python set tabstop=2
 autocmd FileType python set softtabstop=2
+autocmd FileType python set expandtab
 ]])
 -- :au BufEnter *.py setlocal expandtab=True

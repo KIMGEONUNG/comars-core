@@ -38,6 +38,7 @@ return require('packer').startup(function(use)
 
   -- BRAKET CONTROL UTILITIES
   use 'tpope/vim-surround'
+  use 'Raimondi/delimitMate' -- AUTO BRACE CLOSING
 
   -- COMMENT UTILITIES
   use 'tomtom/tcomment_vim'

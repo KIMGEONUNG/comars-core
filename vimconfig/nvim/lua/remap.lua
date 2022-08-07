@@ -54,19 +54,29 @@ remap('n', 'n', 'nzz', { noremap = true, silent = true })
 remap('n', 'N', 'Nzz', { noremap = true, silent = true })
 remap('n', 'J', "mzJ'z", { noremap = true, silent = true })
 
+-- AUTO BRACE CLOSING
+vim.cmd([[
+" inoremap "<leader> ""<left>
+" inoremap '<leader> ''<left>
+" inoremap (<leader> ()<left>
+" inoremap [<leader> []<left>
+" inoremap {<leader> {}<left>
+]])
+
 -- ETC
 remap('n', '<leader>nh', ':nohlsearch<CR>', { noremap = true, silent = true })
 remap('n', 'ci,', ':call DeleteInnerArg()<CR>', { noremap = true, silent = true })
 remap({ 'n', 'i', 'v', 'c' }, '<c-q>', '<esc>', { noremap = true, silent = true })
 
+remap('n', 'Y', 'y$', { noremap = true, silent = true })
+
+
+-- UNKNOWN OR ARCHIVE
+
 -- remap('n', '<c-f>,', 'W', { noremap = true, silent = true })
 -- remap('n', '<c-b>,', 'B', { noremap = true, silent = true })
 -- remap('n', '<c-e>,', '$h', { noremap = true, silent = true })
 
-remap('n', 'Y', 'y$', { noremap = true, silent = true })
-
--- UNKNOWN OR ARCHIVE
---
 -- nnoremap <C-e> <ESC>$
 -- vnoremap J :m '>+1<CR>gv=gv
 -- vnoremap K :m '<-2<CR>gv=gv
