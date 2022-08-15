@@ -12,79 +12,79 @@ from random import shuffle
 
 
 def parse():
-    import argparse
-    parser = argparse.ArgumentParser(description='Image view with grid')
-    parser.add_argument('path_dir', type=str)
-    parser.add_argument('--size', type=int, default=256)
-    parser.add_argument('--ccrop', action='store_true')
-    parser.add_argument('--mode', type=str, default='sort',
-                        choices=['sort', 'random'])
-    parser.add_argument('--seed', type=int, default=None)
+  import argparse
+  parser = argparse.ArgumentParser(description='Image view with grid')
+  parser.add_argument('path_dir', type=str)
+  parser.add_argument('--size', type=int, default=256)
+  parser.add_argument('--ccrop', action='store_true')
+  parser.add_argument('--mode',
+                      type=str,
+                      default='sort',
+                      choices=['sort', 'random'])
+  parser.add_argument('--seed', type=int, default=None)
 
-    parser.add_argument('--num_row', type=int, default=10)
-    parser.add_argument('--num_col', type=int, default=10)
-    parser.add_argument('--max_iter', type=int, default=100000)
-    parser.add_argument('--pad_value', type=int, default=0)
-    parser.add_argument('--padding', type=int, default=0)
-    parser.add_argument('--postfix', type=str, default='grid')
-    return parser.parse_args()
+  parser.add_argument('--num_row', type=int, default=10)
+  parser.add_argument('--num_col', type=int, default=10)
+  parser.add_argument('--max_iter', type=int, default=100000)
+  parser.add_argument('--pad_value', type=int, default=0)
+  parser.add_argument('--padding', type=int, default=0)
+  parser.add_argument('--postfix', type=str, default='grid')
+  return parser.parse_args()
 
 
 def rm_last_slash(s: str):
-    if s[-1:] == '/':
-        s = s[:-1]
-    return s
+  if s[-1:] == '/':
+    s = s[:-1]
+  return s
 
 
 def main():
-    args = parse()
+  args = parse()
 
+  path_out = rm_last_slash(args.path_dir) + '_' + args.postfix
+
+  # Load file
+  if not os.path.exists(args.path_dir):
+    raise FileNotFoundError(args.path_dir)
+
+  if not os.path.exists(path_out):
+    os.mkdir(path_out)
+
+  paths = [os.path.join(args.path_dir, p) for p in os.listdir(args.path_dir)]
+  paths.sort()
+
+  if args.mode == 'random':
     if args.seed is not None:
-        random.seed(args.seed)
+      random.seed(args.seed)
+    shuffle(paths)
 
-    path_out = rm_last_slash(args.path_dir) + '_' + args.postfix
+  num_unit = args.num_row * args.num_col
+  num_iter = len(paths) // num_unit
 
-    # Load file
-    if not os.path.exists(args.path_dir):
-        raise FileNotFoundError(args.path_dir)
+  if args.ccrop:
+    prep = Compose([
+        ToTensor(),
+        Resize((args.size)),
+        CenterCrop(args.size),
+    ])
+  else:
+    prep = Compose([ToTensor(), Resize((args.size, args.size))])
+  for i in tqdm(range(num_iter)):
+    if i >= args.max_iter:
+      break
 
-    if not os.path.exists(path_out):
-        os.mkdir(path_out)
+    target_files = paths[i * num_unit:(i + 1) * num_unit]
+    targets = [Image.open(target).convert('RGB') for target in target_files]
+    targets = [prep(target).unsqueeze(0) for target in targets]
+    target = torch.cat(targets, dim=0)
+    target = make_grid(target,
+                       args.num_row,
+                       padding=args.padding,
+                       pad_value=args.pad_value)
 
-    paths = [os.path.join(args.path_dir, p) for p in os.listdir(args.path_dir)]
-
-    if args.mode == 'sort':
-        paths.sort()
-    elif args.mode == 'random':
-        shuffle(paths)
-    else:
-        raise Exception('Invalid mode')
-
-    num_unit = args.num_row * args.num_col
-    num_iter = len(paths) // num_unit
-
-    if args.ccrop:
-        prep = Compose([ToTensor(),
-            Resize((args.size)),
-            CenterCrop(args.size),
-            ])
-    else:
-        prep = Compose([ToTensor(),
-            Resize((args.size, args.size))])
-    for i in tqdm(range(num_iter)):
-        if i >= args.max_iter:
-            break
-
-        target_files = paths[i * num_unit:(i + 1) * num_unit]
-        targets = [Image.open(target).convert('RGB') for target in target_files]
-        targets = [prep(target).unsqueeze(0) for target in targets]
-        target = torch.cat(targets, dim=0)
-        target = make_grid(target, args.num_row,
-            padding=args.padding, pad_value=args.pad_value)
-
-        im: Image = transforms.ToPILImage()(target)
-        im.save(os.path.join(path_out, '%05d.jpg' % i))
+    im: Image = transforms.ToPILImage()(target)
+    im.save(os.path.join(path_out, '%05d.jpg' % i))
 
 
 if __name__ == '__main__':
-    main()
+  main()
