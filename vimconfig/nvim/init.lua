@@ -16,3 +16,6 @@ require("opts.autocomplete")
 
 -- DEBBUGER
 require("opts.vimspector")
+
+-- LATEX USING VIM
+require("opts.vimtex")

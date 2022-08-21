@@ -198,6 +198,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/vimspector",
     url = "https://github.com/puremourning/vimspector"
+  },
+  vimtex = {
+    loaded = true,
+    path = "/home/comar/.local/share/nvim/site/pack/packer/start/vimtex",
+    url = "https://github.com/lervag/vimtex"
   }
 }
 

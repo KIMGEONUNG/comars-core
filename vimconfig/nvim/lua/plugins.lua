@@ -52,4 +52,7 @@ return require('packer').startup(function(use)
   -- NERDTREE
   use 'preservim/nerdtree'
   use 'ryanoasis/vim-devicons'
+
+  -- LaTex with vim
+  use 'lervag/vimtex'
 end)
