@@ -6,102 +6,103 @@ from PIL import Image
 from os.path import exists
 from torchvision.transforms import ToPILImage, ToTensor, Grayscale
 import matplotlib.pyplot as plt
-import torch 
+import torch
 from pycomar.utils import Counter
-from pycomar.images.colorspace import rgb2yuv
+from pycomar.images.colorspace import rgb2yuv, rgb2hsv
 
 
 def parse():
-    import argparse
-    parser = argparse.ArgumentParser(description='Inspect image')
-    parser.add_argument('path')
-    return parser.parse_args()
+  import argparse
+  parser = argparse.ArgumentParser(description='Inspect image')
+  parser.add_argument('path')
+  return parser.parse_args()
 
 
 def tofourier(x):
-    a: torch.Tensor = torch.fft.fftshift(torch.fft.fft2(x))
-    spectrum = a.abs().log()
-    spectrum = spectrum - spectrum.min()
-    spectrum = spectrum / spectrum.max()
-    return spectrum
+  a: torch.Tensor = torch.fft.fftshift(torch.fft.fft2(x))
+  spectrum = a.abs().log()
+  spectrum = spectrum - spectrum.min()
+  spectrum = spectrum / spectrum.max()
+  return spectrum
 
 
 def main():
-    args = parse()
-    counter = Counter()
-    fontsize = 25
+  args = parse()
+  counter = Counter()
+  fontsize = 25
 
-    if not exists(args.path):
-        print("No such file %s" % args.path, file=sys.stderr)
-        return 2
+  if not exists(args.path):
+    print("No such file %s" % args.path, file=sys.stderr)
+    return 2
 
-    im = Image.open(args.path)
+  im = Image.open(args.path)
 
-    rgb = ToTensor()(im)
-    yuv = rgb2yuv(rgb)
-    y, u, v = [item.squeeze() for item in torch.split(yuv, 1, dim=0)]
-    u += 0.5
-    v += 0.5
+  rgb = ToTensor()(im)
 
-    r, g, b = torch.split(rgb, 1, dim=0)
-    r, g, b = r.squeeze(), g.squeeze(), b.squeeze()
+  r, g, b = rgb
+  y, u, v = rgb2yuv(rgb)
+  h, s, _ = rgb2hsv(rgb)
 
-    fs_y = tofourier(y)
-    fs_u = tofourier(u)
-    fs_v = tofourier(v)
+  u += 0.5
+  v += 0.5
 
-    plt.rcParams["figure.figsize"] = (24, 20)
-    n_col = 3
-    n_row = 4
+  fs_y = tofourier(y)
+  fs_u = tofourier(u)
+  fs_v = tofourier(v)
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("RGB", fontsize=fontsize)
-    plt.imshow(im)
+  plt.rcParams["figure.figsize"] = (24, 20)
+  n_col = 3
+  n_row = 4
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("R", fontsize=fontsize)
-    plt.imshow(r, cmap="gray")
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("RGB", fontsize=fontsize)
+  plt.imshow(im)
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("G", fontsize=fontsize)
-    plt.imshow(g, cmap="gray")
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("R", fontsize=fontsize)
+  plt.imshow(r, cmap="gray")
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("B", fontsize=fontsize)
-    plt.imshow(b, cmap="gray")
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("G", fontsize=fontsize)
+  plt.imshow(g, cmap="gray")
 
-    counter.next()
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("B", fontsize=fontsize)
+  plt.imshow(b, cmap="gray")
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("GRAY", fontsize=fontsize)
-    plt.imshow(Grayscale()(im), cmap="gray")
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("Saturation", fontsize=fontsize)
+  plt.imshow(s, cmap="gray")
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("U", fontsize=fontsize)
-    plt.imshow(u, cmap="gray")
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("GRAY", fontsize=fontsize)
+  plt.imshow(Grayscale()(im), cmap="gray")
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("V", fontsize=fontsize)
-    plt.imshow(v, cmap="gray")
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("U", fontsize=fontsize)
+  plt.imshow(u, cmap="gray")
 
-    counter.next()
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("V", fontsize=fontsize)
+  plt.imshow(v, cmap="gray")
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("FS of Gray", fontsize=fontsize)
-    plt.imshow(fs_y, cmap="gray")
+  counter.next()
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("FS_U", fontsize=fontsize)
-    plt.imshow(fs_u, cmap="gray")
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("FS of Gray", fontsize=fontsize)
+  plt.imshow(fs_y, cmap="gray")
 
-    plt.subplot(n_col, n_row, counter.next())
-    plt.title("FS_V", fontsize=fontsize)
-    plt.imshow(fs_v, cmap="gray")
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("FS_U", fontsize=fontsize)
+  plt.imshow(fs_u, cmap="gray")
 
-    plt.tight_layout()
-    plt.show()
+  plt.subplot(n_col, n_row, counter.next())
+  plt.title("FS_V", fontsize=fontsize)
+  plt.imshow(fs_v, cmap="gray")
+
+  plt.tight_layout()
+  plt.show()
 
 
 if __name__ == '__main__':
-    main()
-
+  main()
