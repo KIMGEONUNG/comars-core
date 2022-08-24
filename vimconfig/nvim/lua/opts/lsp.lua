@@ -50,10 +50,10 @@ require('lspconfig').pylsp.setup {
         yapf = {
           enabled = true,
         },
-
-        flake8 = {
-          indentSize = 2,
-        }
+        --
+        -- flake8 = {
+        --   indentSize = 2,
+        -- }
       }
     }
   }

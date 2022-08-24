@@ -28,7 +28,7 @@ cmp.setup({
         luasnip.expand_or_jump()
       end
     end, { "i", "s" }),
-    
+
     ["<c-j>"] = cmp.mapping(function()
       if luasnip.jumpable(-1) then
         luasnip.jump(-1)

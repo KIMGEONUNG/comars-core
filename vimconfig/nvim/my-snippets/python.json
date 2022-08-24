@@ -1,0 +1,8 @@
+{
+	"snip1": {
+		"prefix": "#!",
+		"body": [
+			"#!/usr/bin/env python"
+		]
+	}
+}
