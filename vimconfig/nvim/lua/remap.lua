@@ -3,6 +3,9 @@ local remap = vim.keymap.set
 remap('n', '<space>', '<nop>', {})
 vim.g.mapleader=" "
 
+-- DELETE A WORD IN INSERT MODE
+remap('i', '<c-d>', '<c-w>', { noremap = true, silent = true })
+
 -- WORK IN QUICK FIX LIST
 remap('n', '<c-j>', ':cnext<CR>', { noremap = true, silent = true })
 remap('n', '<c-k>', ':cprevious<CR>', { noremap = true, silent = true })

@@ -16,51 +16,6 @@ end
 
 vim.cmd([[
 
-function! DeleteBackward() abort
-
-    return
-    let num_cur = col('.') - 2
-    " what are you trying to do.
-    " insert dkdk <c-h>
-
-    echom num_cur
-    return
-    while num_cur >= 0
-        let num_cur = col('.') - 2
-        let char_cur = getline('.')[num_cur]
-        echo num_cur
-        echo char_cur
-        echo "hel"
-        break
-        if char_cur == ' ' || char_cur == '_' || char_cur == '.'
-            break
-        endif
-        normal X
-    endwhile
-
-    " echo num_cur
-    " echo char_cur 
-    " echo "hell" 
-    return
-    let num_line = line('.')
-    let num_col = col('.')
-    let num_end = 1
-
-    while num_col >= num_end 
-        let num_col -= 1
-        let c_cur = getline('.')[num_col]
-        if c_cur == ' ' || c_cur == '_' || c_cur == '.'
-            let num_end = num_col + 1
-            break
-        endif
-    endwhile
-
-    normal v
-    call cursor(num_line, num_end)
-    normal x
-
-endfunction
-
 function! ExecutePredef()
     write
     if filereadable('vim.run.sh')
