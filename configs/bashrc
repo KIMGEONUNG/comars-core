@@ -225,7 +225,7 @@ function color_my_prompt {
 }
 color_my_prompt
 
-export VISUAL="/usr/bin/vim"
+export VISUAL="/usr/bin/nvim"
 export EDITOR="$VISUAL"
 export CUDA_HOME="/usr/local/cuda-11.3"
 export PATH=$PATH:$CUDA_HOME/bin
@@ -246,6 +246,68 @@ if [ $(cat /etc/hostname) == 'comar-laptop' ]; then
     xmodmap -e 'keycode 64 = Control_L' # Alt_L 
 fi
 
-# export LC_ALL="en_US.UTF-8"
+# ENROLL LUA-LSP INTO PATH ENVIRONMENT VARIABLE
 alias luamake=/home/comar/.config/lsp/lua-language-server/3rd/luamake/luamake
 export PATH="${HOME}/.config/lsp/lua-language-server/bin:${PATH}"
+
+# EASY NAVIGATION
+alias .-="cd -"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+alias .......="cd ../../../../../.."
+alias ........="cd ../../../../../../.."
+alias .........="cd ../../../../../../../.."
+alias ..........="cd ../../../../../../../../.."
+alias ...........="cd ../../../../../../../../../.."
+alias ............="cd ../../../../../../../../../../.."
+alias .............="cd ../../../../../../../../../../../.."
+
+# FAST CHANGE DIRECTORY
+export CDPATH="$HOME/repos"
+
+# PUSHD AND PIPD AS DEFAULT
+cd() {
+  if [ "$#" = "0" ]
+  then
+  pushd ${HOME} > /dev/null
+  elif [ -f "${1}" ]
+  then
+    ${EDITOR} ${1}
+  else
+  pushd "$1" > /dev/null
+  fi
+}
+
+bd(){
+  if [ "$#" = "0" ]
+  then
+    popd > /dev/null
+  else
+    for i in $(seq ${1})
+    do
+      popd > /dev/null
+    done
+  fi
+}
+
+# ls_number
+alias lsn="ls -rt1 | tac | cat -n | sed -s 's/^\s*\([0-9]*\)\s*\(.*\)/[\1]\t\2/'"
+
+lf() {
+    if [ "x${1}" == "x" ]
+    then
+        n=1 
+    else
+        n="${1}"
+    fi  
+    ls -rt1 | tail -n ${n} | head -n 1
+}
+
+cdn ()
+{
+  cd $(lf $1)
+}
+
