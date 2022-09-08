@@ -19,3 +19,5 @@ require("opts.vimspector")
 
 -- LATEX USING VIM
 require("opts.vimtex")
+
+require("opts.toggleterm")

@@ -22,8 +22,8 @@ return require('packer').startup(function(use)
 
   -- NAVIGATION
   use {
-        'nvim-telescope/telescope.nvim',
-        requires = { {'nvim-lua/plenary.nvim'} }
+    'nvim-telescope/telescope.nvim',
+    requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
   -- UI
@@ -43,7 +43,7 @@ return require('packer').startup(function(use)
   -- COMMENT UTILITIES
   use 'tomtom/tcomment_vim'
 
-  -- MAXIMIZES AND RESTORES THE CURRENT WINDOW IN VIM. 
+  -- MAXIMIZES AND RESTORES THE CURRENT WINDOW IN VIM.
   use 'szw/vim-maximizer'
 
   -- VIM DEBUGGER
@@ -61,5 +61,15 @@ return require('packer').startup(function(use)
   use 'tpope/vim-fugitive' -- GIT COMMAND IN VIM
   use 'tpope/vim-rhubarb' -- FAST URL OPEN WITH :GBrowse
   use 'junegunn/gv.vim' -- SHOW COMMIT BROWSER WITH :GV
+
+  -- FILESYSTEM : FILE ADD, REMOVE, RENAME
+  use 'tpope/vim-eunuch'
+
+  -- VIM IN TERMINAL
+  use 'akinsho/toggleterm.nvim'
+  -- use { "akinsho/toggleterm.nvim", tag = '*', config = function()
+  --   require("toggleterm").setup{ open_mapping = [[<c-\>]],
+  -- }
+  -- end }
 
 end)
