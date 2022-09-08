@@ -31,6 +31,7 @@ return require('packer').startup(function(use)
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
   use 'kyazdani42/nvim-web-devicons'
+  use 'folke/tokyonight.nvim'
 
   -- PREVIEW
   use 'turbio/bracey.vim' -- HTML PREVIEW
@@ -67,9 +68,6 @@ return require('packer').startup(function(use)
 
   -- VIM IN TERMINAL
   use 'akinsho/toggleterm.nvim'
-  -- use { "akinsho/toggleterm.nvim", tag = '*', config = function()
-  --   require("toggleterm").setup{ open_mapping = [[<c-\>]],
-  -- }
-  -- end }
+
 
 end)
