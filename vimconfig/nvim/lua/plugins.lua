@@ -55,4 +55,11 @@ return require('packer').startup(function(use)
 
   -- LaTex with vim
   use 'lervag/vimtex'
+
+  -- GIT
+  use 'mhinz/vim-signify' -- SIGN COLUMN TO INDICATE MODIFIED LINES
+  use 'tpope/vim-fugitive' -- GIT COMMAND IN VIM
+  use 'tpope/vim-rhubarb' -- FAST URL OPEN WITH :GBrowse
+  use 'junegunn/gv.vim' -- SHOW COMMIT BROWSER WITH :GV
+
 end)
