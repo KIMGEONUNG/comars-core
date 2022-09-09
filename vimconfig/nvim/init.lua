@@ -2,7 +2,7 @@ require("set")
 require("remap")
 require("functions")
 require("plugins")
-require("scheme")
+require("color")
 require("debug")
 
 -- NAVIGATION UTILITIES
