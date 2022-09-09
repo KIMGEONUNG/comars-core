@@ -10,7 +10,7 @@ CWD=$(pwd)
 SESSION_NAME="${1:-unknown}"
 
 # detach from a tmux session if in one
-tmux detach > /dev/null
+# tmux detach > /dev/null
 
 # Create a new session, -d means detached itself
 set -- $(stty size) # $1 = rows $2 = columns
