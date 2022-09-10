@@ -1,12 +1,12 @@
 {
-	"name": "example-snippets",
+	"name": "my-snippets",
 	"contributes": {
 		"snippets": [
 			{
 				"language": [
 					"all"
 				],
-				"path": "./snippets/all.json"
+				"path": "./all.json"
 			},
 			{
 				"language": [
@@ -19,6 +19,12 @@
 					"python"
 				],
 				"path": "./python.json"
+			},
+			{
+				"language": [
+					"tex"
+				],
+				"path": "./tex.json"
 			}
 		]
 	},
