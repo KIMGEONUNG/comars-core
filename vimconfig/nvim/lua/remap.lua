@@ -57,47 +57,9 @@ remap('n', 'n', 'nzz', { noremap = true, silent = true })
 remap('n', 'N', 'Nzz', { noremap = true, silent = true })
 remap('n', 'J', "mzJ'z", { noremap = true, silent = true })
 
--- AUTO BRACE CLOSING
-vim.cmd([[
-" inoremap "<leader> ""<left>
-" inoremap '<leader> ''<left>
-" inoremap (<leader> ()<left>
-" inoremap [<leader> []<left>
-" inoremap {<leader> {}<left>
-]])
-
 -- ETC
 remap('n', '<leader>nh', ':nohlsearch<CR>', { noremap = true, silent = true })
 remap('n', 'ci,', ':call DeleteInnerArg()<CR>', { noremap = true, silent = true })
 remap({ 'n', 'i', 'v', 'c' }, '<c-q>', '<esc>', { noremap = true, silent = true })
 
 remap('n', 'Y', 'y$', { noremap = true, silent = true })
-
-
--- UNKNOWN OR ARCHIVE
-
--- remap('n', '<c-f>,', 'W', { noremap = true, silent = true })
--- remap('n', '<c-b>,', 'B', { noremap = true, silent = true })
--- remap('n', '<c-e>,', '$h', { noremap = true, silent = true })
-
--- nnoremap <C-e> <ESC>$
--- vnoremap J :m '>+1<CR>gv=gv
--- vnoremap K :m '<-2<CR>gv=gv
---
--- inoremap <C-@> <C-x><C-o>
---
--- " UNDO BREAK POINTS
--- inoremap , ,<c-g>u
--- inoremap . .<c-g>u
--- inoremap ! !<c-g>u
--- inoremap ? ?<c-g>u
---
--- " JUMPLIST MUTATION
--- nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
--- nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
-
--- " inoremap <C-a> <C-o>^
--- inoremap <C-e> <C-o>$
--- inoremap <C-f> <C-o>W
--- inoremap <C-b> <C-o>B
--- inoremap <C-l> <C-o>l

@@ -4,7 +4,7 @@ vim.opt.shiftwidth=2
 
 vim.opt.exrc = true
 
-vim.opt.incsearch = true 
+vim.opt.incsearch = true
 vim.opt.hlsearch = true
 vim.opt.expandtab = true
 vim.opt.autoindent = true
