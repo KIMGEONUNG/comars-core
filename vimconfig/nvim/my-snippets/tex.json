@@ -6,6 +6,8 @@
         "",
         "\\usepackage{amsmath,amssymb} % define this before the line numbering.",
         "\\usepackage{color}",
+        "% NARROW MARGIN AND LARGE FONTSIZE",
+        "\\usepackage[width=122mm,left=12mm,paperwidth=146mm,height=193mm,top=12mm,paperheight=217mm]{geometry}",
         "",
         "\\begin{document}",
         "",
