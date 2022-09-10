@@ -62,6 +62,8 @@
         "",
         "The conclusion is ...",
         "",
+        "\\bibliographystyle{splncs04}",
+        "\\bibliography{egbib}",
         "\\end{document}"
 		]
 	}
