@@ -1,3 +1,4 @@
 #!/bin/bash
 
 wget https://raw.githubusercontent.com/KIMGEONUNG/comars-core/master/resource/latex/llncs.cls
+wget https://raw.githubusercontent.com/KIMGEONUNG/comars-core/master/resource/latex/splncs04.bst
