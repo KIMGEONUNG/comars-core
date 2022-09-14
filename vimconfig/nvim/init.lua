@@ -21,3 +21,4 @@ require("opts.vimspector")
 require("opts.vimtex")
 
 require("opts.toggleterm")
+require("opts.surround")

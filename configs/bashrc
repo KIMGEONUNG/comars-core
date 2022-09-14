@@ -270,7 +270,9 @@ alias ............="cd ../../../../../../../../../../.."
 alias .............="cd ../../../../../../../../../../../.."
 
 # FAST CHANGE DIRECTORY
-export CDPATH="$HOME/repos"
+export CDPATH=""
+alias cdvim="cd ~/.config/nvim"
+alias cdvimp="cd ~/.local/share/nvim/site/pack/packer/start"
 
 # PUSHD AND PIPD AS DEFAULT
 cd() {

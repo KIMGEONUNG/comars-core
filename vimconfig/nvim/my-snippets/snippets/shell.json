@@ -1,0 +1,37 @@
+{
+  "args": {
+    "prefix": ["arg"],
+    "body": [
+      "while [[ $# -gt 0 ]]",
+      "do",
+      "    key=\"\\${1}\"",
+      "",
+      "    case \\${key} in",
+      "    -p|--path)",
+      "        path=\"\\${2}\"",
+      "        shift",
+      "        shift",
+      "        ;;",
+      "    -h|--help)",
+      "        echo \"${1:Description}\"",
+      "        shift # past argument",
+      "        ;;",
+      "    *)    # unknown option",
+      "        shift # past argument",
+      "        ;;",
+      "    esac",
+      "    shift",
+      "done",
+      "",
+      "if [ -z \"\\$path\" ]; then",
+      "  echo 'Missing -h or -u' >&2",
+      "  exit 1",
+      "fi",
+      ""
+    ],
+
+    "description": [
+      "Default argument parser"
+    ]
+  }
+} 
