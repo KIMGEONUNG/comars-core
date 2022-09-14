@@ -4,27 +4,30 @@
 		"snippets": [
 			{
 				"language": [
-					"all"
+					"lua"
 				],
-				"path": "./all.json"
+				"path": "snippets/lua.json"
 			},
 			{
 				"language": [
-					"lua"
+					"shellscript",
+					"shell",
+					"sh",
+					"zsh"
 				],
-				"path": "./lua.json"
+				"path": "snippets/shell.json"
 			},
 			{
 				"language": [
 					"python"
 				],
-				"path": "./python.json"
+				"path": "snippets/python.json"
 			},
 			{
 				"language": [
 					"tex"
 				],
-				"path": "./tex.json"
+				"path": "snippets/tex.json"
 			}
 		]
 	},
