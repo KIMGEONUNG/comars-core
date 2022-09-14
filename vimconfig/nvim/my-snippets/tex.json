@@ -52,6 +52,7 @@
         "}",
         "",
         "\\maketitle",
+        "\\input{macro}",
         "",
         "\\begin{abstract}",
         "  This is abtract ...",
