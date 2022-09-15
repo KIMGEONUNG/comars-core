@@ -129,7 +129,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # custom 
 alias xsel='xsel -ib'
-alias cdcomar='cd ~/repos/comars-core/'
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -271,6 +270,8 @@ alias .............="cd ../../../../../../../../../../../.."
 
 # FAST CHANGE DIRECTORY
 export CDPATH=""
+alias cdcomar='cd ~/repos/comars-core/'
+alias cdwrite='cd ~/repos/comar-write/'
 alias cdvim="cd ~/.config/nvim"
 alias cdvimp="cd ~/.local/share/nvim/site/pack/packer/start"
 
