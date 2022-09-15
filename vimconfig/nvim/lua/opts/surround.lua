@@ -12,7 +12,5 @@ autocmd FileType tex let b:surround_{char2nr('i')} = "{\\it \r}"
 
 -- BASH
 vim.cmd([[
-
 autocmd FileType sh let b:surround_{char2nr('v')} = "${\r}"
-
 ]])
