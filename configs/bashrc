@@ -272,6 +272,7 @@ alias .............="cd ../../../../../../../../../../../.."
 export CDPATH=""
 alias cdcomar='cd ~/repos/comars-core/'
 alias cdwrite='cd ~/repos/comar-write/'
+alias cdpycomar='cd ~/repos/pycomar/'
 alias cdvim="cd ~/.config/nvim"
 alias cdvimp="cd ~/.local/share/nvim/site/pack/packer/start"
 
