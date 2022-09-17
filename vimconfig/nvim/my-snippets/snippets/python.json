@@ -1,5 +1,11 @@
 {
-	"snip1": {
+	"print": {
+		"prefix": "p",
+		"body": [
+			"print(${1:'hello world'})"
+		]
+	},
+	"shebang": {
 		"prefix": "#!",
 		"body": [
 			"#!/usr/bin/env python"
