@@ -63,3 +63,9 @@ remap('n', 'ci,', ':call DeleteInnerArg()<CR>', { noremap = true, silent = true 
 remap({ 'n', 'i', 'v', 'c' }, '<c-q>', '<esc>', { noremap = true, silent = true })
 
 remap('n', 'Y', 'y$', { noremap = true, silent = true })
+
+-- PASTE IN VISUAL MODE WITHOUT LOSING ORIGINAL CLIPBOARD 
+-- "_d is to enroll the selected visual region into the '_' register deleting
+-- the region. As a result, the unnamed register '"', which is default register
+-- we generally use, does not be removed. 
+remap('x', "<leader>p", "\"_dP", { noremap = true, silent = true })
