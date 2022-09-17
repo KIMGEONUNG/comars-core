@@ -1,7 +1,7 @@
 local remap = vim.keymap.set
 
 remap('n', '<space>', '<nop>', {})
-vim.g.mapleader=" "
+vim.g.mapleader = " "
 
 -- DELETE A WORD IN INSERT MODE
 remap('i', '<c-d>', '<c-w>', { noremap = true, silent = true })
@@ -15,8 +15,8 @@ remap('n', '<leader>gs', '^', { noremap = true, silent = true })
 remap('n', '<leader>ge', '$', { noremap = true, silent = true })
 
 -- VERTICAL NAVIGATION
-remap({'n', 'v' }, '<c-u>', '10kzz', { noremap = true, silent = true })
-remap({'n', 'v' }, '<c-d>', '10jzz', { noremap = true, silent = true })
+remap({ 'n', 'v' }, '<c-u>', '10kzz', { noremap = true, silent = true })
+remap({ 'n', 'v' }, '<c-d>', '10jzz', { noremap = true, silent = true })
 
 -- POSITIONAL NAVIGATION
 remap('n', '<c-o>', '<c-o>zz', { noremap = true, silent = true })
@@ -38,9 +38,9 @@ remap('n', '<leader>-', ':vertical resize -10<cr>', { noremap = true, silent = t
 remap('n', '<leader>w', ':w<cr>', { noremap = true, silent = false })
 remap('n', '<leader>q', ':q<cr>', { noremap = true, silent = false })
 remap('n', '<leader>e', ':call ExecuteFile(expand(\'%:t\'))<CR>',
-{ noremap = true, silent = false })
+  { noremap = true, silent = false })
 remap('n', '<leader>E', ':call ExecutePredef()<CR>',
-{ noremap = true, silent = false })
+  { noremap = true, silent = false })
 
 -- BUFFER CONTORL
 remap('n', '<leader>bn', ':bnext<CR>', { noremap = true, silent = true })
@@ -64,8 +64,18 @@ remap({ 'n', 'i', 'v', 'c' }, '<c-q>', '<esc>', { noremap = true, silent = true 
 
 remap('n', 'Y', 'y$', { noremap = true, silent = true })
 
--- PASTE IN VISUAL MODE WITHOUT LOSING ORIGINAL CLIPBOARD 
+-- PASTE IN VISUAL MODE WITHOUT LOSING ORIGINAL CLIPBOARD
 -- "_d is to enroll the selected visual region into the '_' register deleting
 -- the region. As a result, the unnamed register '"', which is default register
--- we generally use, does not be removed. 
+-- we generally use, does not be removed.
 remap('x', "<leader>p", "\"_dP", { noremap = true, silent = true })
+
+-- PARMANENT HIGHLIGHTING ON ONE LINE
+-- define line highlight color. this can be written in vimL like "highlight
+-- LineHighlight ctermbg=gray guibg=gray "
+vim.highlight.create('LineHighlight', {ctermbg='gray', guibg='gray'}, false)
+-- highlight the current line
+remap("n", '<Leader>l', ":call matchadd('LineHighlight', '\\%'.line('.').'l')<CR>",
+{ noremap = true, silent = true })
+-- clear all the highlighted lines
+remap("n", '<Leader>c', ":call clearmatches()<CR>", { noremap = true, silent = true })
