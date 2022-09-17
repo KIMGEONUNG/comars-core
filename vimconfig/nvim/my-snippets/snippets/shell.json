@@ -1,26 +1,33 @@
 {
+  "set": {
+    "prefix": ["s"],
+    "body": [
+      "set -e"
+    ],
+    "description": [
+      "set -e"
+    ]
+  },
   "args": {
     "prefix": ["arg"],
     "body": [
       "while [[ $# -gt 0 ]]",
       "do",
-      "    key=\"\\${1}\"",
+      "  key=\"\\${1}\"",
       "",
-      "    case \\${key} in",
-      "    -p|--path)",
-      "        path=\"\\${2}\"",
-      "        shift",
-      "        shift",
-      "        ;;",
-      "    -h|--help)",
-      "        echo \"${1:Description}\"",
-      "        shift # past argument",
-      "        ;;",
-      "    *)    # unknown option",
-      "        shift # past argument",
-      "        ;;",
-      "    esac",
-      "    shift",
+      "  case \\${key} in",
+      "  -p|--path)",
+      "    path=\"\\${2}\"",
+      "    shift 2",
+      "    ;;",
+      "  -h|--help)",
+      "    echo \"${1:Description}\"",
+      "    shift # past argument",
+      "    ;;",
+      "  *)    # unknown option",
+      "    shift # past argument",
+      "    ;;",
+      "  esac",
       "done",
       "",
       "if [ -z \"\\$path\" ]; then",
@@ -29,9 +36,22 @@
       "fi",
       ""
     ],
-
     "description": [
       "Default argument parser"
+    ]
+  },
+  "checkarg": {
+    "prefix": ["ch"],
+    "body": [
+      "if [ -z \"\\${${1:arg}\\}\" ]; then",
+      "  echo 'Missing --${1}' >&2",
+      "  exit 1",
+      "fi",
+      ""
+    ],
+
+    "description": [
+      "Check a required argument"
     ]
   }
 } 

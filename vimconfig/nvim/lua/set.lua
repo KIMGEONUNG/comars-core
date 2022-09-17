@@ -24,6 +24,15 @@ vim.cmd([[
 set colorcolumn=80
 ]])
 
+vim.cmd([[
+set list
+set listchars+=tab:›\ 
+set listchars+=eol:¬
+set listchars+=trail:⋅
+set listchars+=lead:⋅
+]])
+-- set listchars=tab:›\ ,eol:¬,trail:⋅,lead:⋅
+
 -- PYTHON PROVIDER (use :checkhealth)
 vim.g.python3_host_prog = '/home/comar/anaconda3/bin/python3'
 
