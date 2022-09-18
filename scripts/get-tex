@@ -1,6 +1,8 @@
 #!/bin/bash
 
-for f in $file; do
+files="llncs.cls macro.tex splncs04.bst"
+
+for f in $files; do
   if [ -f "${f}" ]; then
     rm ${f} -v
   fi
