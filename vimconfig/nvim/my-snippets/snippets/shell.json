@@ -8,6 +8,29 @@
       "set -e"
     ]
   },
+
+  "argsh": {
+    "prefix": ["argh"],
+    "body": [
+      "while [[ $# -gt 0 ]]",
+      "do",
+      "  key=\"\\${1}\"",
+      "  case \\${key} in",
+      "  -h|--help)",
+      "    echo \"${1:Description}\"",
+      "    shift # past argument",
+      "    ;;",
+      "  *)    # unknown option",
+      "    shift # past argument",
+      "    ;;",
+      "  esac",
+      "done"
+    ],
+    "description": [
+      "Argument parser for help"
+    ]
+  },
+
   "args": {
     "prefix": ["arg"],
     "body": [
@@ -40,8 +63,9 @@
       "Default argument parser"
     ]
   },
+
   "checkarg": {
-    "prefix": ["ch"],
+    "prefix": ["cha"],
     "body": [
       "if [ -z \"\\${${1:arg}\\}\" ]; then",
       "  echo 'Missing --${1}' >&2",
@@ -52,6 +76,66 @@
 
     "description": [
       "Check a required argument"
+    ]
+  },
+
+  "checkfile": {
+    "prefix": ["chf"],
+    "body": [
+      "if [ -f ${1:path} ]; then",
+      "  echo 'No such a file ${1}' >&2",
+      "  exit 1",
+      "fi",
+      ""
+    ],
+
+    "description": [
+      "Check that the file exists"
+    ]
+  },
+  
+  "checknofile": {
+    "prefix": ["chfn"],
+    "body": [
+      "if ! [ -f ${1:path} ]; then",
+      "  echo 'The file already exists ${1}' >&2",
+      "  exit 1",
+      "fi",
+      ""
+    ],
+
+    "description": [
+      "Check that the file does not exist"
+    ]
+  },
+
+  "checkdir": {
+    "prefix": ["chd"],
+    "body": [
+      "if [ -d ${1:path} ]; then",
+      "  echo 'No such a directory ${1}' >&2",
+      "  exit 1",
+      "fi",
+      ""
+    ],
+
+    "description": [
+      "Check that the directory exists"
+    ]
+  },
+  
+  "checknodir": {
+    "prefix": ["chdn"],
+    "body": [
+      "if ! [ -d ${1:path} ]; then",
+      "  echo 'The directory already exists ${1}' >&2",
+      "  exit 1",
+      "fi",
+      ""
+    ],
+
+    "description": [
+      "Check that the directory does not exist"
     ]
   }
 } 

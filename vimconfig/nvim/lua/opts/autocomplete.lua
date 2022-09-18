@@ -64,6 +64,15 @@ cmp.setup.cmdline(':', {
   })
 })
 
+-- LOAD SNIPPETS
+local function load_snippets()
+  require("luasnip.loaders.from_vscode").lazy_load()
+  require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my-snippets" } })
+end
+load_snippets()
 
-require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").load({ paths = { "./my-snippets" } })
+-- RELOAD SNIPPETS
+function Refresh_snippets()
+  require("luasnip").cleanup()
+  load_snippets()
+end
