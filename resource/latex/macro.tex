@@ -1,4 +1,3 @@
-
 \newcommand{\Eq}[1]  {Eq.\ (#1)}
 \newcommand{\Eqs}[1] {Eqs.\ (#1)}
 \newcommand{\Fig}[1] {Fig.\ #1}
@@ -26,6 +25,30 @@
 
 \renewcommand{\paragraph}[1]{{\vspace{2pt}\noindent\textbf{#1}}}
 
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
 % LATEX COMMANDS TO REDUCE THE SPACING ABOVE AND BELOW FIGURES
 % \renewcommand{\topfraction}{0.95}
 % \setcounter{bottomnumber}{1}
@@ -40,5 +63,3 @@
 %% usually not used, instead use the ordinary latex comment %
 %\newcommand{\comment}[1]{} 
 %\renewcommand{\paragraph}[1]{{\vspace{0em}\noindent\textbf{#1}}}
-
-
