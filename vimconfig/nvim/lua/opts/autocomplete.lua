@@ -64,46 +64,7 @@ cmp.setup.cmdline(':', {
   })
 })
 
--- LOAD SNIPPETS
-local function load_snippets()
-  require("luasnip.loaders.from_vscode").lazy_load()
-  require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my-snippets" } })
-end
-load_snippets()
-
--- RELOAD SNIPPETS
-function RefreshSnippet()
-  require("luasnip").cleanup()
-  load_snippets()
-end
-
--- FOR FAST SNIPPET EDITING
-function OpenSnippet()
-  -- print('dkdk', 'dkd')
-  local open = function (path)
-    local cmd = 'edit ' .. path
-    vim.api.nvim_command('split')
-    vim.api.nvim_command(cmd)
-  end
-
-  local filetype = vim.bo.filetype
-  local path_root =' ~/.config/nvim/my-snippets/snippets/'
-  if filetype == 'python' then
-    -- print('this is python')
-    local path = path_root .. 'python.json'
-    open(path)
-  elseif filetype == 'tex' then
-    -- print('this is latex')
-    local path = path_root .. 'tex.json'
-    open(path)
-  elseif filetype == 'sh' then
-    -- print('this is latex')
-    local path = path_root .. 'shell.json'
-    open(path)
-  end
-end
 
 vim.cmd([[
-command! OpenSnip lua OpenSnippet() 
-command! ReSnip lua RefreshSnippet() 
+command! Osnip lua OpenSnippet() 
 ]])

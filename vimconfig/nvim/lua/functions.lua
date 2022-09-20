@@ -1,18 +1,45 @@
 -- FUNCTIONS ------------------------------------------------------------------
 
--- It is borrowed from https://www.notonlycode.org/neovim-lua-config/
+-- LOAD SNIPPETS
+local function load_snippets()
+  require("luasnip.loaders.from_vscode").lazy_load()
+  require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my-snippets" } })
+end
+load_snippets()
 
-function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
+-- RELOAD SNIPPETS
+function RefreshSnippet()
+  -- print("Refresh snippets")
+  require("luasnip").cleanup()
+  load_snippets()
 end
 
-function nmap(shortcut, command)
-  map('n', shortcut, command)
+-- FOR FAST SNIPPET EDITING
+function OpenSnippet()
+  local open = function (path)
+    local cmd = 'edit ' .. path
+    vim.api.nvim_command('split')
+    vim.api.nvim_command(cmd)
+  end
+
+  local filetype = vim.bo.filetype
+  local path_root =' ~/.config/nvim/my-snippets/snippets/'
+  if filetype == 'python' then
+    -- print('this is python')
+    local path = path_root .. 'python.json'
+    open(path)
+  elseif filetype == 'tex' then
+    -- print('this is latex')
+    local path = path_root .. 'tex.json'
+    open(path)
+  elseif filetype == 'sh' then
+    -- print('this is latex')
+    local path = path_root .. 'shell.json'
+    open(path)
+  end
 end
 
-function imap(shortcut, command)
-  map('i', shortcut, command)
-end
+vim.api.nvim_create_autocmd("BufEnter", { command = "lua RefreshSnippet()" })
 
 vim.cmd([[
 
