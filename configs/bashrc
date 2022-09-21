@@ -276,6 +276,7 @@ alias cdpycomar='cd ~/repos/pycomar/'
 alias cdvim="cd ~/.config/nvim"
 alias cdvimp="cd ~/.local/share/nvim/site/pack/packer/start"
 alias cdimgnet="cd ~/dataset-local/imagenet/ILSVRC/Data/CLS-LOC"
+alias cdtmp='cd ~/tmp'
 
 # PUSHD AND PIPD AS DEFAULT
 cd() {
