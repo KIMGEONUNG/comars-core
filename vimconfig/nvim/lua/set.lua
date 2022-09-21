@@ -1,6 +1,6 @@
-vim.opt.scrolloff=8
-vim.opt.tabstop=2
-vim.opt.shiftwidth=2
+vim.opt.scrolloff = 8
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 
 vim.opt.exrc = true
 
@@ -28,10 +28,10 @@ set colorcolumn=80
 vim.cmd([[
 set list
 set listchars+=tab:›\ 
-set listchars+=eol:¬
 set listchars+=trail:⋅
-set listchars+=multispace:\ \ \|
+set listchars+=multispace:\ ⋅
 ]])
+-- set listchars+=eol:¬
 -- set listchars+=conceal:-
 -- set listchars+=multispace:⋅⋅\|
 -- set listchars+=lead:⋅
@@ -39,7 +39,7 @@ set listchars+=multispace:\ \ \|
 -- PYTHON PROVIDER (use :checkhealth)
 vim.g.python3_host_prog = '/home/comar/anaconda3/bin/python3'
 
--- FOR SOME REASON, CERTAIN OPTIONS IN PYTHON CANNOT BE CHANGED USING A NAIVE 
+-- FOR SOME REASON, CERTAIN OPTIONS IN PYTHON CANNOT BE CHANGED USING A NAIVE
 -- ASSIGNMENT. SO WE USE AUTOMCD TRICK LIKE BELOW.
 vim.cmd([[
 autocmd FileType python set shiftwidth=2
