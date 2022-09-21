@@ -75,7 +75,7 @@ remap('x', "<leader>p", "\"_dP", { noremap = true, silent = true })
 -- LineHighlight ctermbg=gray guibg=gray "
 vim.highlight.create('LineHighlight', {ctermbg='gray', guibg='gray'}, false)
 -- highlight the current line
-remap("n", '<Leader>l', ":call matchadd('LineHighlight', '\\%'.line('.').'l')<CR>",
+remap("n", '<Leader>L', ":call matchadd('LineHighlight', '\\%'.line('.').'l')<CR>",
 { noremap = true, silent = true })
 -- clear all the highlighted lines
-remap("n", '<Leader>c', ":call clearmatches()<CR>", { noremap = true, silent = true })
+remap("n", '<Leader>C', ":call clearmatches()<CR>", { noremap = true, silent = true })
