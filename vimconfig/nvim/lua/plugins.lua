@@ -69,5 +69,4 @@ return require('packer').startup(function(use)
   -- VIM IN TERMINAL
   use 'akinsho/toggleterm.nvim'
 
-
 end)
