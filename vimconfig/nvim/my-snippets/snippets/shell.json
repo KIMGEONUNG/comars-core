@@ -1,4 +1,13 @@
 {
+  "variable": {
+    "prefix": ["v"],
+    "body": [
+      "\\${${1:name}}"
+    ],
+    "description": [
+      "variable"
+    ]
+  },
   "set": {
     "prefix": ["s"],
     "body": [
