@@ -15,7 +15,7 @@ vim.opt.nu = true
 -- A "NO" PREFIX DOES NOT AVAILABLE IN THE LUA SETTING.
 -- FOR EXAMPLE, WE CANNOT USE "VIM.OPT.NOWRAP = TRUE" FOR "SET NOWRAP".
 -- INSTEAD, WE SHOULD USE "VIM.OPT.WRAP = FALSE"
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.backup = false
 vim.opt.swapfile = false
 vim.opt.errorbells = false

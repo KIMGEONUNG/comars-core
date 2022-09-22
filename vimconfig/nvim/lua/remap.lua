@@ -3,6 +3,11 @@ local remap = vim.keymap.set
 remap('n', '<space>', '<nop>', {})
 vim.g.mapleader = " "
 
+
+-- MOVE CURSOR BASED ON DISPLAY LINE WHEN WE USE WRAP OPTION
+remap('n', 'j', 'gj', { noremap = true, silent = true })
+remap('n', 'k', 'gk', { noremap = true, silent = true })
+
 -- DELETE A WORD IN INSERT MODE
 remap('i', '<c-d>', '<c-w>', { noremap = true, silent = true })
 
