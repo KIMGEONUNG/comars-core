@@ -17,8 +17,7 @@ end
 -- FOR FAST SNIPPET EDITING
 function OpenSnippet()
   local open = function (path)
-    local cmd = 'edit ' .. path
-    vim.api.nvim_command('split')
+    local cmd = 'tabnew ' .. path
     vim.api.nvim_command(cmd)
   end
 
