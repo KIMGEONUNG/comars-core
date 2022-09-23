@@ -69,4 +69,7 @@ return require('packer').startup(function(use)
   -- VIM IN TERMINAL
   use 'akinsho/toggleterm.nvim'
 
+  -- TEXT NAVIGATION
+  use 'justinmk/vim-sneak'
+
 end)
