@@ -94,6 +94,8 @@ function! ExecuteFile(arg)
         !google-chrome index.html 
     elseif !empty(matchstr(a:arg, '.css$'))
         !google-chrome index.html 
+    elseif !empty(matchstr(a:arg, '.lua$'))
+        !lua %
     elseif !empty(matchstr(a:arg, '.sh$'))
         !bash % 
     elseif !empty(matchstr(a:arg, '.cpp$')) || !empty(matchstr(a:arg, '.h$'))

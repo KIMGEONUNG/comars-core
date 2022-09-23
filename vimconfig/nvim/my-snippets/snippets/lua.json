@@ -1,17 +1,11 @@
 {
-  "print": {
-    "prefix": ["p"],
+  "shebang": {
+    "prefix": "#!",
     "body": [
-      "print\(${1:contents}\)"
+      "#!/usr/bin/env lua"
     ],
     "description": [
-      "description"
+      "shebang"
     ]
-  },
-  	"dash": {
-		"prefix": "---",
-		"body": [
-			"#----------------------------------------------------"
-		]
-	}
+  }
 }
