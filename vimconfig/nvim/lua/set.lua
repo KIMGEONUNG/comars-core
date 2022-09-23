@@ -38,4 +38,3 @@ set listchars+=multispace:\ ⋅
 
 -- PYTHON PROVIDER (use :checkhealth)
 vim.g.python3_host_prog = '/home/comar/anaconda3/bin/python3'
-
