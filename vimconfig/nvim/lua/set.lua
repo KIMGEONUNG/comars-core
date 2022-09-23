@@ -1,3 +1,6 @@
+-- GLOBAL VARIABLE
+vim.g.verbose = true
+
 vim.opt.scrolloff = 8
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2

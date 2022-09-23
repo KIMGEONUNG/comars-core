@@ -1,9 +1,5 @@
 -- FUNCTIONS ------------------------------------------------------------------
-
-function ReloadConfig()
-  vim.api.nvim_command("so $MYVIMRC")
-end
-
+--
 function OpenNullBuffer()
   vim.api.nvim_command("vs /dev/null")
 end
