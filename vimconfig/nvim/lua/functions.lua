@@ -9,7 +9,6 @@ load_snippets()
 
 -- RELOAD SNIPPETS
 function RefreshSnippet()
-  -- print("Refresh snippets")
   require("luasnip").cleanup()
   load_snippets()
 end
@@ -44,6 +43,14 @@ function OpenSnippet()
     local path = path_root .. 'json.json'
     open(path)
   end
+
+  -- ENABLE TO EXIT USING 'Q' KEY
+  vim.api.nvim_buf_set_keymap(0, "n", "q", ":bwipe<CR>", {})
+  vim.api.nvim_buf_attach(0, true, { 
+    on_detach=function (...)
+      RefreshSnippet()
+    end,
+  })
 end
 
 
