@@ -6,19 +6,19 @@ require("color")
 require("debug")
 
 -- NAVIGATION UTILITIES
-require("opts.telescope")
+require("user.telescope")
 
 -- LANGUAGE SERVER PROTOCOL
-require("opts.lsp")
+require("user.lsp")
 
 -- AUTOCOMPLETE, SNIPPET
-require("opts.autocomplete")
+require("user.autocomplete")
 
 -- DEBBUGER
-require("opts.vimspector")
+require("user.vimspector")
 
 -- LATEX USING VIM
-require("opts.vimtex")
+require("user.vimtex")
 
-require("opts.toggleterm")
-require("opts.surround")
+require("user.toggleterm")
+require("user.surround")

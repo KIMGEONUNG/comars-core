@@ -1,8 +1,11 @@
 {
-	"snip1": {
-		"prefix": "lua",
-		"body": [
-			"lualualua"
-		]
-	}
+  "print": {
+    "prefix": ["p"],
+    "body": [
+      "print\(${1:contents}\)"
+    ],
+    "description": [
+      "description"
+    ]
+  }
 }

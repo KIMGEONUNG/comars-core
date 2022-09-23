@@ -42,15 +42,19 @@ remap('n', '<leader>-', ':vertical resize -10<cr>', { noremap = true, silent = t
 -- READ, WRITE, EXECUTE
 remap('n', '<leader>w', ':w<cr>', { noremap = true, silent = false })
 remap('n', '<leader>q', ':q<cr>', { noremap = true, silent = false })
+
+
+
 remap('n', '<leader>e', ':call ExecuteFile(expand(\'%:t\'))<CR>',
   { noremap = true, silent = false })
 remap('n', '<leader>E', ':call ExecutePredef()<CR>',
   { noremap = true, silent = false })
 
 -- BUFFER CONTORL
-remap('n', '<leader>bn', ':bnext<CR>', { noremap = true, silent = true })
-remap('n', '<leader>bp', ':bprevious<CR>', { noremap = true, silent = true })
+remap('n', '<S-l>', ':bnext<CR>', { noremap = true, silent = true })
+remap('n', '<S-h>', ':bprevious<CR>', { noremap = true, silent = true })
 remap('n', '<leader>bw', ':bwipe<CR>', { noremap = true, silent = true })
+
 vim.cmd([[
 " close all buffers except current one
 command! BufCurOnly execute '%bdelete|edit#|bdelete#'

@@ -36,6 +36,14 @@ function OpenSnippet()
     -- print('this is latex')
     local path = path_root .. 'shell.json'
     open(path)
+  elseif filetype == 'lua' then
+    -- print('this is latex')
+    local path = path_root .. 'lua.json'
+    open(path)
+  elseif filetype == 'json' then
+    -- print('this is latex')
+    local path = path_root .. 'json.json'
+    open(path)
   end
 end
 

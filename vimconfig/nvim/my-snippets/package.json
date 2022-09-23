@@ -2,6 +2,12 @@
 	"name": "my-snippets",
 	"contributes": {
 		"snippets": [
+      {
+				"language": [
+					"json"
+				],
+				"path": "snippets/json.json"
+			},
 			{
 				"language": [
 					"lua"
