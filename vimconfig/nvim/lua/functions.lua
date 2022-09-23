@@ -1,5 +1,13 @@
 -- FUNCTIONS ------------------------------------------------------------------
 
+function ReloadConfig()
+  vim.api.nvim_command("so $MYVIMRC")
+end
+
+function OpenNullBuffer()
+  vim.api.nvim_command("vs /dev/null")
+end
+
 function Quit()
   -- CHECK THE NUMBER OF BUFFERS
   local num_buf = vim.fn.bufnr('$')
