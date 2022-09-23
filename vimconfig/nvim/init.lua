@@ -22,3 +22,5 @@ require("user.vimtex")
 
 require("user.toggleterm")
 require("user.surround")
+
+require("autocmd")

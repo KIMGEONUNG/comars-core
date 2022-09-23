@@ -46,8 +46,6 @@ function OpenSnippet()
   end
 end
 
-vim.api.nvim_create_autocmd("BufEnter", { command = "lua RefreshSnippet()" })
-
 
 function Quit()
   -- CHECK THE NUMBER OF BUFFERS
@@ -258,4 +256,3 @@ function! DeleteInnerArg()
 endfunction
  
 ]])
-
