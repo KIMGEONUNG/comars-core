@@ -15,6 +15,3 @@ for _, x in pairs(cmds4python) do
     group = group
   })
 end
-
---  RELOAD SNIPPETS CHANGED
--- vim.api.nvim_create_autocmd("TabLeave", { command = "lua RefreshSnippet()" })

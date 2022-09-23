@@ -4,6 +4,7 @@ require("functions")
 require("plugins")
 require("color")
 require("debug")
+require("autocmd")
 
 -- NAVIGATION UTILITIES
 require("user.telescope")
@@ -23,5 +24,5 @@ require("user.vimtex")
 require("user.toggleterm")
 require("user.surround")
 require("user.sneak")
+require("user.luasnip")
 
-require("autocmd")

@@ -64,5 +64,3 @@ cmp.setup.cmdline(':', {
   })
 })
 
--- command! Os lua OpenSnippet() 
-vim.api.nvim_create_user_command("Os", OpenSnippet, {})
