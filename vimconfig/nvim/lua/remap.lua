@@ -43,6 +43,8 @@ remap('n', '<leader>-', ':vertical resize -10<cr>', { noremap = true, silent = t
 remap('n', '<leader>w', ':w<cr>', { noremap = true, silent = false })
 remap('n', '<leader>q', ':q<cr>', { noremap = true, silent = false })
 
+function quit()
+end
 
 
 remap('n', '<leader>e', ':call ExecuteFile(expand(\'%:t\'))<CR>',

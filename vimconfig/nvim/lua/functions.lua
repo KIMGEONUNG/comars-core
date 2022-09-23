@@ -49,6 +49,16 @@ end
 
 vim.api.nvim_create_autocmd("BufEnter", { command = "lua RefreshSnippet()" })
 
+function Quit()
+  -- local num = vim.api.nvim_command("len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))")
+  local num = 1
+  if num <= 1 then
+    vim.api.nvim_command('quit')
+  else
+    vim.api.nvim_command('bwipe')
+  end
+end
+
 vim.cmd([[
 
 function! ExecutePredef()
