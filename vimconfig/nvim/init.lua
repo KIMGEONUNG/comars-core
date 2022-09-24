@@ -26,3 +26,4 @@ require("user.surround")
 require("user.sneak")
 require("user.luasnip")
 
+require("func.execute")

@@ -43,10 +43,7 @@ remap('n', '<leader>w', ':w<cr>', { noremap = true, silent = false })
 remap('n', '<leader>q', ':lua Quit()<cr>', { noremap = true, silent = true })
 remap('n', '<leader>Q', ':q<cr>', { noremap = true, silent = false })
 
-remap('n', '<leader>e', ':call ExecuteFile(expand(\'%:t\'))<CR>',
-  { noremap = true, silent = false })
-remap('n', '<leader>E', ':call ExecutePredef()<CR>',
-  { noremap = true, silent = false })
+remap('n', '<leader>e', ':lua ExecuteFile()<CR>', { noremap = true, silent = false })
 
 -- BUFFER CONTORL
 remap('n', '<S-l>', ':bnext<CR>', { noremap = true, silent = true })
