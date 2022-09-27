@@ -1,4 +1,13 @@
 {
+  "assumption": {
+    "prefix": ["as"],
+    "body": [
+      "\\assume{${1: Text}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
 	"todo": {
 		"prefix": "todo",
 		"body": "\\todo{${1: Text}}"
