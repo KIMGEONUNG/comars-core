@@ -6,37 +6,43 @@ from PIL import Image
 
 
 def parse():
-    import argparse
-    parser = argparse.ArgumentParser(description='Image rotation')
-    parser.add_argument('-r', '--replace', default=False,
-                        action='store_true', help='replace input')
-    parser.add_argument('-d', '--degree', type=int, default=45, 
-                        help='target image degree')
-    return parser.parse_args()
+  import argparse
+  parser = argparse.ArgumentParser(description='Image rotation')
+  parser.add_argument('-r',
+                      '--replace',
+                      default=False,
+                      action='store_true',
+                      help='replace input')
+  parser.add_argument('-d',
+                      '--degree',
+                      type=int,
+                      default=45,
+                      help='target image degree')
+  return parser.parse_args()
 
 
 def main():
-    args = parse()
+  args = parse()
 
-    target_files = sys.stdin.read().splitlines()
-    print("image rotation files: %d EA" % len(target_files), file=sys.stderr)
+  target_files = sys.stdin.read().splitlines()
+  print("image rotation files: %d EA" % len(target_files), file=sys.stderr)
 
-    for target_file in target_files:
-        im = Image.open(target_file)
-        im = transforms.functional.rotate(im, args.degree)
+  for target_file in target_files:
+    im = Image.open(target_file)
+    im = transforms.functional.rotate(im, args.degree)
 
-        path_output = None
-        if args.replace:
-            path_output = target_file
-        else:
-            parts = target_file.split('.')
-            head = ''.join(parts[:-1])
-            ext = parts[-1]
-            path_output = head + '_rotate_%04d.' % (args.degree) + ext
+    path_output = None
+    if args.replace:
+      path_output = target_file
+    else:
+      parts = target_file.split('.')
+      head = ''.join(parts[:-1])
+      ext = parts[-1]
+      path_output = head + '_rotate_%04d.' % (args.degree) + ext
 
-        im.save(path_output)
-        print(path_output)
+    im.save(path_output)
+    print(path_output)
 
 
 if __name__ == '__main__':
-    main()
+  main()

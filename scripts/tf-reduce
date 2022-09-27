@@ -6,80 +6,82 @@ from os.path import isfile, join
 import os
 import tqdm
 import tensorflow.compat.v1 as tf
+
 tf.disable_v2_behavior()
 
 
 def ignore_files(dir, files):
-    return [f for f in files if isfile(join(dir, f))]
+  return [f for f in files if isfile(join(dir, f))]
 
 
 def args_parse():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-i', "--path_dir_in", type=str, required=True)
-    parser.add_argument('-o', "--path_dir_out", type=str, default='reduced_log')
-    parser.add_argument("--interval", type=int, default=5)
-    return parser.parse_args()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-i', "--path_dir_in", type=str, required=True)
+  parser.add_argument('-o', "--path_dir_out", type=str, default='reduced_log')
+  parser.add_argument("--interval", type=int, default=5)
+  return parser.parse_args()
 
 
 def main():
 
-    args = args_parse()
+  args = args_parse()
 
-    path_in = args.path_dir_in
-    path_out = args.path_dir_out
-    interval = args.interval
+  path_in = args.path_dir_in
+  path_out = args.path_dir_out
+  interval = args.interval
 
-    # DIRECTORY COPY RECURSIVELY
-    shutil.copytree(path_in, path_out, ignore=ignore_files)
+  # DIRECTORY COPY RECURSIVELY
+  shutil.copytree(path_in, path_out, ignore=ignore_files)
 
-    for (root, dirs, files) in os.walk(path_in):
-        for file in files:
-            path_log = join(root, file)
-            path_log_out = root.replace(path_in, path_out)
+  for (root, dirs, files) in os.walk(path_in):
+    for file in files:
+      path_log = join(root, file)
+      path_log_out = root.replace(path_in, path_out)
 
-            counter = {}
-            writer = tf.summary.FileWriter(path_log_out)
-            for event in tqdm.tqdm(tf.train.summary_iterator(path_log), total=None):
-                event_type = event.WhichOneof('what')
-                if event_type != 'summary':
-                    writer.add_event(event)
-                    continue
+      counter = {}
+      writer = tf.summary.FileWriter(path_log_out)
+      for event in tqdm.tqdm(tf.train.summary_iterator(path_log), total=None):
+        event_type = event.WhichOneof('what')
+        if event_type != 'summary':
+          writer.add_event(event)
+          continue
 
-                # possible types: simple_value, image, histo, audio
-                # filtered_values = [value for value in event.summary.value 
-                                            #if value.HasField('simple_value')]
-                filtered_images = [value for value in event.summary.value
-                                                    if value.HasField('image')]
+        # possible types: simple_value, image, histo, audio
+        # filtered_values = [value for value in event.summary.value
+        #if value.HasField('simple_value')]
+        filtered_images = [
+            value for value in event.summary.value if value.HasField('image')
+        ]
 
-                if not len(filtered_images) > 0:
-                    writer.add_event(event)
-                    continue
+        if not len(filtered_images) > 0:
+          writer.add_event(event)
+          continue
 
-                tags = [f.tag for f in filtered_images]
-                for tag in tags:
-                    if tag not in counter.keys():
-                        counter[tag] = 0
-                    else:
-                        counter[tag] += 1
+        tags = [f.tag for f in filtered_images]
+        for tag in tags:
+          if tag not in counter.keys():
+            counter[tag] = 0
+          else:
+            counter[tag] += 1
 
-                is_continue = False
-                for tag in tags:
-                    if counter[tag] % interval != 0:
-                        is_continue = True
-                        break
-                if is_continue:
-                    continue
+        is_continue = False
+        for tag in tags:
+          if counter[tag] % interval != 0:
+            is_continue = True
+            break
+        if is_continue:
+          continue
 
-                wall_time = event.wall_time
-                step = event.step
-                summary = tf.Summary(value=filtered_images)
-                filtered_event = tf.summary.Event(summary=summary,
-                                                  wall_time=wall_time,
-                                                  step=step)
-                writer.add_event(filtered_event)
+        wall_time = event.wall_time
+        step = event.step
+        summary = tf.Summary(value=filtered_images)
+        filtered_event = tf.summary.Event(summary=summary,
+                                          wall_time=wall_time,
+                                          step=step)
+        writer.add_event(filtered_event)
 
-            writer.close()
+      writer.close()
 
 
 if __name__ == '__main__':
-    main()
+  main()

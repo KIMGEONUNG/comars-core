@@ -2,45 +2,51 @@
 
 import torch
 import argparse
-import os 
+import os
 import numpy as np
 import torchvision.transforms as transforms
 from PIL import Image
 
-def parsearg():
-    parse = argparse.ArgumentParser(
-            description="Visualize frequency domain from image")
-    parse.add_argument('input_files', nargs='+', help='input file paths')
-    parse.add_argument('--postfix', default='fft-',
-            help='postfix using in output file name')
-    parse.add_argument('--show', default=False, action='store_true',
-            help='show image without save')
 
-    return parse.parse_args()
+def parsearg():
+  parse = argparse.ArgumentParser(
+      description="Visualize frequency domain from image")
+  parse.add_argument('input_files', nargs='+', help='input file paths')
+  parse.add_argument('--postfix',
+                     default='fft-',
+                     help='postfix using in output file name')
+  parse.add_argument('--show',
+                     default=False,
+                     action='store_true',
+                     help='show image without save')
+
+  return parse.parse_args()
+
 
 def main():
-    args = parsearg() 
-    for f in args.input_files:
-        im = Image.open(f).convert('L')
-        dark_image_grey = transforms.ToTensor()(im).squeeze()
-        fourier_transform = np.fft.fft2(dark_image_grey)
-        fourier_transform_shifted = np.fft.fftshift(fourier_transform)
-        fourier_spectrum_shifted = np.log(abs(fourier_transform_shifted) + 1e-5)
-        fourier_spectrum_shifted = torch.from_numpy(fourier_spectrum_shifted)
-        fourier_spectrum_shifted = ((fourier_spectrum_shifted 
-                - fourier_spectrum_shifted.min()) 
-                / fourier_spectrum_shifted.max())
-        im_final = torch.cat([dark_image_grey, fourier_spectrum_shifted], dim=-1)
-        im_final = transforms.ToPILImage()(im_final)
+  args = parsearg()
+  for f in args.input_files:
+    im = Image.open(f).convert('L')
+    dark_image_grey = transforms.ToTensor()(im).squeeze()
+    fourier_transform = np.fft.fft2(dark_image_grey)
+    fourier_transform_shifted = np.fft.fftshift(fourier_transform)
+    fourier_spectrum_shifted = np.log(abs(fourier_transform_shifted) + 1e-5)
+    fourier_spectrum_shifted = torch.from_numpy(fourier_spectrum_shifted)
+    fourier_spectrum_shifted = (
+        (fourier_spectrum_shifted - fourier_spectrum_shifted.min()) /
+        fourier_spectrum_shifted.max())
+    im_final = torch.cat([dark_image_grey, fourier_spectrum_shifted], dim=-1)
+    im_final = transforms.ToPILImage()(im_final)
 
-        if args.show:
-            im_final.show()
-        else:
-            filename = f.split('/')[-1]
-            directory = '/'.join(f.split('/')[:-1])
-            target = os.path.join(directory,  args.postfix + filename)
-            im_final.save(target)
-            print('saved results to %s'%(target))
+    if args.show:
+      im_final.show()
+    else:
+      filename = f.split('/')[-1]
+      directory = '/'.join(f.split('/')[:-1])
+      target = os.path.join(directory, args.postfix + filename)
+      im_final.save(target)
+      print('saved results to %s' % (target))
+
 
 if __name__ == '__main__':
-    main()
+  main()

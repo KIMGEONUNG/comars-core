@@ -8,45 +8,46 @@ from PIL import Image
 
 
 def parse():
-    import argparse
-    parser = argparse.ArgumentParser(description='Image view with grid')
-    parser.add_argument('-n', '--num_row', type=int, default=4)
-    parser.add_argument('--use_one_row', action='store_true')
-    parser.add_argument('--pad_value', type=int, default=0)
-    parser.add_argument('--padding', type=int, default=2)
-    parser.add_argument('--total', type=int, default=16)
-    parser.add_argument('--save', type=str, default=None)
-    return parser.parse_args()
+  import argparse
+  parser = argparse.ArgumentParser(description='Image view with grid')
+  parser.add_argument('-n', '--num_row', type=int, default=4)
+  parser.add_argument('--use_one_row', action='store_true')
+  parser.add_argument('--pad_value', type=int, default=0)
+  parser.add_argument('--padding', type=int, default=2)
+  parser.add_argument('--total', type=int, default=16)
+  parser.add_argument('--save', type=str, default=None)
+  return parser.parse_args()
 
 
 def main():
-    args = parse()
+  args = parse()
 
-    target_files = sys.stdin.read().splitlines()
-    num_total = len(target_files)
+  target_files = sys.stdin.read().splitlines()
+  num_total = len(target_files)
 
-    target_files = target_files[:min(num_total, args.total)]
+  target_files = target_files[:min(num_total, args.total)]
 
-    prep = transforms.Compose([transforms.ToTensor()])
+  prep = transforms.Compose([transforms.ToTensor()])
 
+  if args.use_one_row:
+    num_row = num_total
+  else:
+    num_row = args.num_row
 
-    if args.use_one_row:
-        num_row = num_total
-    else:
-        num_row = args.num_row
+  targets = [Image.open(target) for target in target_files]
+  targets = [prep(target).unsqueeze(0) for target in targets]
+  target = torch.cat(targets, dim=0)
+  target = make_grid(target,
+                     num_row,
+                     padding=args.padding,
+                     pad_value=args.pad_value)
 
-    targets = [Image.open(target) for target in target_files]
-    targets = [prep(target).unsqueeze(0) for target in targets]
-    target = torch.cat(targets, dim=0)
-    target = make_grid(target, num_row,
-            padding=args.padding, pad_value=args.pad_value)
-
-    im = transforms.ToPILImage()(target)
-    if args.save is not None:
-        im.save(args.save)
-    else:
-        im.show()
+  im = transforms.ToPILImage()(target)
+  if args.save is not None:
+    im.save(args.save)
+  else:
+    im.show()
 
 
 if __name__ == '__main__':
-    main()
+  main()

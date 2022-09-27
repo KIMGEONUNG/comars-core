@@ -5,29 +5,30 @@ from PIL import Image
 
 
 def parse():
-    import argparse
-    parser = argparse.ArgumentParser(description='Image to jpg')
-    return parser.parse_args()
+  import argparse
+  parser = argparse.ArgumentParser(description='Image to jpg')
+  return parser.parse_args()
 
 
 def main():
-    args = parse()
+  args = parse()
 
-    target_files = sys.stdin.read().splitlines()
-    print("image resize target files: %d EA" % len(target_files), file=sys.stderr)
+  target_files = sys.stdin.read().splitlines()
+  print("image resize target files: %d EA" % len(target_files),
+        file=sys.stderr)
 
-    for target_file in target_files:
-        im = Image.open(target_file)
-        im = im.convert('RGB')
+  for target_file in target_files:
+    im = Image.open(target_file)
+    im = im.convert('RGB')
 
-        parts = target_file.split('.')
-        head = ''.join(parts[:-1])
-        ext = 'jpg'
-        path_output = head + '.' + ext
+    parts = target_file.split('.')
+    head = ''.join(parts[:-1])
+    ext = 'jpg'
+    path_output = head + '.' + ext
 
-        im.save(path_output)
-        print(path_output)
+    im.save(path_output)
+    print(path_output)
 
 
 if __name__ == '__main__':
-    main()
+  main()

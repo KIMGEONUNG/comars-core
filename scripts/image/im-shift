@@ -7,50 +7,63 @@ from PIL import Image
 
 
 def parse():
-    import argparse
-    parser = argparse.ArgumentParser(description='Image rotation')
-    parser.add_argument('-r', '--replace', default=False,
-                        action='store_true', help='replace input')
-    parser.add_argument('-t', '--translation', type=int, default=100, 
-                        help='target image degree')
-    parser.add_argument('-z', '--zero', action='store_true', default=False,
-                        help='packing with zero')
-    parser.add_argument('-V', '--vertical', action='store_true', default=False,
-                        help='vertical shift')
-    return parser.parse_args()
+  import argparse
+  parser = argparse.ArgumentParser(description='Image rotation')
+  parser.add_argument('-r',
+                      '--replace',
+                      default=False,
+                      action='store_true',
+                      help='replace input')
+  parser.add_argument('-t',
+                      '--translation',
+                      type=int,
+                      default=100,
+                      help='target image degree')
+  parser.add_argument('-z',
+                      '--zero',
+                      action='store_true',
+                      default=False,
+                      help='packing with zero')
+  parser.add_argument('-V',
+                      '--vertical',
+                      action='store_true',
+                      default=False,
+                      help='vertical shift')
+  return parser.parse_args()
 
 
 def main():
-    args = parse()
+  args = parse()
 
-    target_files = sys.stdin.read().splitlines()
-    print("image shift files: %d EA" % len(target_files), file=sys.stderr)
+  target_files = sys.stdin.read().splitlines()
+  print("image shift files: %d EA" % len(target_files), file=sys.stderr)
 
-    for target_file in target_files:
-        im = Image.open(target_file)
-        im = transforms.ToTensor()(im)
-        im_target = torch.zeros_like(im)
+  for target_file in target_files:
+    im = Image.open(target_file)
+    im = transforms.ToTensor()(im)
+    im_target = torch.zeros_like(im)
 
-        if args.vertical:
-            im_target[:, args.translation:, :] = im[:, :-args.translation, :]
-        else:
-            im_target[:, :, args.translation:] = im[:, :, :-args.translation]
+    if args.vertical:
+      im_target[:, args.translation:, :] = im[:, :-args.translation, :]
+    else:
+      im_target[:, :, args.translation:] = im[:, :, :-args.translation]
 
-        im = transforms.ToPILImage()(im_target)
+    im = transforms.ToPILImage()(im_target)
 
-        path_output = None
-        if args.replace:
-            path_output = target_file
-        else:
-            parts = target_file.split('.')
-            head = ''.join(parts[:-1])
-            ext = parts[-1]
-            direction = 'v' if args.vertical else 'h'
-            path_output = head + '_shift_%s_%04d.' % (direction, args.translation) + ext
+    path_output = None
+    if args.replace:
+      path_output = target_file
+    else:
+      parts = target_file.split('.')
+      head = ''.join(parts[:-1])
+      ext = parts[-1]
+      direction = 'v' if args.vertical else 'h'
+      path_output = head + '_shift_%s_%04d.' % (direction,
+                                                args.translation) + ext
 
-        im.save(path_output)
-        print(path_output)
+    im.save(path_output)
+    print(path_output)
 
 
 if __name__ == '__main__':
-    main()
+  main()

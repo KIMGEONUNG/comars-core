@@ -7,45 +7,51 @@ from PIL import Image
 
 
 def parse():
-    import argparse
-    parser = argparse.ArgumentParser(description='Image center crop')
-    parser.add_argument('-r', '--replace', action='store_true',
-                        help='replace input')
-    parser.add_argument('-m', '--mode', default='resize',
-                        choices=['resize', 'crop'])
+  import argparse
+  parser = argparse.ArgumentParser(description='Image center crop')
+  parser.add_argument('-r',
+                      '--replace',
+                      action='store_true',
+                      help='replace input')
+  parser.add_argument('-m',
+                      '--mode',
+                      default='resize',
+                      choices=['resize', 'crop'])
 
-    return parser.parse_args()
+  return parser.parse_args()
+
 
 def main():
-    args = parse()
+  args = parse()
 
-    target_files = sys.stdin.read().splitlines()
-    print("image center-crop target  files: %d EA" % len(target_files), file=sys.stderr)
+  target_files = sys.stdin.read().splitlines()
+  print("image center-crop target  files: %d EA" % len(target_files),
+        file=sys.stderr)
 
-    for target_file in target_files:
-        im = Image.open(target_file)
+  for target_file in target_files:
+    im = Image.open(target_file)
 
-        size = min(im.size)
+    size = min(im.size)
 
-        if args.mode == 'resize':
-            im = Resize((size, size))(im)
-        elif args.mode == 'crop':
-            im = CenterCrop(size)(im)
-        else:
-            raise NotImplementedError('Invalid Mode')
+    if args.mode == 'resize':
+      im = Resize((size, size))(im)
+    elif args.mode == 'crop':
+      im = CenterCrop(size)(im)
+    else:
+      raise NotImplementedError('Invalid Mode')
 
-        path_output = None
-        if args.replace:
-            path_output = target_file
-        else:
-            parts = target_file.split('.')
-            head = ''.join(parts[:-1])
-            ext = parts[-1]
-            path_output = head + '_square_%04d.' % (size) + ext
+    path_output = None
+    if args.replace:
+      path_output = target_file
+    else:
+      parts = target_file.split('.')
+      head = ''.join(parts[:-1])
+      ext = parts[-1]
+      path_output = head + '_square_%04d.' % (size) + ext
 
-        im.save(path_output)
-        print(path_output)
+    im.save(path_output)
+    print(path_output)
 
 
 if __name__ == '__main__':
-    main()
+  main()

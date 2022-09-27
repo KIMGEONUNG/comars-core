@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import argparse 
+import argparse
 import os
 import numpy as np
 from os.path import join
@@ -15,182 +15,209 @@ import matplotlib.pyplot as plt
 
 
 def parse():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('targets', type=str, nargs='+')
-    parser.add_argument('--mode', type=str, default='sequential',
-            choices=['random', 'sequential', 'specify'])
-    parser.add_argument('--format', type=str, default='jpg',
-            choices=['jpg', 'pdf', 'png'])
-    parser.add_argument('--target_ids', type=str, nargs='+', default=None)
-    parser.add_argument('--no_caption_id', action='store_true')
-    parser.add_argument('--no_caption_type', action='store_true')
-    parser.add_argument('--ccrop', action='store_true')
-    parser.add_argument('--only_one', action='store_true')
-    parser.add_argument('--transpose', action='store_true')
-    parser.add_argument('--print_random_id', action='store_true')
-    parser.add_argument('--no_resize', action='store_true')
-    parser.add_argument('--resolution', type=int, default=256) 
-    parser.add_argument('--length', type=int, default=10) 
-    parser.add_argument('--path_out', type=str, default='out')
-    parser.add_argument('--iter_max', type=int, default=5000)
-    parser.add_argument('--num_sample', type=int, default=50000)
-    parser.add_argument('--pad_val', type=int, default=1)
-    parser.add_argument('--pad', type=int, default=0)
-    return parser.parse_args()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('targets', type=str, nargs='+')
+  parser.add_argument('--mode',
+                      type=str,
+                      default='sequential',
+                      choices=['random', 'sequential', 'specify'])
+  parser.add_argument('--format',
+                      type=str,
+                      default='jpg',
+                      choices=['jpg', 'pdf', 'png'])
+  parser.add_argument('--target_ids', type=str, nargs='+', default=None)
+  parser.add_argument('--no_caption_id', action='store_true')
+  parser.add_argument('--no_caption_type', action='store_true')
+  parser.add_argument('--ccrop', action='store_true')
+  parser.add_argument('--only_one', action='store_true')
+  parser.add_argument('--transpose', action='store_true')
+  parser.add_argument('--print_random_id', action='store_true')
+  parser.add_argument('--no_resize', action='store_true')
+  parser.add_argument('--resolution', type=int, default=256)
+  parser.add_argument('--length', type=int, default=10)
+  parser.add_argument('--path_out', type=str, default='out')
+  parser.add_argument('--iter_max', type=int, default=5000)
+  parser.add_argument('--num_sample', type=int, default=50000)
+  parser.add_argument('--pad_val', type=int, default=1)
+  parser.add_argument('--pad', type=int, default=0)
+  return parser.parse_args()
 
 
 def cv2torch(x):
-    x = x / 255
-    x = np.flip(x, -1).copy()
-    x = torch.Tensor(x).permute(0,3,1,2)
-    return x
+  x = x / 255
+  x = np.flip(x, -1).copy()
+  x = torch.Tensor(x).permute(0, 3, 1, 2)
+  return x
 
 
 def ccrop(x):
-    h, w, _ = x.shape
-    short = min(h, w)
+  h, w, _ = x.shape
+  short = min(h, w)
 
-    h_edge = (h - short) // 2
-    w_edge = (w - short) // 2
+  h_edge = (h - short) // 2
+  w_edge = (w - short) // 2
 
-    x_crop = x[h_edge:h_edge + short, w_edge:w_edge + short, :]
-    return x_crop
+  x_crop = x[h_edge:h_edge + short, w_edge:w_edge + short, :]
+  return x_crop
 
 
 def main(args):
-    ids = ['%05d' % i for i in range(args.num_sample)]
+  ids = ['%05d' % i for i in range(args.num_sample)]
+  num_iter = int(len(ids) / args.length)
+
+  if args.mode == 'sequential':
+    pass
+  elif args.mode == 'random':
+    shuffle(ids)
+    if True:
+      ids = ids[:100]
+      ids.sort()
+
+    if args.print_random_id:
+      for id in ids:
+        print(id)
+  elif args.mode == 'specify':
+    ids = args.target_ids
+    if ids is None:
+      raise Exception('No targets are specified')
     num_iter = int(len(ids) / args.length)
+  else:
+    raise Exception('Invalid mode')
 
+  if not os.path.exists(args.path_out):
+    os.mkdir(args.path_out)
 
-    if args.mode == 'sequential':
-        pass
-    elif args.mode == 'random':
-        shuffle(ids)
-        if True:
-            ids = ids[:100]
-            ids.sort()
+  if len(ids) % args.length != 0:
+    num_iter += 1
 
-        if args.print_random_id:
-            for id in ids:
-                print(id)
-    elif args.mode == 'specify':
-        ids = args.target_ids
-        if ids is None:
-            raise Exception('No targets are specified')
-        num_iter = int(len(ids) / args.length)
-    else:
-        raise Exception('Invalid mode')
+  if args.transpose:
+    grid_row = len(args.targets)
+    cap_id_dim = 2
+    cap_type_dim = 1
+  else:
+    grid_row = args.length
+    cap_id_dim = 1
+    cap_type_dim = 2
 
-    if not os.path.exists(args.path_out):
-        os.mkdir(args.path_out)
-
-    if len(ids) % args.length != 0:
-        num_iter += 1
-
+  for i in tqdm(range(num_iter)):
+    if args.iter_max <= i:
+      break
+    id_group = ids[i * args.length:(i + 1) * args.length]
     if args.transpose:
-        grid_row = len(args.targets)
-        cap_id_dim = 2
-        cap_type_dim = 1
+      paths = [
+          join(target, id + '.jpg') for id in id_group
+          for target in args.targets
+      ]
     else:
-        grid_row = args.length
-        cap_id_dim = 1
-        cap_type_dim = 2
+      paths = [
+          join(target, id + '.jpg') for target in args.targets
+          for id in id_group
+      ]
 
-    for i in tqdm(range(num_iter)):
-        if args.iter_max <= i:
-            break
-        id_group = ids[i * args.length: (i + 1) * args.length]
+    imgs = [cv.imread(path) for path in paths]
+
+    if args.ccrop:
+      imgs = [ccrop(img) for img in imgs]
+
+    if not args.no_resize:
+      imgs = [
+          cv.resize(img, (args.resolution, args.resolution)) for img in imgs
+      ]
+    imgs = [np.expand_dims(img, 0) for img in imgs]
+    imgs = np.vstack(imgs)
+    imgs = cv2torch(imgs)
+    grid = make_grid(imgs,
+                     nrow=grid_row,
+                     padding=args.pad,
+                     pad_value=args.pad_val)
+    fontFace = cv.FONT_HERSHEY_SIMPLEX
+    fontscale = 1.2
+    color = (0, 0, 0)
+    _, height, width = grid.shape
+
+    buff_c = 0
+    if not args.no_caption_id:
+      if args.transpose:
+        buff_c = 200
+        length = height
+        paper = np.ones((length, buff_c, 3)) * 255
+      else:
+        buff_c = 80
+        length = width
+        paper = np.ones((buff_c, length, 3)) * 255
+      unit = int(length / len(id_group))
+
+      for j in range(len(id_group)):
         if args.transpose:
-            paths = [join(target, id + '.jpg') for id in id_group
-                                           for target in args.targets]
+          cv.putText(paper,
+                     str(id_group[j]), (10, unit * j + 130),
+                     fontFace,
+                     fontscale,
+                     color,
+                     thickness=2)
         else:
-            paths = [join(target, id + '.jpg') for target in args.targets
-                                           for id in id_group]
+          cv.putText(paper,
+                     str(id_group[j]), (unit * j + 50, buff_c // 2),
+                     fontFace,
+                     fontscale,
+                     color,
+                     thickness=2)
 
-        imgs = [cv.imread(path) for path in paths]
+      paper = paper / 255
+      paper = np.flip(paper, -1).copy()
+      paper = torch.Tensor(paper).permute(2, 0, 1)
 
-        if args.ccrop:
-            imgs = [ccrop(img) for img in imgs]
+      if args.transpose:
+        grid = torch.cat([paper, grid], cap_id_dim)
+      else:
+        grid = torch.cat([grid, paper], cap_id_dim)
 
-        if not args.no_resize:
-            imgs = [cv.resize(img, (args.resolution, args.resolution))
-                    for img in imgs]
-        imgs = [np.expand_dims(img, 0) for img in imgs]
-        imgs = np.vstack(imgs)
-        imgs = cv2torch(imgs)
-        grid = make_grid(imgs, nrow=grid_row,
-                         padding=args.pad,
-                         pad_value=args.pad_val)
-        fontFace = cv.FONT_HERSHEY_SIMPLEX
-        fontscale = 1.2 
-        color = (0, 0, 0) 
-        _, height, width = grid.shape
+    if not args.no_caption_type:
+      if args.transpose:
+        buff_t = 80
+        length = width
+        paper = np.ones((buff_t, length + buff_c, 3)) * 255
+      else:
+        buff_t = 200
+        length = height
+        paper = np.ones((length + buff_c, buff_t, 3)) * 255
+      unit = int(length / len(args.targets))
 
-        buff_c = 0 
-        if not args.no_caption_id:
-            if args.transpose:
-                buff_c = 200 
-                length = height 
-                paper = np.ones((length, buff_c, 3)) * 255
-            else:
-                buff_c = 80 
-                length = width
-                paper = np.ones((buff_c, length, 3)) * 255
-            unit = int(length / len(id_group)) 
+      num_iter = len(args.targets)
+      if args.transpose:
+        for j in range(num_iter):
+          cv.putText(paper,
+                     str(args.targets[j]),
+                     (buff_c + unit * j + 50, buff_t // 2),
+                     fontFace,
+                     fontscale,
+                     color,
+                     thickness=2)
+      else:
+        for j in range(num_iter):
+          cv.putText(paper,
+                     str(args.targets[j]), (10, unit * j + 130),
+                     fontFace,
+                     fontscale,
+                     color,
+                     thickness=2)
 
-            for j in range(len(id_group)):
-                if args.transpose:
-                    cv.putText(paper, str(id_group[j]), (10, unit * j + 130),
-                               fontFace, fontscale, color, thickness=2)
-                else:
-                    cv.putText(paper, str(id_group[j]), (unit * j + 50, buff_c // 2),
-                               fontFace, fontscale, color, thickness=2)
+      paper = paper / 255
+      paper = np.flip(paper, -1).copy()
+      paper = torch.Tensor(paper).permute(2, 0, 1)
 
-            paper = paper / 255
-            paper = np.flip(paper, -1).copy()
-            paper = torch.Tensor(paper).permute(2,0,1)
+      if args.transpose:
+        grid = torch.cat([grid, paper], cap_type_dim)
+      else:
+        grid = torch.cat([paper, grid], cap_type_dim)
 
-            if args.transpose:
-                grid = torch.cat([paper, grid], cap_id_dim)
-            else:
-                grid = torch.cat([grid, paper], cap_id_dim)
+    grid = ToPILImage()(grid)
+    # grid.show()
+    grid.save(join(args.path_out, '%05d.%s' % (i, args.format)))
+    if args.only_one:
+      exit()
 
-        if not args.no_caption_type:
-            if args.transpose:
-                buff_t = 80 
-                length = width
-                paper = np.ones((buff_t, length + buff_c, 3)) * 255
-            else:
-                buff_t = 200
-                length = height
-                paper = np.ones((length + buff_c, buff_t, 3)) * 255
-            unit = int(length / len(args.targets)) 
-
-            num_iter = len(args.targets)
-            if args.transpose:
-                for j in range(num_iter):
-                    cv.putText(paper, str(args.targets[j]), (buff_c + unit * j + 50, buff_t // 2),
-                               fontFace, fontscale, color, thickness=2)
-            else:
-                for j in range(num_iter):
-                    cv.putText(paper, str(args.targets[j]), (10, unit * j + 130),
-                               fontFace, fontscale, color, thickness=2)
-
-            paper = paper / 255
-            paper = np.flip(paper, -1).copy()
-            paper = torch.Tensor(paper).permute(2, 0, 1)
-
-            if args.transpose:
-                grid = torch.cat([grid, paper], cap_type_dim)
-            else:
-                grid = torch.cat([paper, grid], cap_type_dim)
-
-        grid = ToPILImage()(grid)
-        # grid.show()
-        grid.save(join(args.path_out, '%05d.%s' % (i, args.format)))
-        if args.only_one:
-            exit()
 
 if __name__ == '__main__':
-    args = parse()
-    main(args)
+  args = parse()
+  main(args)
