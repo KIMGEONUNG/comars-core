@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import sys
+from scipy.io import loadmat
+from pycomar.images import show3plt
+import argparse
+import numpy as np
+import cv2
+import re
+
+
+def parse():
+    p = argparse.ArgumentParser()
+    return p.parse_args()
+
+
+def get_img(path):
+    img: np.ndarray = loadmat(path)['noisy_list']
+    img = img.astype('float32') / (2 ** 16) * 255
+    img = img[..., ::-1]
+
+    return img
+
+
+def scale_img(img, scale):
+    img = img * scale
+    img = img.clip(0, 1)
+    return img
+
+
+def main():
+    args = parse()
+    target_files = sys.stdin.read().splitlines()
+    print("# Target files", file=sys.stderr)
+    for f in target_files:
+        path_out = re.sub('mat$', 'jpg', f)
+        img = get_img(f)
+        r, g, b, n = np.split(img, 4, axis=-1)
+
+        imgs = [img[..., i].astype('uint8') for i in range(4)]
+        show3plt(imgs, titles=["R", "G", "B", "NIR"], path_out=path_out)
+        print(path_out, file=sys.stderr)
+
+
+if __name__ == '__main__':
+    main()

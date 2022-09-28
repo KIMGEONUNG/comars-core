@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+
+import sys
+import argparse
+import numpy as np
+import cv2
+import re
+from pycomar.images import np2pil
+
+
+def parse():
+    p = argparse.ArgumentParser()
+    return p.parse_args()
+
+
+def read_16bit_raw(filename, height=1280, width=2160):
+    pgmf = open(filename, 'rb')
+
+    raster = []
+    for y in range(height):
+        row = []
+        for yy in range(width):
+            a = pgmf.read(1)
+            bit_a = ord(a)
+
+            b = pgmf.read(1)
+            bit_b = ord(b)
+
+            row.append(bit_a + 255 * bit_b)
+        raster.append(row)
+
+    pgmf.close()
+    return np.asarray(raster)
+
+
+def raw_to_4(im):
+    native_1 = im[0::2, 0::2]  # top left (R)
+    native_2 = im[1::2, 0::2]  # bottom left (IR)
+    native_3 = im[0::2, 1::2]  # top right (G)
+    native_4 = im[1::2, 1::2]  # botom right (B)
+
+    col_list = [native_1,  native_3, native_4]
+    return np.asarray(col_list).transpose(1, 2, 0)
+
+
+def main():
+    args = parse()
+    target_files = sys.stdin.read().splitlines()
+    print("# Target files", file=sys.stderr)
+    for f in target_files:
+        path_out = re.sub('dng$', 'jpg', f)
+        img = raw_to_4(read_16bit_raw(f)).astype('float32') / 2 ** 16
+        img = np2pil(img)
+        img.save(path_out)
+        print(path_out, file=sys.stderr)
+
+
+if __name__ == '__main__':
+    main()
