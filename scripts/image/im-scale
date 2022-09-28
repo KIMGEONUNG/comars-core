@@ -24,9 +24,6 @@ def parse():
 def main():
   args = parse()
 
-  if len(args.size) > 2:
-    raise Exception('Invalid image size')
-
   target_files = sys.stdin.read().splitlines()
   print("image resize target files: %d EA" % len(target_files),
         file=sys.stderr)
@@ -44,7 +41,7 @@ def main():
       parts = target_file.split('.')
       head = ''.join(parts[:-1])
       ext = parts[-1]
-      info = '_'.join([str(i) for i in args.size])
+      info = str(args.scale)
       path_output = head + '_scale_' + info + '.' + ext
 
     im.save(path_output)
