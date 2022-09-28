@@ -34,7 +34,7 @@ local _on_stdout4log = function(_, data, _)
 
   -- Write stdout to log file
   if data then
-    print(require("inspect")(data))
+    -- print(require("inspect")(data))
     vim.api.nvim_buf_set_lines(id_buf, -1, -1, false,
       { "===== STDOUT =====" })
     vim.api.nvim_buf_set_lines(id_buf, -1, -1, false, data)
