@@ -1,4 +1,90 @@
 {
+  "beta": {
+    "prefix": ["beta"],
+    "body": [
+      "\\beta"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "alpha": {
+    "prefix": ["alpha"],
+    "body": [
+      "\\alpha"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "lambda": {
+    "prefix": ["lambda", "lam"],
+    "body": [
+      "\\lambda"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "theta": {
+    "prefix": ["theta", "th" ],
+    "body": [
+      "\\theta"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "sum": {
+    "prefix": ["sum"],
+    "body": [
+      "\\sum_{${1:x}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "mathcal": {
+    "prefix": ["mc"],
+    "body": [
+      "\\mathcal{${1:L}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "equation": {
+    "prefix": ["eq"],
+    "body": [
+      "\\begin{equation}",
+      "  \\begin{aligned}",
+      "    ${1:eq}",
+      "  \\end{aligned}",
+      "\\end{equation}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "equaltion-inline": {
+    "prefix": ["e"],
+    "body": [
+      "\\$${1:equation}\\$"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  
+  "frac": {
+    "prefix": ["frac"],
+    "body": [
+      "\\frac{${1:1}}{${2:x}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "assumption": {
     "prefix": ["as"],
     "body": [
