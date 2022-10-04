@@ -1,3 +1,9 @@
+function hello()
+  -- local str = io.read("*l")
+  -- print(str)
+  inspect = require("inspect")
+  print(inspect( vim.fn.getpos('w0') ))
+end
 
 function OpenNullBuffer()
   vim.api.nvim_command("vs /dev/null")

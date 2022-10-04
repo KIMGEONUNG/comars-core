@@ -1,0 +1,5 @@
+#!/bin/bash
+path="$HOME/.cache/cpscript.txt"
+
+set -e
+bash $path

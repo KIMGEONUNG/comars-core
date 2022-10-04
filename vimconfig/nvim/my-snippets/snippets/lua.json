@@ -1,4 +1,13 @@
 {
+  "stdin": {
+    "prefix": ["stdin"],
+    "body": [
+      "io.read(\"*l\")"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "shebang": {
     "prefix": "#!",
     "body": [
