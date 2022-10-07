@@ -36,6 +36,7 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
+-- PYTHON
 require('lspconfig').pylsp.setup {
   on_attach = on_attach,
   flags = lsp_flags,
@@ -60,13 +61,24 @@ require('lspconfig').pylsp.setup {
 }
 -- pylsp.plugins.flake8.indentSize
 
-
+-- CPP
 require 'lspconfig'.clangd.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
 }
 
+-- JAVASCRIPT
+require 'lspconfig'.tsserver.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  cmd = { "typescript-language-server", "--stdio" },
+  -- settings = {
+  -- }
+}
+
+-- LUA
 require 'lspconfig'.sumneko_lua.setup {
   on_attach = on_attach,
   flags = lsp_flags,
