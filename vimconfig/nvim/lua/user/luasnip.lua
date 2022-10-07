@@ -40,6 +40,10 @@ function OpenSnippet()
     -- print('this is latex')
     local path = path_root .. 'json.json'
     open(path)
+  elseif filetype == 'javascript' then
+    -- print('this is latex')
+    local path = path_root .. 'javascript.json'
+    open(path)
   end
 
   -- ENABLE TO EXIT USING 'Q' KEY

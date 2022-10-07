@@ -1,0 +1,11 @@
+{
+  "print": {
+    "prefix": ["pr"],
+    "body": [
+      "console.log(${1:text})"
+    ],
+    "description": [
+      "description"
+    ]
+  }
+}
