@@ -1,4 +1,21 @@
 {
+  "subfig4": {
+    "prefix": ["subfig4"],
+    "body": [
+      "\\begin{figure}",
+      "  \\centering",
+      "  \\subfigure[apple]{\\includegraphics[width=0.24\\textwidth]{figures/sample01.jpg}}",
+      "  \\subfigure[banana]{\\includegraphics[width=0.24\\textwidth]{figures/sample01.jpg}}",
+      "  \\subfigure[cap]{\\includegraphics[width=0.24\\textwidth]{figures/sample01.jpg}}",
+      "  \\subfigure[death]{\\includegraphics[width=0.24\\textwidth]{figures/sample01.jpg}}",
+      "  \\caption{cpation}",
+      "  \\label{fig:}",
+      "\\end{figure}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "beta": {
     "prefix": ["beta"],
     "body": [
@@ -102,12 +119,74 @@
 		"prefix": "---",
 		"body": "%-----------------------------------------------------------------------------"
 	},
-	"snip1": {
+  "macro": {
+    "prefix": ["macro"],
+    "body": [
+      "\\definecolor{dkgreen}{rgb}{0,0.6,0}",
+      "\\definecolor{gray}{rgb}{0.5,0.5,0.5}",
+      "\\definecolor{mauve}{rgb}{0.58,0,0.82}",
+      "",
+      "\\newcommand{\\todo}[1]{{\\textcolor{red}{#1}}}",
+      "\\newcommand{\\assume}[1]{{\\textcolor{orange}{#1}}}",
+      "\\newcommand{\\XX}{{\\textcolor{red}{XX}}}",
+      "",
+      "\\newcommand{\\Eq}[1]  {Eq.\\ (#1)}",
+      "\\newcommand{\\Eqs}[1] {Eqs.\\ (#1)}",
+      "\\newcommand{\\Fig}[1] {Fig.\\ #1}",
+      "\\newcommand{\\Figs}[1]{Figs.\\ #1}",
+      "\\newcommand{\\Tbl}[1]  {Tab.\\ #1}",
+      "\\newcommand{\\Tbls}[1] {Tabs.\\ #1}",
+      "\\newcommand{\\Sec}[1] {Sec.\\ #1}",
+      "\\newcommand{\\SSec}[1] {Sec.\\ #1}",
+      "\\newcommand{\\Secs}[1] {Secs.\\ #1}",
+      "\\newcommand{\\Alg}[1] {Alg.\\ #1}",
+      "\\newcommand{\\etal}   {{\\textit{et al.}}}",
+      "",
+      "\\newcommand{\\kgu}[1]{{\\textcolor{magenta}{[KGU: #1]}}}",
+      "\\newcommand{\\cmt}[1]{{\\textcolor{magenta}{(#1)}}}",
+      "\\newcommand{\\jy}[1]{{\\textbf{\\textcolor{MidnightBlue}{[JY] }}\\textcolor{MidnightBlue}{#1}}}",
+      "\\newcommand{\\sean}[1]{{\\textcolor{green}{sean: #1}}}",
+      "\\newcommand{\\sunghyun}[1]{{\\textcolor[rgb]{0.6,0.0,0.6}{sunghyun: #1}}}",
+      "\\newcommand{\\sh}[1]{{\\textcolor[rgb]{0.2,0.6,0.6}{[BAEK: #1]}}}",
+      "\\newcommand{\\kkang}[1]{{\\textcolor[rgb]{0.6,0.0,0.1}{kkang: #1}}}",
+      "\\newcommand{\\change}[1]{{\\color{red}#1}}",
+      "\\newcommand{\\bb}[1]{\\textbf{\\textit{#1}}}",
+      "",
+      "\\newcommand{\\itembs} {\\item[$\\blacksquare$]}",
+      "",
+      "\\renewcommand{\\paragraph}[1]{{\\vspace{2pt}\\noindent\\textbf{#1}}}",
+      "",
+      "\\def\\checkmark{\\tikz\\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}",
+      "",
+      "",
+      "\\lstset{frame=tb,",
+      "  language=python,",
+      "  aboveskip=3mm,",
+      "  belowskip=3mm,",
+      "  showstringspaces=false,",
+      "  columns=flexible,",
+      "  basicstyle={\\small\\ttfamily},",
+      "  numbers=none,",
+      "  numberstyle=\\tiny\\color{gray},",
+      "  keywordstyle=\\color{blue},",
+      "  commentstyle=\\color{dkgreen},",
+      "  stringstyle=\\color{mauve},",
+      "  breaklines=true,",
+      "  breakatwhitespace=true,",
+      "  tabsize=3",
+      "}"
+    ],
+    "description": [
+      "this is custom macro"
+    ]
+  },
+	"mytemplete": {
 		"prefix": "mytp1",
 		"body": [
         "\\documentclass[runningheads]{llncs}",
         "",
         "\\usepackage{graphicx}",
+        "\\usepackage{subfigure}",
         "\\usepackage{amsmath,amssymb} % define this before the line numbering.",
         "\\usepackage{listings}",
         "\\usepackage{color}",
