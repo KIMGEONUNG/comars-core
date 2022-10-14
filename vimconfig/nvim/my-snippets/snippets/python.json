@@ -1,4 +1,13 @@
 {
+  "exit": {
+    "prefix": ["e"],
+    "body": [
+      "exit()"
+    ],
+    "description": [
+      "exit"
+    ]
+  },  
 	"print": {
 		"prefix": "p",
 		"body": [
