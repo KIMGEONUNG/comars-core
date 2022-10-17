@@ -27,3 +27,7 @@ require("user.sneak")
 require("user.luasnip")
 
 require("func.execute")
+
+vim.cmd([[
+hi Comment guifg=red ctermfg=red gui=italic
+]])
