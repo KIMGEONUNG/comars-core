@@ -44,6 +44,10 @@ function OpenSnippet()
     -- print('this is latex')
     local path = path_root .. 'javascript.json'
     open(path)
+  elseif filetype == 'markdown' then
+    -- print('this is latex')
+    local path = path_root .. 'markdown.json'
+    open(path)
   end
 
   -- ENABLE TO EXIT USING 'Q' KEY

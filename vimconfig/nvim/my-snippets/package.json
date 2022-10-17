@@ -4,6 +4,12 @@
 		"snippets": [
       {
 				"language": [
+					"markdown"
+				],
+				"path": "snippets/markdown.json"
+			},
+      {
+				"language": [
 					"javascript"
 				],
 				"path": "snippets/javascript.json"

@@ -1,0 +1,29 @@
+{
+  "blue text": {
+    "prefix": ["bt"],
+    "body": [
+      "<span style=\"color:blue\">${1:text}</span>"
+    ],
+    "description": [
+      "blue text"
+    ]
+  },
+  "red text": {
+    "prefix": ["rt"],
+    "body": [
+      "<span style=\"color:red\">${1:text}</span>"
+    ],
+    "description": [
+      "red text"
+    ]
+  },
+  "green text": {
+    "prefix": ["gt"],
+    "body": [
+      "<span style=\"color:green\">${1:text}</span>"
+    ],
+    "description": [
+      "green text"
+    ]
+  }
+}
