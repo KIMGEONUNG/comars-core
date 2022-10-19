@@ -1,4 +1,15 @@
 {
+  "details": {
+    "prefix": ["details"],
+    "body": [
+      "<details>",
+      "<summary>${1:text}</summary>",
+      "</details>"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "blue text": {
     "prefix": ["bt"],
     "body": [
