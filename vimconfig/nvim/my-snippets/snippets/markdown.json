@@ -1,4 +1,16 @@
 {
+  "figure": {
+    "prefix": ["figure"],
+    "body": [
+      "<figure>",
+      "<img src=\"${1:src}\" alt=\"fail\" style=\"width:100%\">",
+      "<figcaption align = \"center\"><b>${2:caption}</b></figcaption>",
+      "</figure>"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "details": {
     "prefix": ["details"],
     "body": [

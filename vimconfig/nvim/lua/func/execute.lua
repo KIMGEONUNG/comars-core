@@ -15,21 +15,23 @@ vim.opt.splitbelow = true
 function SetLog(arg)
   vim.g.is_logging = arg
 end
+
 vim.api.nvim_create_user_command("LogOn", 'lua SetLog(true)', {})
 vim.api.nvim_create_user_command("LogOff", 'lua SetLog(false)', {})
 
 function SetAutoOpen(arg)
   vim.g.auto_open = arg
 end
+
 vim.api.nvim_create_user_command("AuoOn", 'lua SetAutoOpen(true)', {})
 vim.api.nvim_create_user_command("AuoOff", 'lua SetAutoOpen(false)', {})
 
 
 -- CALLBACKS
 local _on_stdout4log = function(_, data, _)
-  -- Get log buffer id
+  -- GET LOG BUFFER ID
   local id_buf = vim.fn.bufnr(path_log)
-  -- Clear log buffer
+  -- CLEAR LOG BUFFER
   vim.api.nvim_buf_set_lines(id_buf, 0, -1, false, {})
 
   -- Write stdout to log file
@@ -55,7 +57,7 @@ end
 function ExecuteFile()
   -- INIT
   vim.api.nvim_command('write')
-  local path_file = vim.fn.expand("%:t")
+  local path_file = vim.fn.expand("%:p")
   local filetype = vim.bo.filetype
 
   -- FIND EXECUTION PROGRAM
@@ -82,6 +84,8 @@ function ExecuteFile()
       local b_info = vim.fn.getbufinfo(path_log)
       local is_hidden = b_info[1].hidden == 1
       local is_unload = b_info[1].loaded == 0
+      -- CLEAR LOG BUFFER
+      vim.api.nvim_buf_set_lines(vim.fn.bufnr(path_log), 0, -1, false, {})
       if is_hidden or is_unload then
         vim.api.nvim_command("vs " .. path_log)
         vim.api.nvim_command("wincmd p")
@@ -90,16 +94,16 @@ function ExecuteFile()
 
     -- START PROGRAM
     if vim.g.auto_open then
-    vim.fn.jobstart( exe .. " " ..  path_file , {
-      stdout_buffered = true,
-      stderr_buffered = true,
-      on_stdout = _on_stdout4log,
-      on_stderr = _on_stderr4log,
-      on_exit = function()
-        vim.api.nvim_command("wall")
-      end
-    })
-  end
+      vim.fn.jobstart(exe .. " " .. path_file, {
+        stdout_buffered = true,
+        stderr_buffered = true,
+        on_stdout = _on_stdout4log,
+        on_stderr = _on_stderr4log,
+        on_exit = function()
+          vim.api.nvim_command("wall")
+        end
+      })
+    end
   else
     vim.api.nvim_command("!" .. exe .. " %")
   end
