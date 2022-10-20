@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+
+import json
+from sys import stdin
+import re
+
+config = {
+    "configurations": {
+        "run": {
+            "adapter": "debugpy",
+            "configuration": {
+                "request": "launch",
+                "type": "python",
+                "cwd": "${workspaceRoot}",
+                "program": "${file}",
+                "args": [],
+                "stopOnEntry": True,
+                "env": {},
+                "justMyCode": True
+            },
+            "breakpoints": {
+                "exception": {
+                    "raised": "N",
+                    "uncaught": "",
+                    "userUnhandled": ""
+                }
+            }
+        }
+    }
+}
+
+# READ ONE LINE FOR EXECUTION COMMAND
+command = stdin.read()[:-1]
+elements = command.split(' ')
+
+# EXTRACT ENVIRONMENT VARIABLE
+env = {}
+for _ in range(len(elements)):
+  if re.match(".+=.+", elements[0]) is not None:
+    pair = elements[0].split('=')
+    env[pair[0]] = pair[1]
+    del elements[0]
+    continue
+  else:
+    break
+config["configurations"]["run"]["configuration"]["env"] = env
+
+# EXTRACT TYPE
+config["configurations"]["run"]["configuration"]["type"] = elements[0]
+del elements[0]
+
+# EXTRACT PROGRAM
+config["configurations"]["run"]["configuration"]["program"] = elements[0]
+del elements[0]
+
+# EXTRACT ARGS
+config["configurations"]["run"]["configuration"]["args"] = elements
+
+# CONVERT INTO JSON:
+json_str = json.dumps(config, indent=2)
+
+# SAVE VIMSPECTOR CONFIG FILE
+with open('.vimspector.json', 'w') as f:
+  f.write(json_str)
