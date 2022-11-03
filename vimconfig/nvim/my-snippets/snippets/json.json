@@ -1,4 +1,13 @@
 {
+  "snipm": {
+    "prefix": ["snipm"],
+    "body": [
+      "\\${${1:1}:${2:text}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "snippet": {
     "prefix": "s",
     "body": [
