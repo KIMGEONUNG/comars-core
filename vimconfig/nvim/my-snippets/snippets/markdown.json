@@ -1,4 +1,22 @@
 {
+  "wip": {
+    "prefix": ["wip"],
+    "body": [
+      "<span style=\"color:red\">(WIP)</span>"
+    ],
+    "description": [
+      "done"
+    ]
+  },
+  "done": {
+    "prefix": ["done"],
+    "body": [
+      "<span style=\"color:green\">(Done)</span>"
+    ],
+    "description": [
+      "done"
+    ]
+  },
   "figure": {
     "prefix": ["figure"],
     "body": [

@@ -3,6 +3,9 @@ local remap = vim.keymap.set
 remap('n', '<space>', '<nop>', {})
 vim.g.mapleader = " "
 
+-- START SEARCH FROM THE CURRENT CURSOR
+remap('n', '#', '#N', { noremap = true, silent = true })
+
 -- MOVE CURSOR BASED ON DISPLAY LINE WHEN WE USE WRAP OPTION
 remap('n', 'j', 'gj', { noremap = true, silent = true })
 remap('n', 'k', 'gk', { noremap = true, silent = true })
