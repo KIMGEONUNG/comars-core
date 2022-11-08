@@ -1,4 +1,13 @@
 {
+  "undo": {
+    "prefix": ["undo"],
+    "body": [
+      "<span style=\"color:gray\">(Undo)</span>"
+    ],
+    "description": [
+      "done"
+    ]
+  },
   "wip": {
     "prefix": ["wip"],
     "body": [
