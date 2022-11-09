@@ -61,6 +61,15 @@
       "description"
     ]
   },
+  "mathbb": {
+    "prefix": ["mb"],
+    "body": [
+      "\\mathbb{${1:L}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "mathcal": {
     "prefix": ["mc"],
     "body": [
