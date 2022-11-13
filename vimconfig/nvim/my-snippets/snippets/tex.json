@@ -1,4 +1,13 @@
 {
+  "log": {
+    "prefix": ["log"],
+    "body": [
+      "\\log{${1:x}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "subfig4": {
     "prefix": ["subfig4"],
     "body": [
