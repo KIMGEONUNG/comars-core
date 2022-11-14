@@ -28,6 +28,7 @@ require("user.luasnip")
 
 require("func.execute")
 
+-- POST DEFINITIONS
 vim.cmd([[
 hi Comment guifg=red ctermfg=red gui=italic
 ]])
