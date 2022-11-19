@@ -1,7 +1,22 @@
-vim.opt.completeopt='menu,menuone,noselect'
+vim.opt.completeopt = 'menu,menuone,noselect'
 
-local cmp = require'cmp'
-local luasnip = require'luasnip'
+-- DEFINE COLORS
+-- vim.api.nvim_set_hl(0, "MyPmenu", { bg = "Black", fg = "White" })
+vim.api.nvim_set_hl(0, "MyPmenuSel", { bg = "White", fg = "Black", bold = true, italic = true })
+--
+vim.api.nvim_set_hl(0, "CmpItemAbbr", { bg = "None", fg = "#aaafff" })
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { bg = "None", fg = "#fdff00" })
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { bg = "None", fg = "#ec5300" })
+
+local border_config = {
+  border = "double",
+  -- winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuThumb,Search:Error",
+  winhighlight = "Normal:MyPmenu,FloatBorder:MyPmenu,CursorLine:MyPmenuSel,Search:None",
+}
+
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
+
 
 cmp.setup({
   snippet = {
@@ -13,9 +28,12 @@ cmp.setup({
 
   window = {
     -- THIS IS AWESOME VISUAL INTERFACE, BUT INVOKE AN INCONVENIENT LATENCY.
-    documentation = cmp.config.window.bordered(),
-    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(border_config),
+    completion = cmp.config.window.bordered(border_config),
+    -- completion = cmp.config.window.bordered({ border = {"◆", "━", "■", "┃", "■", "━", "■", "┃"}}),
   },
+
+  formatting = {},
 
   -- WARNING: IF YOU USE SIMPLE CURLY BRACKET SUCH AS "mapping = {}",
   -- SOME ESSENTIAL SHORTCUT OVERRIDING MIGHT BE OMITTED.
@@ -63,4 +81,3 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
-
