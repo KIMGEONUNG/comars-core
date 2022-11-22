@@ -25,6 +25,6 @@ nnoremap <leader>d<space> :call vimspector#Continue()<CR>
 
 nmap <leader>drc <Plug>VimspectorRunToCursor
 nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
-" nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
+nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
 ]])
