@@ -2,10 +2,10 @@
 -- ASSIGNMENT. SO WE USE AUTOMCD TRICK LIKE BELOW.
 local group = vim.api.nvim_create_augroup("Python-semantic", {})
 local cmds4python = {
-  "set shiftwidth=2",
-  "set softtabstop=2",
+  "set shiftwidth=4",
+  "set softtabstop=4",
   "set expandtab",
-  "set tabstop=2"
+  "set tabstop=4"
 }
 
 for _, x in pairs(cmds4python) do
