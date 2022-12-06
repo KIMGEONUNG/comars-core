@@ -43,7 +43,10 @@ def main():
     im = Image.open(target_file)
 
     if args.use_torch:
-      im = Resize(args.size)(im)
+      if len(args.size) == 1:
+        im = Resize(args.size[0])(im)
+      else:
+        im = Resize(args.size)(im)
     else:
       if len(args.size) == 2:
         width, height = args.size
