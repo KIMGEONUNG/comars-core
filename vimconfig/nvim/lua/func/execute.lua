@@ -1,5 +1,5 @@
 -- INIT
-vim.g.is_logging = true
+vim.g.is_logging = false
 vim.g.auto_open = true
 local path_log = "log.txt"
 local lang_exe_pairs = {
