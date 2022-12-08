@@ -30,5 +30,9 @@ require("func.execute")
 
 -- POST DEFINITIONS
 vim.cmd([[
-hi Comment guifg=red ctermfg=red gui=italic
+hi Comment guifg=red ctermfg=red gui=italic 
+hi LineNr guifg=#cdb923 ctermfg=gray
+
+set cursorline
+highlight CursorLineNR guifg=yellow
 ]])

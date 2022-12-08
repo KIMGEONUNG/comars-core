@@ -32,7 +32,7 @@ vim.cmd([[
 set list
 set listchars+=tab:›\ 
 set listchars+=trail:⋅
-set listchars+=multispace:\ ⋅
+set listchars+=multispace:\ \ \ \┃
 ]])
 -- set listchars+=eol:¬
 -- set listchars+=conceal:-
