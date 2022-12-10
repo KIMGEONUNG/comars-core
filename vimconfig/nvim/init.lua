@@ -27,6 +27,7 @@ require("user.sneak")
 require("user.luasnip")
 
 require("func.execute")
+require("func.vclip")
 
 -- POST DEFINITIONS
 vim.cmd([[
