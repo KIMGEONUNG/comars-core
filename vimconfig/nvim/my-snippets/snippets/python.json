@@ -1,4 +1,9 @@
 {
+  "definit": {
+    "prefix": "defi",
+    "body": "def __init__(self, ${1:arg}):\n\t${2:pass}$0",
+    "description": "init method for class"
+  },
   "exit": {
     "prefix": ["e"],
     "body": [
