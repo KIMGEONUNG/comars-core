@@ -1,49 +1,60 @@
 #!/usr/bin/env python
 
 import sys
-import torchvision.transforms as transforms
 from PIL import Image
+from skimage.io import imread
+import numpy as np
 
 
 def parse():
-  import argparse
-  parser = argparse.ArgumentParser(description='Convert image to gray')
-  parser.add_argument('-r',
-                      '--replace',
-                      default=False,
-                      action='store_true',
-                      help='replace input')
-  parser.add_argument('--use_rgb',
-                      action='store_true',
-                      help='save with 3 channel')
-  return parser.parse_args()
+    import argparse
+    parser = argparse.ArgumentParser(description='Add noise')
+    parser.add_argument('-r',
+                        '--replace',
+                        default=False,
+                        action='store_true',
+                        help='replace input')
+    parser.add_argument('-m', '--mean', type=float, default=0.0, help='mean')
+    parser.add_argument('-v',
+                        '--var',
+                        type=float,
+                        default=0.1,
+                        help='variance')
+    return parser.parse_args()
+
+
+def add_noise(x, mean, var):
+    x = x / 255.0
+    noise = np.random.normal(mean, var, x.shape)
+    x = x + noise
+    x = x.clip(0, 1)
+    x = (x * 255).astype('uint8')
+    return x
 
 
 def main():
-  args = parse()
+    args = parse()
 
-  target_files = sys.stdin.read().splitlines()
-  print("image gray target files: %d EA" % len(target_files), file=sys.stderr)
-  num_ch = 1
-  if args.use_rgb:
-    num_ch = 3
+    target_files = sys.stdin.read().splitlines()
+    print("target files: %d EA" % len(target_files), file=sys.stderr)
 
-  for target_file in target_files:
-    im = Image.open(target_file)
-    im = transforms.Grayscale(num_ch)(im)
+    for target_file in target_files:
+        x = imread(target_file)
+        x_noise = add_noise(x, mean=args.mean, var=args.var)
+        im = Image.fromarray(x_noise)
 
-    path_output = None
-    if args.replace:
-      path_output = target_file
-    else:
-      parts = target_file.split('.')
-      head = ''.join(parts[:-1])
-      ext = parts[-1]
-      path_output = head + '_gray.' + ext
+        path_output = None
+        if args.replace:
+            path_output = target_file
+        else:
+            parts = target_file.split('.')
+            head = ''.join(parts[:-1])
+            ext = parts[-1]
+            path_output = head + '_noise%.1f' % (args.var) + "." + ext
 
-    im.save(path_output, quality=100, subsampling=0)
-    print(path_output)
+        im.save(path_output, quality=100, subsampling=0)
+        print(path_output)
 
 
 if __name__ == '__main__':
-  main()
+    main()

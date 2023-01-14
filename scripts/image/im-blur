@@ -3,47 +3,64 @@
 import sys
 import torchvision.transforms as transforms
 from PIL import Image
+from skimage.io import imread, imsave
+from skimage import filters
+import numpy as np
 
 
 def parse():
-  import argparse
-  parser = argparse.ArgumentParser(description='Convert image to gray')
-  parser.add_argument('-r',
-                      '--replace',
-                      default=False,
-                      action='store_true',
-                      help='replace input')
-  parser.add_argument('--use_rgb',
-                      action='store_true',
-                      help='save with 3 channel')
-  return parser.parse_args()
+    import argparse
+    parser = argparse.ArgumentParser(description='Add noise')
+    parser.add_argument('-r',
+                        '--replace',
+                        default=False,
+                        action='store_true',
+                        help='replace input')
+    parser.add_argument('-v',
+                        '--var',
+                        type=float,
+                        default=1.0,
+                        help='variance')
+    return parser.parse_args()
+
+
+def add_blur(x, var):
+
+    r, g, b = np.split(x / 255.0, 3, axis=-1)
+
+    r = filters.gaussian(r, sigma=var)
+    g = filters.gaussian(g, sigma=var)
+    b = filters.gaussian(b, sigma=var)
+
+    rgb = np.concatenate([r, g, b], axis=-1)
+    rgb = (rgb * 255).astype('uint8')
+
+    return rgb
 
 
 def main():
-  args = parse()
+    args = parse()
 
-  target_files = sys.stdin.read().splitlines()
-  print("image gray target files: %d EA" % len(target_files), file=sys.stderr)
-  num_ch = 1
-  if args.use_rgb:
-    num_ch = 3
+    target_files = sys.stdin.read().splitlines()
+    print("target files: %d EA" % len(target_files), file=sys.stderr)
 
-  for target_file in target_files:
-    im = Image.open(target_file)
-    im = transforms.Grayscale(num_ch)(im)
+    for target_file in target_files:
+        x = imread(target_file)
+        x_blur = add_blur(x, var=args.var)
+        im = Image.fromarray(x_blur)
 
-    path_output = None
-    if args.replace:
-      path_output = target_file
-    else:
-      parts = target_file.split('.')
-      head = ''.join(parts[:-1])
-      ext = parts[-1]
-      path_output = head + '_gray.' + ext
+        path_output = None
+        if args.replace:
+            path_output = target_file
+        else:
+            parts = target_file.split('.')
+            head = ''.join(parts[:-1])
+            ext = parts[-1]
+            path_output = head + '_blur%.1f' % (args.var) + "." + ext
 
-    im.save(path_output, quality=100, subsampling=0)
-    print(path_output)
+        im.save(path_output, quality=100, subsampling=0)
+        print(path_output)
 
 
 if __name__ == '__main__':
-  main()
+    main()
