@@ -34,7 +34,7 @@ def main():
       ext = parts[-1]
       path_output = head + '_color' + '.' + ext
 
-    im.save(path_output)
+    im.save(path_output, quality=100, subsampling=0)
 
 
 if __name__ == '__main__':

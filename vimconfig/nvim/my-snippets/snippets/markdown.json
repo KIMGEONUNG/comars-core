@@ -75,5 +75,23 @@
     "description": [
       "green text"
     ]
+  },
+  "gray text": {
+    "prefix": ["grayt"],
+    "body": [
+      "<span style=\"color:gray\">${1:text}</span>"
+    ],
+    "description": [
+      "gray text"
+    ]
+  },
+  "orange text": {
+    "prefix": ["ot"],
+    "body": [
+      "<span style=\"color:orange\">${1:text}</span>"
+    ],
+    "description": [
+      "orange text"
+    ]
   }
 }

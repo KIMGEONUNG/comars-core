@@ -7,7 +7,7 @@ pushd ~/repos/$name > /dev/null
 git pull
 
 git add .
-git mcommit "update: auto"
+git commit -m "update: auto"
 
 if ! [[ -z $(git status | grep "ahead of 'origin/master") ]]; then
     git push

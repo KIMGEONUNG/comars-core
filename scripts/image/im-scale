@@ -44,7 +44,7 @@ def main():
       info = str(args.scale)
       path_output = head + '_scale_' + info + '.' + ext
 
-    im.save(path_output)
+    im.save(path_output, quality=100, subsampling=0)
     print(path_output)
 
 

@@ -83,7 +83,7 @@ def main():
                        pad_value=args.pad_value)
 
     im: Image = transforms.ToPILImage()(target)
-    im.save(os.path.join(path_out, '%05d.jpg' % i))
+    im.save(os.path.join(path_out, '%05d.jpg' % i), quality=100, subsampling=0)
 
 
 if __name__ == '__main__':

@@ -44,7 +44,7 @@ def main():
 
   im = transforms.ToPILImage()(target)
   if args.save is not None:
-    im.save(args.save)
+    im.save(args.save, quality=100, subsampling=0)
   else:
     im.show()
 

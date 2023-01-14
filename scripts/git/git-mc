@@ -61,7 +61,7 @@ echo commit message: $message
 #           Sometimes, too many code modification exists and you don't want to concern about them, just use this one.
 #           This verb is not recommended because it cab be evidence that you have not managed the "commit" history.
 
-verbs="complete\|update\|chconfig\|fix\|rmc\|rmf\|mvf"
+verbs="feat\|fix\|docs\|refact\|test\|src"
 filter=`echo $message | sed "s:^\($verbs\)\:\ .\+$:match:"`
 
 if [ "$filter" != "match" ]

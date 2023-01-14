@@ -61,7 +61,7 @@ def main():
       path_output = head + '_shift_%s_%04d.' % (direction,
                                                 args.translation) + ext
 
-    im.save(path_output)
+    im.save(path_output, quality=100, subsampling=0)
     print(path_output)
 
 

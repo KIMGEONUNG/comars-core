@@ -41,7 +41,7 @@ def main():
       ext = parts[-1]
       path_output = head + '_gray.' + ext
 
-    im.save(path_output)
+    im.save(path_output, quality=100, subsampling=0)
     print(path_output)
 
 

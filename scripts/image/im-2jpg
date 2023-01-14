@@ -26,7 +26,7 @@ def main():
     ext = 'jpg'
     path_output = head + '.' + ext
 
-    im.save(path_output)
+    im.save(path_output, quality=100, subsampling=0)
     print(path_output)
 
 
