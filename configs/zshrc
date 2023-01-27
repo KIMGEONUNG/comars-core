@@ -53,17 +53,18 @@ source $ZSH/oh-my-zsh.sh
 ########################
 # KEY BINDINGS
 ########################
-# bindkey '^l' autosuggest-accept
+bindkey '^k' autosuggest-accept
 # bindkey '^h' autosuggest-clear
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
-bindkey '^[[3~' delete-char
-bindkey '^H' backward-delete-char
+# bindkey "^[[H" beginning-of-line
+# bindkey "^[[F" end-of-line
+# bindkey '^[[3~' delete-char
+# bindkey '^H' backward-delete-char
 
 ########################
 # Alias
 ########################
-alias tmux="tmux -2 -u"
+# alias tmux="tmux -2 -u"
+
 # tmux -2 : force tmux to assume the terminal supports 256 colours
 # tmux -u : tmux attempts to guess if the terminal is likely to support UTF-8 by checking
 #           the first of the LC_ALL, LC_CTYPE and LANG environment variables to be set for
@@ -73,10 +74,10 @@ alias tmux="tmux -2 -u"
 #           the utf8 and status-utf8 options are enabled in the global window and session
 #           options respectively.
 
-if [[ -n "$TMUX" ]]; then
-    bindkey "^[[1~" beginning-of-line
-    bindkey '^[[4~' end-of-line
-fi
+# if [[ -n "$TMUX" ]]; then
+#     bindkey "^[[1~" beginning-of-line
+#     bindkey '^[[4~' end-of-line
+# fi
 
 # syntax hihlighing plugin (should be at the end of zshrc file)
 source $ZSH_CUSTOM_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -84,8 +85,18 @@ source $ZSH_CUSTOM_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #######################
 # My settings
 #######################
-alias "pip=pip3"
-alias "python=python3"
+alias cdcg='cd $HOME/cg'
+alias cdcomar='cd ~/repos/comars-core/'
+alias cdwrite='cd ~/repos/comar-write/'
+alias cdpycomar='cd ~/repos/pycomar/'
+alias cdvim="cd ~/.config/nvim"
+alias cdvimp="cd ~/.local/share/nvim/site/pack/packer/start"
+alias cdimgnet="cd ~/dataset-local/imagenet/ILSVRC/Data/CLS-LOC"
+alias cdtmp='cd ~/tmp'
+alias cddown='cd ~/Downloads'
+alias cdrepo='cd ~/repos'
+alias cdbin='cd ~/bin'
+
 cd(){builtin cd "$@" && pwd && ls;}
 
 # >>> conda initialize >>>
