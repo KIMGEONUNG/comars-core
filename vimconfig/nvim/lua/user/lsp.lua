@@ -78,6 +78,43 @@ require 'lspconfig'.tsserver.setup {
   -- }
 }
 
+-- JSON
+require 'lspconfig'.jsonls.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  cmd = { "vscode-json-language-server", "--stdio" },
+  -- settings = {
+  -- }
+}
+
+-- HTML
+require 'lspconfig'.html.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  cmd = { "vscode-html-language-server", "--stdio" },
+  init_options = {
+    configurationSection = { "html", "css", },
+    embeddedLanguages = {
+      css = true,
+      -- javascript = true,
+    },
+  },
+  -- settings = {
+  -- }
+}
+
+-- -- CSS
+require 'lspconfig'.cssls.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  cmd = { "vscode-css-language-server", "--stdio" },
+  -- settings = {
+  -- }
+}
+
 -- LUA
 require 'lspconfig'.sumneko_lua.setup {
   on_attach = on_attach,

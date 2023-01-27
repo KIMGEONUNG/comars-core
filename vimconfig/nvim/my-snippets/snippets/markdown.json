@@ -17,6 +17,15 @@
       "done"
     ]
   },
+  "postponed": {
+    "prefix": ["postponed"],
+    "body": [
+      "<span style=\"color:red\">(POSTPONED)</span>"
+    ],
+    "description": [
+      "done"
+    ]
+  },
   "done": {
     "prefix": ["done"],
     "body": [

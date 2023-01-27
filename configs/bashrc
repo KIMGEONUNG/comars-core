@@ -123,7 +123,8 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export PATH="/home/comar/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/cg:$PATH"
 
 # export PROMPT_DIRTRIM=2
 
@@ -233,6 +234,7 @@ alias .............="cd ../../../../../../../../../../../.."
 
 # FAST CHANGE DIRECTORY
 export CDPATH=""
+alias cdcg='cd $HOME/cg'
 alias cdcomar='cd ~/repos/comars-core/'
 alias cdwrite='cd ~/repos/comar-write/'
 alias cdpycomar='cd ~/repos/pycomar/'
