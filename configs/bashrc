@@ -292,3 +292,6 @@ cdn ()
 
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
+
+export PATH="$HOME/cg:$PATH"
+alias cdcg='cd $HOME/cg'
