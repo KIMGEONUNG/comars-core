@@ -3,7 +3,6 @@ neofetch
 export PATH="$HOME/bin:$PATH"
 
 
-
 #!/bin/bash
 ZSH=$HOME/.oh-my-zsh                                # Path to your oh-my-zsh configuration.
 ZSH_CUSTOM=$HOME/.oh-my-zsh/custom                  # Path to your oh-my-zsh configuration.
@@ -101,6 +100,7 @@ alias cdtmp='cd ~/tmp'
 alias cddown='cd ~/Downloads'
 alias cdrepo='cd ~/repos'
 alias cdbin='cd ~/bin'
+alias lg='lazygit'
 
 cd(){builtin cd "$@" && pwd && ls;}
 
