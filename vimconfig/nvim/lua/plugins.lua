@@ -72,4 +72,7 @@ return require('packer').startup(function(use)
   -- TEXT NAVIGATION
   use 'justinmk/vim-sneak'
 
+  -- LAZYGIT IN VIM
+  use 'kdheepak/lazygit.nvim'
+
 end)

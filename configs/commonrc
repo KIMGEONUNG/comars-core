@@ -1,0 +1,49 @@
+#!/bin/sh
+
+neofetch
+
+#######################
+# My settings
+#######################
+export CDPATH=""
+alias cdcg='cd $HOME/cg'
+alias cdcomar='cd ~/repos/comars-core/'
+alias cdwrite='cd ~/repos/comar-write/'
+alias cdpycomar='cd ~/repos/pycomar/'
+alias cdvim="cd ~/.config/nvim"
+alias cdvimp="cd ~/.local/share/nvim/site/pack/packer/start"
+alias cdimgnet="cd ~/dataset-local/imagenet/ILSVRC/Data/CLS-LOC"
+alias cdtmp='cd ~/tmp'
+alias cddown='cd ~/Downloads'
+alias cdrepo='cd ~/repos'
+alias cdbin='cd ~/bin'
+alias lg='lazygit'
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$("$HOME/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+# ENROLL LUA-LSP INTO PATH ENVIRONMENT VARIABLE
+alias luamake=$HOME/.config/lsp/lua-language-server/3rd/luamake/luamake
+export PATH="${HOME}/.config/lsp/lua-language-server/bin:${PATH}"
+export PATH="$HOME/bin:$PATH"
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
