@@ -13,7 +13,6 @@ ZSH_CUSTOM_PLUGINS=$HOME/.oh-my-zsh/custom/plugins  # Path to your oh-my-zsh con
 # ZSH_THEME=random
 ZSH_THEME=agnoster
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-# https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # agnoster needs powerline font
 # sudo apt install fonts-powerline​
 
@@ -77,8 +76,13 @@ bindkey '^k' autosuggest-accept
 # if [[ -n "$TMUX" ]]; then
 #     bindkey "^[[1~" beginning-of-line
 #     bindkey '^[[4~' end-of-line
-# fi
 
+# fi
+prompt_dir() {
+  local __cur_location=$(pwd | sed -e "s:$HOME:~:" -e "s:\(.\)[^/]*/:\1/:g")
+  # prompt_segment blue $CURRENT_FG '%3~'
+  prompt_segment blue $CURRENT_FG ${__cur_location}
+}
 
 # syntax hihlighing plugin (should be at the end of zshrc file)
 source $ZSH_CUSTOM_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
