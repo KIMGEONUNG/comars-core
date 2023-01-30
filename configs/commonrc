@@ -34,6 +34,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+PS1="$(echo "$PS1" | sed 's/(base) //') "
 
 # ENROLL LUA-LSP INTO PATH ENVIRONMENT VARIABLE
 alias luamake=$HOME/.config/lsp/lua-language-server/3rd/luamake/luamake

@@ -78,9 +78,15 @@ bindkey '^k' autosuggest-accept
 #     bindkey '^[[4~' end-of-line
 
 # fi
+
+prompt_context() {
+  if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    prompt_segment black default "👾"
+  fi
+}
+
 prompt_dir() {
   local __cur_location=$(pwd | sed -e "s:$HOME:~:" -e "s:\(.\)[^/]*/:\1/:g")
-  # prompt_segment blue $CURRENT_FG '%3~'
   prompt_segment blue $CURRENT_FG ${__cur_location}
 }
 
