@@ -26,6 +26,9 @@ require("user.surround")
 require("user.sneak")
 require("user.luasnip")
 
+-- TREESITTER
+require("user.treesitter")
+
 require("func.execute")
 require("func.vclip")
 
