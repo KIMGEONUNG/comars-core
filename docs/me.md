@@ -1,15 +1,24 @@
-## Daily Routine
+# Daily Routine
 
-Baviour should be done from high-level to low-level
+Baviours should be done from high-level to low-level
 
-### Research Follow-up
+## Research Follow-up
 
 - Twitter
 - ArXiv
   - Restoration
   - Diffusion
 
-### Research 
+## Research 
 
-### Programming
+- 
 
+## Programming
+
+- Fine-tune stable diffusion
+- QualCmp
+
+## ETC
+
+- Make PPT for bigcolor, which is ordered by prof. cho
+- Backup window
