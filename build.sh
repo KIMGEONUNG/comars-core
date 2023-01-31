@@ -15,3 +15,7 @@ popd >/dev/null
 pushd ./lazygitconfig >/dev/null
 bash ./build.sh
 popd >/dev/null
+
+pushd ./docs/ >/dev/null
+bash ./build.sh
+popd >/dev/null
