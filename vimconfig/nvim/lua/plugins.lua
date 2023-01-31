@@ -32,6 +32,7 @@ return require('packer').startup(function(use)
   use 'vim-airline/vim-airline-themes'
   use 'kyazdani42/nvim-web-devicons'
   use 'folke/tokyonight.nvim'
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- PREVIEW
   use 'turbio/bracey.vim' -- HTML PREVIEW

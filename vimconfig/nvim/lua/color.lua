@@ -1,7 +1,8 @@
 
 -- COLORSCHEME
 -- vim.cmd[[colorscheme tokyonight-night]]
-vim.cmd[[colorscheme tokyonight-storm]]
+-- vim.cmd[[colorscheme tokyonight-storm]]
+vim.cmd[[colorscheme catppuccin]]
 
 -- AIRLINE
 vim.cmd([[let g:airline#extensions#tabline#enabled = 1]])

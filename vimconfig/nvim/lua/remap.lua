@@ -80,7 +80,7 @@ remap('x', "<leader>p", "\"_dP", { noremap = true, silent = true })
 -- PARMANENT HIGHLIGHTING ON ONE LINE
 -- define line highlight color. this can be written in vimL like "highlight
 -- LineHighlight ctermbg=gray guibg=gray "
-vim.highlight.create('LineHighlight', {ctermbg='gray', guibg='gray'}, false)
+-- vim.api.nvim_set_hl('LineHighlight', {ctermbg='gray', guibg='gray'}, false)
 -- highlight the current line
 remap("n", '<Leader>L', ":call matchadd('LineHighlight', '\\%'.line('.').'l')<CR>",
 { noremap = true, silent = true })
