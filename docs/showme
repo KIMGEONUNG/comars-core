@@ -1,0 +1,6 @@
+#!/bin/bash
+
+p=$(readlink $0)
+p=${p%/*}
+
+mdless $p me.md
