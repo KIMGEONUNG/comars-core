@@ -27,7 +27,7 @@ require("user.sneak")
 require("user.luasnip")
 
 -- TREESITTER
-require("user.treesitter")
+-- require("user.treesitter")
 
 -- LAZYGIT
 require("user.lazygit")

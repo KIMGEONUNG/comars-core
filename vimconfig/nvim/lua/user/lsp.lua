@@ -29,7 +29,7 @@ end
 
 -- UNKNOWN
 -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local lsp_flags = {
@@ -41,7 +41,7 @@ local lsp_flags = {
 require('lspconfig').pylsp.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   settings = {
     pylsp = {
       -- configurationSources = {"flake8"},
@@ -66,14 +66,14 @@ require('lspconfig').pylsp.setup {
 require 'lspconfig'.clangd.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
 }
 
 -- JAVASCRIPT
 require 'lspconfig'.tsserver.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   cmd = { "typescript-language-server", "--stdio" },
   -- settings = {
   -- }
@@ -83,7 +83,7 @@ require 'lspconfig'.tsserver.setup {
 require 'lspconfig'.jsonls.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   cmd = { "vscode-json-language-server", "--stdio" },
   -- settings = {
   -- }
@@ -93,7 +93,7 @@ require 'lspconfig'.jsonls.setup {
 require 'lspconfig'.html.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   cmd = { "vscode-html-language-server", "--stdio" },
   init_options = {
     configurationSection = { "html", "css", },
@@ -110,7 +110,7 @@ require 'lspconfig'.html.setup {
 require 'lspconfig'.cssls.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   cmd = { "vscode-css-language-server", "--stdio" },
   -- settings = {
   -- }
@@ -120,7 +120,7 @@ require 'lspconfig'.cssls.setup {
 require 'lspconfig'.sumneko_lua.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {

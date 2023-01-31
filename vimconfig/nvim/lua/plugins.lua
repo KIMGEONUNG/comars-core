@@ -75,10 +75,10 @@ return require('packer').startup(function(use)
   -- LAZYGIT IN VIM
   use 'kdheepak/lazygit.nvim'
 
-  -- LAZYGIT IN VIM
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ":TSUpdate",
-  }
+  -- TREESITTER
+  -- use {
+  --   'nvim-treesitter/nvim-treesitter',
+  --   run = ":TSUpdate",
+  -- }
 
 end)
