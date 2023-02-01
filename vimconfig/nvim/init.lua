@@ -32,6 +32,8 @@ require("user.luasnip")
 -- LAZYGIT
 require("user.lazygit")
 
+require("user.tree")
+
 require("func.execute")
 require("func.vclip")
 
