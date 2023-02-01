@@ -40,4 +40,4 @@ set listchars+=multispace:\ \ \ \┃
 -- set listchars+=lead:⋅
 
 -- PYTHON PROVIDER (use :checkhealth)
-vim.g.python3_host_prog = '/home/comar/anaconda3/bin/python3'
+-- vim.g.python3_host_prog = '/home/comar/anaconda3/bin/python3'

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p bean
+# sshfs -o reconnect cgkorea@10.1.27.21:/volume1/data ./bean
+sudo mount -t cifs //bean.postech.ac.kr/data/kkw ./bean -o user=cgkorea

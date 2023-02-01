@@ -14,6 +14,7 @@ nnoremap <leader>dw :call GoToWindow(g:vimspector_session_windows.watches)<CR>
 nnoremap <leader>ds :call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>
 nnoremap <leader>do :call GoToWindow(g:vimspector_session_windows.output)<CR>
 nnoremap <leader>de :call vimspector#Reset()<CR>
+nnoremap <leader>dp :call vimspector#Pause()<CR>
 
 nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
 
