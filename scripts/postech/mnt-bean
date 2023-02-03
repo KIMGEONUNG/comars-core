@@ -5,3 +5,6 @@ gid=$(id -g)
 
 mkdir -p bean
 sudo mount -t cifs //bean.postech.ac.kr/data/kkw ./bean -o user=cgkorea,uid=$uid,gid=$gid
+
+mkdir -p bean-log
+sudo mount -t cifs //bean.postech.ac.kr/log/kkw ./bean-log -o user=cgkorea,uid=$uid,gid=$gid
