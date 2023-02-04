@@ -6,6 +6,7 @@ function StartDebug()
   local win_id = vim.g.vimspector_session_windows.code
   local buf_id = vim.fn.winbufnr(win_id)
 
+
   -- INSPECT PANNELS
   -- for i, x in pairs(vim.g.vimspector_session_windows) do
   --   print('here')
