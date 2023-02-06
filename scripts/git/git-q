@@ -3,6 +3,6 @@
 git add .
 git mc "feat: trivial" 
 
-if [ -z "$(git url | grep 'URL not found')" ]; then
-    git push
-fi
+# if [ -z "$(git url | grep 'URL not found')" ]; then
+#     git push
+# fi
