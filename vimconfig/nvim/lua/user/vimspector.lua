@@ -70,4 +70,16 @@ nmap <leader>drc <Plug>VimspectorRunToCursor
 nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
 nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
+nmap dl <Plug>VimspectorStepInto<CR>
+nmap dk <Plug>VimspectorStepOut<CR>
+nmap dj <Plug>VimspectorStepOver<CR>
+nmap db <Plug>VimspectorToggleBreakpoint
+nnoremap dc :call GoToWindow(g:vimspector_session_windows.code)<CR>
+nnoremap dt :call GoToWindow(g:vimspector_session_windows.tagpage)<CR>
+nnoremap dv :call GoToWindow(g:vimspector_session_windows.variables)<CR>
+nnoremap dw :call GoToWindow(g:vimspector_session_windows.watches)<CR>
+nnoremap ds :call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>
+nnoremap do :call GoToWindow(g:vimspector_session_windows.output)<CR>
+nnoremap dp :call vimspector#Pause()<CR>
+
 ]])
