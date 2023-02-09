@@ -49,37 +49,26 @@ let g:vimspector_enable_mappings = 'HUMAN'
 
 nnoremap <leader>dd :lua StartDebug()<CR>
 nnoremap <leader>de :lua ExitDebug()<CR>
-
-nnoremap <leader>dc :call GoToWindow(g:vimspector_session_windows.code)<CR>
-nnoremap <leader>dt :call GoToWindow(g:vimspector_session_windows.tagpage)<CR>
-nnoremap <leader>dv :call GoToWindow(g:vimspector_session_windows.variables)<CR>
-nnoremap <leader>dw :call GoToWindow(g:vimspector_session_windows.watches)<CR>
-nnoremap <leader>ds :call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>
-nnoremap <leader>do :call GoToWindow(g:vimspector_session_windows.output)<CR>
-nnoremap <leader>dp :call vimspector#Pause()<CR>
-
-nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
-
-nmap <leader>dl <Plug>VimspectorStepInto<CR>
-nmap <leader>dk <Plug>VimspectorStepOut<CR>
-nmap <leader>dj <Plug>VimspectorStepOver<CR>
-nmap <leader>d_ <Plug>VimspectorRestart<CR>
 nnoremap <leader>d<space> :call vimspector#Continue()<CR> 
+nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
 
 nmap <leader>drc <Plug>VimspectorRunToCursor
 nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
 nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
-
-nmap dl <Plug>VimspectorStepInto<CR>
-nmap dk <Plug>VimspectorStepOut<CR>
-nmap dj <Plug>VimspectorStepOver<CR>
-nmap db <Plug>VimspectorToggleBreakpoint
-nnoremap dc :call GoToWindow(g:vimspector_session_windows.code)<CR>
-nnoremap dt :call GoToWindow(g:vimspector_session_windows.tagpage)<CR>
-nnoremap dv :call GoToWindow(g:vimspector_session_windows.variables)<CR>
-nnoremap dw :call GoToWindow(g:vimspector_session_windows.watches)<CR>
-nnoremap ds :call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>
-nnoremap do :call GoToWindow(g:vimspector_session_windows.output)<CR>
-nnoremap dp :call vimspector#Pause()<CR>
-
 ]])
+
+local remap = vim.keymap.set
+local opt = { noremap = true, silent = true }
+
+remap("n", "dc", ":call GoToWindow(g:vimspector_session_windows.code)<CR>", opt)
+remap("n", "dt", ":call GoToWindow(g:vimspector_session_windows.tagpage)<CR>", opt)
+remap("n", "dv", ":call GoToWindow(g:vimspector_session_windows.variables)<CR>", opt)
+remap("n", "dw", ":call GoToWindow(g:vimspector_session_windows.watches)<CR>", opt)
+remap("n", "ds", ":call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>", opt)
+remap("n", "do", ":call GoToWindow(g:vimspector_session_windows.output)<CR>", opt)
+
+remap("n", "dl", "<Plug>VimspectorStepInto<CR>", opt)
+remap("n", "dk", "<Plug>VimspectorStepOut<CR>", opt)
+remap("n", "dj", "<Plug>VimspectorStepOver<CR>", opt)
+remap("n", "db", "<Plug>VimspectorToggleBreakpoint<CR>", opt)
+remap("n", "dp", ":call vimspector#Pause()<CR>", opt)
