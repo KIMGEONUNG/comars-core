@@ -2,8 +2,7 @@ function OpenNullBuffer()
   vim.api.nvim_command("vs /dev/null")
 end
 
-function Quit()
-  -- CHECK THE NUMBER OF BUFFERS
+function NumListedBuf()
   local num_buf = vim.fn.bufnr('$')
   local cnt = 0
   for i = 1, num_buf do
@@ -11,6 +10,12 @@ function Quit()
       cnt = cnt + 1
     end
   end
+  return cnt
+end
+
+function Quit()
+  -- CHECK THE NUMBER OF LISTED BUFFERS
+  local cnt = NumListedBuf()
 
   -- SELECT OPERATION
   if cnt <= 1 then
@@ -20,6 +25,17 @@ function Quit()
   end
 end
 
+function QuitF()
+  -- CHECK THE NUMBER OF LISTED BUFFERS
+  local cnt = NumListedBuf()
+
+  -- SELECT OPERATION
+  if cnt <= 1 then
+    vim.api.nvim_command('quit!')
+  else
+    vim.api.nvim_command('bwipe!')
+  end
+end
 
 vim.cmd([[
 

@@ -44,7 +44,7 @@ remap('n', '<leader>-', ':vertical resize -10<cr>', { noremap = true, silent = t
 -- READ, WRITE, EXECUTE
 remap('n', '<leader>w', ':w<cr>', { noremap = true, silent = false })
 remap('n', '<leader>q', ':lua Quit()<cr>', { noremap = true, silent = true })
-remap('n', '<leader>Q', ':q<cr>', { noremap = true, silent = false })
+remap('n', '<leader>Q', ':lua QuitF()<cr>', { noremap = true, silent = false })
 
 remap('n', '<leader>e', ':lua ExecuteFile()<CR>', { noremap = true, silent = false })
 
