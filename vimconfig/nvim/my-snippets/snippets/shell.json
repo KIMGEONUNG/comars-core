@@ -1,4 +1,15 @@
 {
+  
+  "condaact": {
+    "prefix": ["condaact"],
+    "body": [
+      "source ~/anaconda3/etc/profile.d/conda.sh"
+    ],
+    "description": [
+      "conda activate for bash script"
+    ]
+  },
+  
   "variable": {
     "prefix": ["v"],
     "body": [
