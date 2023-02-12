@@ -15,7 +15,7 @@ def parse():
                       help='replace input')
   parser.add_argument('-s',
                       '--scale',
-                      type=int,
+                      type=float,
                       default=100,
                       help='target scale')
   return parser.parse_args()
