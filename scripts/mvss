@@ -1,0 +1,5 @@
+#!/bin/bash
+path="$HOME/.cache/mvscript.txt"
+
+set -e
+bash $path

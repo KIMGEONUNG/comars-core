@@ -3,7 +3,8 @@
   "condaact": {
     "prefix": ["condaact"],
     "body": [
-      "source ~/anaconda3/etc/profile.d/conda.sh"
+      "source ~/anaconda3/etc/profile.d/conda.sh",
+      "conda activate ${1}"
     ],
     "description": [
       "conda activate for bash script"

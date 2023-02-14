@@ -1,0 +1,14 @@
+#!/bin/bash
+# mv script generation
+path="$HOME/.cache/mvscript.txt"
+
+if [ -z "$path" ]; then
+  echo 'Missing -h or -u' >&2
+  exit 1
+fi
+
+echo "echo From mvs program" > $path
+for i in $@; do
+  echo "mv $(pwd)/$i ./ -rv" >> $path
+done
+echo "echo mvs end" >> $path
