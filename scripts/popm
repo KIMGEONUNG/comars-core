@@ -1,0 +1,27 @@
+#!/bin/bash
+
+path="$HOME/.cache/mymemos.txt"
+
+if [[ -z $1 ]]; then
+  echo Error: no argument
+  exit 1
+fi
+
+if [[ $1 == "all" ]]; then
+  echo Clear messages
+  echo MESSAGES > $path
+  exit 0
+fi
+
+if [ -z "$path" ]; then
+  echo 'Missing -h or -u' >&2
+  exit 1
+fi
+
+# REMOVE TARGET LINE
+sed -i "s/$1>*.\+//" $path
+
+# REMOVE EMPTY NEWLINES
+sed -i '/^[[:space:]]*$/d' $path
+
+cat $path

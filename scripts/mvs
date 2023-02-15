@@ -9,6 +9,6 @@ fi
 
 echo "echo From mvs program" > $path
 for i in $@; do
-  echo "mv $(pwd)/$i ./ -rv" >> $path
+  echo "mv $(pwd)/$i ./ -v" >> $path
 done
 echo "echo mvs end" >> $path

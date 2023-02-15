@@ -1,0 +1,6 @@
+#!/bin/bash
+
+path="$HOME/.cache/mymemos.txt"
+
+echo "$(echo $RANDOM)>" "$@" [$(date +%F) $(date +%T)] >> $path
+cat $path

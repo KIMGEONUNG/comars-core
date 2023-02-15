@@ -1,0 +1,4 @@
+#!/bin/bash
+
+path="$HOME/.cache/mymemos.txt"
+cat $path
