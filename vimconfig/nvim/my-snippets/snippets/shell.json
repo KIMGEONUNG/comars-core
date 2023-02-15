@@ -1,4 +1,13 @@
 {
+    "name": {
+      "prefix": ["cvd"],
+      "body": [
+        "CUDA_VISIBLE_DEVICES=${1:0}"
+      ],
+      "description": [
+        "cuda visible divices"
+      ]
+    },
   
   "condaact": {
     "prefix": ["condaact"],
