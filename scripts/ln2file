@@ -1,0 +1,5 @@
+#!/bin/bash
+echo convert ln to file
+for i in $@; do
+  echo "cp $(pwd)/$i ./ -rv" >> $path
+done
