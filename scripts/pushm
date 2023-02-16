@@ -2,5 +2,5 @@
 
 path="$HOME/.cache/mymemos.txt"
 
-echo "$(echo $RANDOM)>" "$@" [$(date +%F) $(date +%T)] >> $path
+echo "$(echo $(($RANDOM % 1000)))>" "$@" [$(date +%F) $(date +%T)] >> $path
 cat $path
