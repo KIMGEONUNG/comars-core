@@ -1,5 +1,12 @@
 #!/bin/bash
-echo convert ln to file
-for i in $@; do
-  echo "cp $(pwd)/$i ./ -rv" >> $path
+echo Convert ln to file
+for f in $@; do
+  # echo "cp $(pwd)/$i ./ -rv" >> $path
+  if [[ -L $f ]]; then
+    src=$(readlink $f) 
+    rm $f
+    cp -v $src ./
+  else
+    echo $f is not a symbolic link
+  fi
 done
