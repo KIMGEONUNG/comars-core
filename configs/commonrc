@@ -15,6 +15,7 @@ alias cdvimp="cd ~/.local/share/nvim/site/pack/packer/start"
 alias cdimgnet="cd ~/dataset-local/imagenet/ILSVRC/Data/CLS-LOC"
 alias cdtmp='cd ~/tmp'
 alias cdmnt='cd ~/mnt'
+alias cdwip='cd ~/wip'
 alias cddown='cd ~/Downloads'
 alias cdrepo='cd ~/repos'
 alias cdbin='cd ~/bin'
@@ -50,3 +51,16 @@ HISTFILESIZE=2000
 
 alias xsel='xsel -ib'
 alias nvimn='nvim /dev/null'
+
+# .bashrc
+# set pwd for tmux
+function set_tmux_pwd() {
+    [ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD"
+    return 0
+}
+function my_cd() {
+    \cd $1
+    set_tmux_pwd
+}
+set_tmux_pwd
+alias cd=my_cd
