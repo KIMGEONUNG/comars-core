@@ -54,13 +54,14 @@ fi
 
 pwd=$(pwd)
 path_root=$path_fs${pwd#$path_mnt}
+path_root=$(echo $path_root | sed -e 's/ac.kr\//ac.kr::/')
 echo Root: $path_root
 
 # MK SCRIPT
-echo "echo From cps program" > $MY_CACHE_BCP
+echo "echo From bcps program" > $MY_CACHE_BCP
 for i in $@; do
   echo "rsync -azv $path_root/$i ./ " >> $MY_CACHE_BCP
 done
-echo "echo cps end" >> $path
+echo "echo bcps end" >> $MY_CACHE_BCP
 
 echo cache to $MY_CACHE_BCP
