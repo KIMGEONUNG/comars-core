@@ -1,16 +1,30 @@
 {
-    "name": {
-      "prefix": ["cvd"],
-      "body": [
-        "CUDA_VISIBLE_DEVICES=${1:0}"
-      ],
-      "description": [
-        "cuda visible divices"
-      ]
-    },
-  
+  "Error": {
+    "prefix": [
+      "error"
+    ],
+    "body": [
+      "echo -e \"\\033[31mError: ${1:text} \\033[0m\" >&2"
+    ],
+    "description": [
+      "error"
+    ]
+  },
+  "name": {
+    "prefix": [
+      "cvd"
+    ],
+    "body": [
+      "CUDA_VISIBLE_DEVICES=${1:0}"
+    ],
+    "description": [
+      "cuda visible divices"
+    ]
+  },
   "condaact": {
-    "prefix": ["condaact"],
+    "prefix": [
+      "condaact"
+    ],
     "body": [
       "source ~/anaconda3/etc/profile.d/conda.sh",
       "conda activate ${1}"
@@ -19,9 +33,10 @@
       "conda activate for bash script"
     ]
   },
-  
   "variable": {
-    "prefix": ["v"],
+    "prefix": [
+      "v"
+    ],
     "body": [
       "\\${${1:name}}"
     ],
@@ -30,7 +45,9 @@
     ]
   },
   "set": {
-    "prefix": ["s"],
+    "prefix": [
+      "s"
+    ],
     "body": [
       "set -e"
     ],
@@ -38,9 +55,10 @@
       "set -e"
     ]
   },
-
   "argsh": {
-    "prefix": ["argh"],
+    "prefix": [
+      "argh"
+    ],
     "body": [
       "while [[ $# -gt 0 ]]",
       "do",
@@ -60,9 +78,10 @@
       "Argument parser for help"
     ]
   },
-
   "args": {
-    "prefix": ["arg"],
+    "prefix": [
+      "arg"
+    ],
     "body": [
       "while [[ $# -gt 0 ]]",
       "do",
@@ -93,9 +112,10 @@
       "Default argument parser"
     ]
   },
-
   "checkarg": {
-    "prefix": ["cha"],
+    "prefix": [
+      "cha"
+    ],
     "body": [
       "if [ -z \"\\${${1:arg}\\}\" ]; then",
       "  echo 'Missing --${1}' >&2",
@@ -103,14 +123,14 @@
       "fi",
       ""
     ],
-
     "description": [
       "Check a required argument"
     ]
   },
-
   "checkfile": {
-    "prefix": ["chf"],
+    "prefix": [
+      "chf"
+    ],
     "body": [
       "if [ -f ${1:path} ]; then",
       "  echo 'No such a file ${1}' >&2",
@@ -118,14 +138,14 @@
       "fi",
       ""
     ],
-
     "description": [
       "Check that the file exists"
     ]
   },
-  
   "checknofile": {
-    "prefix": ["chfn"],
+    "prefix": [
+      "chfn"
+    ],
     "body": [
       "if ! [ -f ${1:path} ]; then",
       "  echo 'The file already exists ${1}' >&2",
@@ -133,14 +153,14 @@
       "fi",
       ""
     ],
-
     "description": [
       "Check that the file does not exist"
     ]
   },
-
   "checkdir": {
-    "prefix": ["chd"],
+    "prefix": [
+      "chd"
+    ],
     "body": [
       "if [ -d ${1:path} ]; then",
       "  echo 'No such a directory ${1}' >&2",
@@ -148,14 +168,14 @@
       "fi",
       ""
     ],
-
     "description": [
       "Check that the directory exists"
     ]
   },
-  
   "checknodir": {
-    "prefix": ["chdn"],
+    "prefix": [
+      "chdn"
+    ],
     "body": [
       "if ! [ -d ${1:path} ]; then",
       "  echo 'The directory already exists ${1}' >&2",
@@ -163,9 +183,8 @@
       "fi",
       ""
     ],
-
     "description": [
       "Check that the directory does not exist"
     ]
   }
-} 
+}

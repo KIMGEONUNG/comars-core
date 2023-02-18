@@ -3,6 +3,14 @@
 neofetch
 
 #######################
+# CUSTOM ENV 
+#######################
+export MY_CACHE_BCP="$HOME/.cache/bcpscript.txt"
+export MY_CACHE_CP="$HOME/.cache/cpscript.txt"
+export MY_CACHE_MV="$HOME/.cache/mvscript.txt"
+export MY_CACHE_LN="$HOME/.cache/lnscript.txt"
+
+#######################
 # My settings
 #######################
 export CDPATH=""

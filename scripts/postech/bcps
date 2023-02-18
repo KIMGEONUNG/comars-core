@@ -1,18 +1,66 @@
-
 #!/bin/bash
 # cp script generation
-path="$HOME/.cache/bcpscript.txt"
 
-if [ -z "$path" ]; then
-  echo 'Missing -h or -u' >&2
+
+# CHECK WHETHER BEAN IS MOUNTED
+if [[ -z $(df | grep bean.postech.ac.kr) ]]; then
+  echo -e "\033[31mError: bean does not be mounted \033[0m" >&2
   exit 1
 fi
 
-echo "echo From cps program" > $path
+# EXTRACT MOUNTED LOCATION  
+mnt_data=$(df | grep bean.postech.ac.kr/data | awk '{print $1 "\t" $6}')
+if ! [[ -z $mnt_data ]]; then
+  fs_data=$(echo $mnt_data | awk '{print $1}')
+  fs_data=${fs_data:2}
+  mnt_data=$(echo $mnt_data | awk '{print $2}')
+
+  echo bean/data is mounted
+  echo FIESYSTEMN $fs_data  "|" MOUNTED ON $mnt_data
+
+fi
+
+mnt_log=$(df | grep bean.postech.ac.kr/log | awk '{print $1 "\t" $6}')
+if ! [[ -z $mnt_log ]]; then
+  fs_log=$(echo $mnt_log | awk '{print $1}') 
+  fs_log=${fs_log:2}
+  mnt_log=$(echo $mnt_log | awk '{print $2}')
+
+  echo bean/log is mounted
+  echo FIESYSTEMN $fs_log  "|" MOUNTED ON $mnt_log
+fi
+
+
+# CHECK WHETHER CURRENT WORKING DIRECTORY IS IN MOUNTED DIRECTORY
+is_in_log=$(pwd | grep $mnt_log)
+is_in_data=$(pwd | grep $mnt_data)
+
+if [[ -z ${is_in_log} ]] && [[ -z ${is_in_data} ]]; then
+  echo -e "\033[31mError: Now not in mounted subdirectory \033[0m" >&2
+  exit 1
+fi
+
+# MK SRC AND DEST
+if [[ $is_in_log ]]; then
+  path_fs=$fs_log
+  path_mnt=$mnt_log
+elif [[ $is_in_data ]]; then
+  path_fs=$fs_data
+  path_mnt=$mnt_data
+else
+  echo -e "\033[31mError: invalid location \033[0m" >&2
+  exit 1
+fi
+
+pwd=$(pwd)
+path_root=$path_fs${pwd#$path_mnt}
+echo Root: $path_root
+
+# MK SCRIPT
+echo "echo From cps program" > $MY_CACHE_BCP
 for i in $@; do
-  echo "cp $(pwd)/$i ./ -rv" >> $path
+  echo "rsync -azv $path_root/$i ./ " >> $MY_CACHE_BCP
 done
 echo "echo cps end" >> $path
 
-
-# rsync -azv bean.postech.ac.kr::log/kkw/$1 $HOME/logs
+echo cache to $MY_CACHE_BCP
