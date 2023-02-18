@@ -1,6 +1,6 @@
 #!/bin/bash
 # cp script generation
-path="$HOME/.cache/cpscript.txt"
+path=$MY_CACHE_CP
 
 if [ -z "$path" ]; then
   echo 'Missing -h or -u' >&2

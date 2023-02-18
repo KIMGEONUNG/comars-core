@@ -1,6 +1,6 @@
 #!/bin/bash
 # mv script generation
-path="$HOME/.cache/mvscript.txt"
+path=$MY_CACHE_MV
 
 if [ -z "$path" ]; then
   echo 'Missing -h or -u' >&2

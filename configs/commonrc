@@ -60,8 +60,7 @@ HISTFILESIZE=2000
 alias xsel='xsel -ib'
 alias nvimn='nvim /dev/null'
 
-# .bashrc
-# set pwd for tmux
+# SET PWD FOR TMUX
 function set_tmux_pwd() {
     [ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD"
     return 0
