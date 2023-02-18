@@ -1,0 +1,18 @@
+
+#!/bin/bash
+# cp script generation
+path="$HOME/.cache/bcpscript.txt"
+
+if [ -z "$path" ]; then
+  echo 'Missing -h or -u' >&2
+  exit 1
+fi
+
+echo "echo From cps program" > $path
+for i in $@; do
+  echo "cp $(pwd)/$i ./ -rv" >> $path
+done
+echo "echo cps end" >> $path
+
+
+# rsync -azv bean.postech.ac.kr::log/kkw/$1 $HOME/logs
