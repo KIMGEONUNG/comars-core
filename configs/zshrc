@@ -80,7 +80,9 @@ bindkey '^k' autosuggest-accept
 # fi
 
 prompt_context() {
-  if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+  if [[ -z "$SSH_CLIENT" ]]; then
+    prompt_segment black default "🏘️"
+  else
     prompt_segment black default "👾"
   fi
 }
