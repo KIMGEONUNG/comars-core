@@ -91,7 +91,7 @@ prompt_context() {
     suffix=🏢$suffix
   fi
 
-  if [[ -z "$SSH_CLIENT" ]]; then
+  if ! [[ -z "$SSH_CLIENT" ]]; then
     suffix=👾$suffix
   fi
 
