@@ -12,7 +12,7 @@ pushd ./vimconfig >/dev/null
 bash ./build.sh
 popd >/dev/null
 
-pushd ./lazygitconfig >/dev/null
+pushd ./lazygit >/dev/null
 bash ./build.sh
 popd >/dev/null
 
