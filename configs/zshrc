@@ -79,12 +79,22 @@ bindkey '^k' autosuggest-accept
 
 # fi
 
+
 prompt_context() {
-  if [[ -z "$SSH_CLIENT" ]]; then
-    prompt_segment black default "🏘️"
-  else
-    prompt_segment black default "👾"
+  id_home=260af0674a494ad49655b263621be503
+  id_postech=a38f10e5e8fd4db29961d482d37b3c32
+  suffix=""
+  if [[ $(cat /etc/machine-id) == $id_home ]]; then
+    suffix=🏘️$suffix
+  elif [[ $(cat /etc/machine-id) == $id_postech ]]; then
+    suffix=🏢$suffix
   fi
+  # if [[ -z "$SSH_CLIENT" ]]; then
+  #   prompt_segment black default "🏘️"
+  # else
+  #   prompt_segment black default "👾"
+  # fi
+  prompt_segment black default $suffix
 }
 
 prompt_dir() {
