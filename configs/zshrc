@@ -91,8 +91,14 @@ prompt_context() {
     suffix=🏢$suffix
   fi
 
+  # SIGN FOR SSH
   if ! [[ -z "$SSH_CLIENT" ]]; then
-    suffix=👾$suffix
+    suffix="🔴 $suffix"
+  fi
+
+  # SIGN FOR MOUNTED DIRECTORY
+  if ! [[ -z "$(df . | grep -v nvme | tail +2)" ]]; then
+    suffix="🔶 $suffix"
   fi
 
   prompt_segment black default $suffix
