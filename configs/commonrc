@@ -32,6 +32,8 @@ alias cdwip='cd ~/wip'
 alias cddown='cd ~/Downloads'
 alias cdrepo='cd ~/repos'
 alias cdbin='cd ~/bin'
+alias cdlog='cd ~/mnt/log'
+alias cddata='cd ~/mnt/data'
 alias lg='lazygit'
 
 # >>> conda initialize >>>

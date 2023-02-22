@@ -9,7 +9,7 @@ if [[ $1 == 9 || $1 == 10 ]]; then
     ssh -o ServerAliveInterval=15 \
         -t k2woong92@mark8.postech.ac.kr ssh \
             -i /home/k2woong92/.ssh/mark k2woong92@mark${1}.postech.ac.kr
-elif [[ $1 == 12 ]]; then
+elif [[ $1 == 12 || $1 == 13 ]]; then
     ssh -o ServerAliveInterval=15 \
         -t k2woong92@mark11.postech.ac.kr ssh \
             -i /home/k2woong92/.ssh/mark k2woong92@mark${1}.postech.ac.kr

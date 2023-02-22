@@ -6,8 +6,12 @@ gid=$(id -g)
 dir_data=data
 dir_log=log
 
+# The options(-o) description
+# - if not specifying uid,gid, the mounted directory and all below files is set as root, so every behavior is limited
+# - if not specifying mfsymlinks, the symbolic links is not work due to the difference filesystem
+
 mkdir -p $dir_data
-sudo mount -t cifs //bean.postech.ac.kr/data/kkw ./$dir_data -o user=cgkorea,uid=$uid,gid=$gid
+sudo mount -t cifs //bean.postech.ac.kr/data/kkw ./$dir_data -o user=cgkorea,uid=$uid,gid=$gid,mfsymlinks
 
 mkdir -p $dir_log
-sudo mount -t cifs //bean.postech.ac.kr/log/kkw ./$dir_log -o user=cgkorea,uid=$uid,gid=$gid
+sudo mount -t cifs //bean.postech.ac.kr/log/kkw ./$dir_log -o user=cgkorea,uid=$uid,gid=$gid,mfsymlinks
