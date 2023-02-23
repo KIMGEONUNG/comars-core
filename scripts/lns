@@ -1,0 +1,9 @@
+#!/bin/bash
+# mv script generation
+path=$MY_CACHE_LN
+
+echo "echo From lns program" > $path
+for i in $@; do
+  echo "ln -sv $(pwd)/$i ./" >> $path
+done
+echo "echo lns end" >> $path

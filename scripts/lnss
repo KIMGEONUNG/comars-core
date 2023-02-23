@@ -1,0 +1,15 @@
+#!/bin/bash
+# cp script generation
+path=$MY_CACHE_LN
+
+if [ -z "$path" ]; then
+  echo 'Missing -h or -u' >&2
+  exit 1
+fi
+
+echo "echo From lns program" > $path
+for i in $@; do
+  echo "ln -s $(pwd)/$i ./ -v" >> $path
+done
+echo "echo lns end" >> $path
+
