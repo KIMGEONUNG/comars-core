@@ -72,3 +72,6 @@ remap("n", "dk", "<Plug>VimspectorStepOut<CR>", opt)
 remap("n", "dj", "<Plug>VimspectorStepOver<CR>", opt)
 remap("n", "db", "<Plug>VimspectorToggleBreakpoint<CR>", opt)
 remap("n", "dp", ":call vimspector#Pause()<CR>", opt)
+
+remap("n", "di", "<Plug>VimspectorBalloonEval<CR>", opt)
+remap("x", "di", "<Plug>VimspectorBalloonEval<CR>", opt)
