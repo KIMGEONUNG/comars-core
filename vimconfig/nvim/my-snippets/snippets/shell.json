@@ -1,4 +1,15 @@
 {
+  "endprogram": {
+    "prefix": [
+      "end"
+    ],
+    "body": [
+      "echo -e \"\\033[32mProgram finished \\033[0m\" >&2"
+    ],
+    "description": [
+      "program finished"
+    ]
+  },
   "print": {
     "prefix": ["p"],
     "body": [

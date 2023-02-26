@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e 
+
+if [[ -z $1 ]]; then
+    echo -e "\033[31mError: no arg \033[0m" >&2
+    exit 1
+fi
+
+path=$1.json
+
+if ! [[ -f vimspectorconfigs/$path ]]; then
+    echo -e "\033[31mError: no such config $path \033[0m" >&2
+    exit 1
+fi
+
+ln -srvf vimspectorconfigs/$path .vimspector.json
