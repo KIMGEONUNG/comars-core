@@ -61,10 +61,10 @@ local remap = vim.keymap.set
 local opt = { noremap = true, silent = true }
 
 remap("n", "dc", ":call GoToWindow(g:vimspector_session_windows.code)<CR>", opt)
-remap("n", "dt", ":call GoToWindow(g:vimspector_session_windows.tagpage)<CR>", opt)
+remap("n", "dt", ":call GoToWindow(g:vimspector_session_windows.terminal)<CR>", opt)
 remap("n", "dv", ":call GoToWindow(g:vimspector_session_windows.variables)<CR>", opt)
 remap("n", "dw", ":call GoToWindow(g:vimspector_session_windows.watches)<CR>", opt)
-remap("n", "ds", ":call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>", opt)
+remap("n", "<leader>ds", ":call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>", opt)
 remap("n", "do", ":call GoToWindow(g:vimspector_session_windows.output)<CR>", opt)
 
 remap("n", "dl", "<Plug>VimspectorStepInto<CR>", opt)

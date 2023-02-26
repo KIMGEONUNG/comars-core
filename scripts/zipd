@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+  echo -e "\033[31mError: no argument \033[0m" >&2
+  exit 1
+fi
+
+zip -r $1.zip $1

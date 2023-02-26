@@ -1,4 +1,22 @@
 {
+  "print": {
+    "prefix": ["p"],
+    "body": [
+      "echo ${1:hello world}"
+    ],
+    "description": [
+      "print"
+    ]
+  },
+  "exit": {
+    "prefix": ["e"],
+    "body": [
+      "exit 0"
+    ],
+    "description": [
+      "exit"
+    ]
+  },
   "Error": {
     "prefix": [
       "error"
