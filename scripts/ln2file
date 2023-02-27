@@ -5,7 +5,7 @@ for f in $@; do
   if [[ -L $f ]]; then
     src=$(readlink $f) 
     rm $f
-    cp -v $src ./
+    cp -v $src $f
   else
     echo $f is not a symbolic link
   fi
