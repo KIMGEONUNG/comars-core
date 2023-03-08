@@ -1,34 +1,55 @@
 {
-  "definit": {
-    "prefix": "defi",
-    "body": "def __init__(self, ${1:arg}):\n\t${2:pass}$0",
-    "description": "init method for class"
-  },
-  "exit": {
-    "prefix": ["e"],
-    "body": [
-      "exit()"
-    ],
-    "description": [
-      "exit"
-    ]
-  },  
-	"print": {
-		"prefix": "p",
-		"body": [
-			"print(${1:'hello world'})"
-		]
-	},
-	"shebang": {
-		"prefix": "#!",
-		"body": [
-			"#!/usr/bin/env python"
-		]
-	},
-	"dash": {
-		"prefix": "---",
-		"body": [
-			"#-kk--------------------------------------------#"
-		]
-	}
+    "arg": {
+        "prefix": [
+            "arg"
+        ],
+        "body": [
+            "import argparse",
+            "",
+            "def parse():",
+            "    p = argparse.ArgumentParser()",
+            "    p.add_argument('--path', default='config.yaml')",
+            "    return p.parse_args()",
+            "",
+            "def main():",
+            "    args = parse()"
+        ],
+        "description": [
+            "arguement"
+        ]
+    },
+    "definit": {
+        "prefix": "defi",
+        "body": "def __init__(self, ${1:arg}):\n\t${2:pass}$0",
+        "description": "init method for class"
+    },
+    "exit": {
+        "prefix": [
+            "e"
+        ],
+        "body": [
+            "exit()"
+        ],
+        "description": [
+            "exit"
+        ]
+    },
+    "print": {
+        "prefix": "p",
+        "body": [
+            "print(${1:'hello world'})"
+        ]
+    },
+    "shebang": {
+        "prefix": "#!",
+        "body": [
+            "#!/usr/bin/env python"
+        ]
+    },
+    "dash": {
+        "prefix": "---",
+        "body": [
+            "#-kk--------------------------------------------#"
+        ]
+    }
 }
