@@ -6,6 +6,7 @@ local lang_exe_pairs = {
   python = "python",
   lua = "lua",
   sh = "bash",
+  cpp = "cpp",
 }
 -- when call verticalsplit(vs), a new window open at the right side
 vim.opt.splitright = true
@@ -72,6 +73,14 @@ function ExecuteFile()
   -- CHECK FILETYPE AND EXECUTE ACCORDING TO TYPE
   if exe == nil then
     print("Undifined execution")
+    return
+  elseif exe == "cpp" then
+    local target = 'doit.sh'
+    if vim.fn.filereadable(target) then
+      vim.api.nvim_command("!bash doit.sh")
+    else
+      print("No target file:" .. target)
+    end
     return
   end
 
