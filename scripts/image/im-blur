@@ -45,7 +45,8 @@ def main():
     print("target files: %d EA" % len(target_files), file=sys.stderr)
 
     for target_file in target_files:
-        x = imread(target_file)
+        x = Image.open(target_file).convert('RGB')
+        x = np.array(x)
         x_blur = add_blur(x, var=args.var)
         im = Image.fromarray(x_blur)
 
