@@ -1,4 +1,31 @@
 {
+  "breakthrough": {
+    "prefix": ["breakthrough"],
+    "body": [
+      "<span style=\"color:orange\">(Breakthrough)</span>"
+    ],
+    "description": [
+      "breakthrough"
+    ]
+  },
+  "conditional": {
+    "prefix": ["cond"],
+    "body": [
+      "<span style=\"color:blue\">(Conditional)</span>"
+    ],
+    "description": [
+      "conditional"
+    ]
+  },
+  "todo": {
+    "prefix": ["todo"],
+    "body": [
+      "<span style=\"color:orange\">(Todo)</span>"
+    ],
+    "description": [
+      "todo"
+    ]
+  },
   "undo": {
     "prefix": ["undo"],
     "body": [
@@ -29,7 +56,7 @@
   "done": {
     "prefix": ["done"],
     "body": [
-      "<span style=\"color:green\">(Done)</span>"
+      "<span style=\"color:gray\">(Done)</span>"
     ],
     "description": [
       "done"

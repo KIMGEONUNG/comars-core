@@ -60,18 +60,18 @@ nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 local remap = vim.keymap.set
 local opt = { noremap = true, silent = true }
 
-remap("n", "dc", ":call GoToWindow(g:vimspector_session_windows.code)<CR>", opt)
-remap("n", "dt", ":call GoToWindow(g:vimspector_session_windows.terminal)<CR>", opt)
-remap("n", "dv", ":call GoToWindow(g:vimspector_session_windows.variables)<CR>", opt)
-remap("n", "dw", ":call GoToWindow(g:vimspector_session_windows.watches)<CR>", opt)
+remap("n", "<leader>dc", ":call GoToWindow(g:vimspector_session_windows.code)<CR>", opt)
+remap("n", "<leader>dt", ":call GoToWindow(g:vimspector_session_windows.terminal)<CR>", opt)
+remap("n", "<leader>dv", ":call GoToWindow(g:vimspector_session_windows.variables)<CR>", opt)
+remap("n", "<leader>dw", ":call GoToWindow(g:vimspector_session_windows.watches)<CR>", opt)
 remap("n", "<leader>ds", ":call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>", opt)
-remap("n", "do", ":call GoToWindow(g:vimspector_session_windows.output)<CR>", opt)
+remap("n", "<leader>do", ":call GoToWindow(g:vimspector_session_windows.output)<CR>", opt)
 
-remap("n", "dl", "<Plug>VimspectorStepInto<CR>", opt)
-remap("n", "dk", "<Plug>VimspectorStepOut<CR>", opt)
-remap("n", "dj", "<Plug>VimspectorStepOver<CR>", opt)
-remap("n", "db", "<Plug>VimspectorToggleBreakpoint<CR>", opt)
-remap("n", "dp", ":call vimspector#Pause()<CR>", opt)
+remap("n", "<leader>dl", "<Plug>VimspectorStepInto<CR>", opt)
+remap("n", "<leader>dk", "<Plug>VimspectorStepOut<CR>", opt)
+remap("n", "<leader>dj", "<Plug>VimspectorStepOver<CR>", opt)
+remap("n", "<leader>db", "<Plug>VimspectorToggleBreakpoint<CR>", opt)
+remap("n", "<leader>dp", ":call vimspector#Pause()<CR>", opt)
 
-remap("n", "di", "<Plug>VimspectorBalloonEval<CR>", opt)
-remap("x", "di", "<Plug>VimspectorBalloonEval<CR>", opt)
+remap("n", "<leader>di", "<Plug>VimspectorBalloonEval<CR>", opt)
+remap("x", "<leader>di", "<Plug>VimspectorBalloonEval<CR>", opt)
