@@ -25,6 +25,7 @@ require("user.toggleterm")
 require("user.surround")
 require("user.sneak")
 require("user.luasnip")
+require("user.markdown")
 
 -- TREESITTER
 -- require("user.treesitter")
