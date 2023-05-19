@@ -14,6 +14,7 @@ export VISUAL="/usr/bin/nvim"
 export EDITOR="$VISUAL"
 export CUDA_HOME="/usr/local/cuda-11.3"
 export PATH=$PATH:$CUDA_HOME/bin
+export PAGER="most"
 
 #######################
 # My settings

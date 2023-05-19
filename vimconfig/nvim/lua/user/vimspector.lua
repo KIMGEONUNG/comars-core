@@ -1,27 +1,7 @@
 -- FOR FAST SNIPPET EDITING
 function StartDebug()
   vim.api.nvim_command(":w")
-
   vim.api.nvim_command("call vimspector#Launch()")
-  local win_id = vim.g.vimspector_session_windows.code
-  local buf_id = vim.fn.winbufnr(win_id)
-
-
-  -- INSPECT PANNELS
-  -- for i, x in pairs(vim.g.vimspector_session_windows) do
-  --   print('here')
-  --   print(i)
-  --   print(x)
-  -- end
-
-  -- ADD KEYMAP
-  -- vim.api.nvim_buf_set_keymap(buf_id, "n", "q", ":bwipe<CR>", {})
-  -- vim.api.nvim_buf_set_keymap(buf_id, "n", "dl", "<Plug>VimspectorStepInto<CR>", {})
-  -- vim.api.nvim_buf_set_keymap(buf_id, "n", "dk", "<Plug>VimspectorStepOut<CR>", {})
-  -- vim.api.nvim_buf_set_keymap(buf_id, "n", "dj", "<Plug>VimspectorStepOver<CR>", {})
-
-  -- DELETE KEYMAP
-  -- vim.api.nvim_buf_del_keymap(buf_id, "n", "dj")
 end
 
 function ExitDebug()
@@ -40,7 +20,6 @@ function ExitDebug()
 end
 
 vim.cmd([[
-
 fun GoToWindow(id)
     call win_gotoid(a:id)
 endfun
@@ -50,28 +29,77 @@ let g:vimspector_enable_mappings = 'HUMAN'
 nnoremap <leader>dd :lua StartDebug()<CR>
 nnoremap <leader>de :lua ExitDebug()<CR>
 nnoremap <leader>d<space> :call vimspector#Continue()<CR> 
-nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
 
 nmap <leader>drc <Plug>VimspectorRunToCursor
 nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
-nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 ]])
+-- nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
+-- nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
-local remap = vim.keymap.set
 local opt = { noremap = true, silent = true }
+vim.keymap.set("n", "<leader>dc", ":call GoToWindow(g:vimspector_session_windows.code)<CR>", opt)
+vim.keymap.set("n", "<leader>dt", ":call GoToWindow(g:vimspector_session_windows.terminal)<CR>", opt)
+vim.keymap.set("n", "<leader>dv", ":call GoToWindow(g:vimspector_session_windows.variables)<CR>", opt)
+vim.keymap.set("n", "<leader>dw", ":call GoToWindow(g:vimspector_session_windows.watches)<CR>", opt)
+vim.keymap.set("n", "<leader>ds", ":call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>", opt)
+vim.keymap.set("n", "<leader>do", ":call GoToWindow(g:vimspector_session_windows.output)<CR>", opt)
 
-remap("n", "<leader>dc", ":call GoToWindow(g:vimspector_session_windows.code)<CR>", opt)
-remap("n", "<leader>dt", ":call GoToWindow(g:vimspector_session_windows.terminal)<CR>", opt)
-remap("n", "<leader>dv", ":call GoToWindow(g:vimspector_session_windows.variables)<CR>", opt)
-remap("n", "<leader>dw", ":call GoToWindow(g:vimspector_session_windows.watches)<CR>", opt)
-remap("n", "<leader>ds", ":call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>", opt)
-remap("n", "<leader>do", ":call GoToWindow(g:vimspector_session_windows.output)<CR>", opt)
+local mapped = {}
+local remaps = {
 
-remap("n", "<leader>dl", "<Plug>VimspectorStepInto<CR>", opt)
-remap("n", "<leader>dk", "<Plug>VimspectorStepOut<CR>", opt)
-remap("n", "<leader>dj", "<Plug>VimspectorStepOver<CR>", opt)
-remap("n", "<leader>db", "<Plug>VimspectorToggleBreakpoint<CR>", opt)
-remap("n", "<leader>dp", ":call vimspector#Pause()<CR>", opt)
+  { "n", "dl", "<Plug>VimspectorStepInto<CR>", },
+  { "n", "dk", "<Plug>VimspectorStepOut<CR>", },
+  { "n", "dj", "<Plug>VimspectorStepOver<CR>", },
+  { "n", "db", "<Plug>VimspectorToggleBreakpoint<CR>", },
+  { "n", "dp", ":call vimspector#Pause()<CR>", },
 
-remap("n", "<leader>di", "<Plug>VimspectorBalloonEval<CR>", opt)
-remap("x", "<leader>di", "<Plug>VimspectorBalloonEval<CR>", opt)
+  { "n", "di", "<Plug>VimspectorBalloonEval<CR>", },
+  { "x", "di", "<Plug>VimspectorBalloonEval<CR>", },
+}
+
+function OnJumpToFrame()
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  if mapped[bufnr] then
+    return
+  end
+  local status, err = pcall(function()
+    local option = { nobufremap = true, silent = true }
+    -- local option = {}
+    for _, v in ipairs(remaps) do
+      vim.api.nvim_buf_set_keymap(bufnr, v[1], v[2], v[3], option)
+    end
+  end)
+  print(err)
+  mapped[bufnr] = { modifiable = vim.api.nvim_buf_get_option(bufnr, 'modifiable') }
+  vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
+end
+
+function OnDebugEnd()
+  local original_buf = vim.api.nvim_get_current_buf()
+  local hidden = vim.o.hidden
+
+  vim.o.hidden = true
+
+  for bufnr in pairs(mapped) do
+    pcall(function()
+      vim.api.nvim_set_current_buf(tonumber(bufnr))
+      vim.api.nvim_buf_del_keymap(bufnr, 'n', 'dj')
+      vim.api.nvim_buf_set_option(bufnr, 'modifiable', mapped[bufnr].modifiable)
+      for _, v in ipairs(remaps) do
+        vim.api.nvim_buf_del_keymap(bufnr, v[1], v[2])
+      end
+    end)
+  end
+  vim.api.nvim_set_current_buf(original_buf)
+  vim.o.hidden = hidden
+  mapped = {}
+end
+
+vim.cmd([[
+augroup TestCustomMappings
+  au!
+  autocmd User VimspectorJumpedToFrame lua OnJumpToFrame()
+  autocmd User VimspectorDebugEnded ++nested lua OnDebugEnd()
+augroup END
+]])
