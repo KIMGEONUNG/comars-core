@@ -19,29 +19,6 @@ function ExitDebug()
   vim.api.nvim_command("call vimspector#Reset()")
 end
 
-
-function GoToWindow(id)
-    vim.fn.win_gotoid(id)
-end
-
-vim.g.vimspector_enable_mappings = 'HUMAN'
-
-vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua StartDebug()<CR>', {})
-vim.api.nvim_set_keymap('n', '<leader>de', '<Cmd>lua ExitDebug()<CR>', {})
-vim.api.nvim_set_keymap('n', '<leader>d<space>', ':call vimspector#Continue()<CR>', {})
-vim.api.nvim_set_keymap('n', '<leader>drc', '<Plug>VimspectorRunToCursor', {})
-vim.api.nvim_set_keymap('n', '<leader>dbp', '<Plug>VimspectorToggleBreakpoint', {})
-vim.api.nvim_set_keymap('n', '<leader>dbc', '<Plug>VimspectorToggleConditionalBreakpoint', {})
--- nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
-
-local opt = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>dt", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.terminal)<CR>", opt)
-vim.keymap.set("n", "<leader>dc", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.code)<CR>", opt)
-vim.keymap.set("n", "<leader>dv", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.variables)<CR>", opt)
-vim.keymap.set("n", "<leader>dw", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.watches)<CR>", opt)
-vim.keymap.set("n", "<leader>ds", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.stack_trace)<CR>", opt)
-vim.keymap.set("n", "<leader>do", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.output)<CR>", opt)
-
 local mapped = {}
 local remaps = {
   { "n", "dl", "<Plug>VimspectorStepInto<CR>", },
@@ -66,7 +43,7 @@ function OnJumpToFrame()
       vim.api.nvim_buf_set_keymap(bufnr, v[1], v[2], v[3], option)
     end
   end)
-  print(err)
+  -- print(err)
   mapped[bufnr] = { modifiable = vim.api.nvim_buf_get_option(bufnr, 'modifiable') }
   vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
 end
@@ -92,10 +69,40 @@ function OnDebugEnd()
   mapped = {}
 end
 
-vim.cmd([[
-augroup TestCustomMappings
-  au!
-  autocmd User VimspectorJumpedToFrame lua OnJumpToFrame()
-  autocmd User VimspectorDebugEnded ++nested lua OnDebugEnd()
-augroup END
-]])
+vim.g.vimspector_enable_mappings = 'HUMAN'
+vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua StartDebug()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>de', '<Cmd>lua ExitDebug()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>d<space>', ':call vimspector#Continue()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>drc', '<Plug>VimspectorRunToCursor', {})
+vim.api.nvim_set_keymap('n', '<leader>dbp', '<Plug>VimspectorToggleBreakpoint', {})
+vim.api.nvim_set_keymap('n', '<leader>dbc', '<Plug>VimspectorToggleConditionalBreakpoint', {})
+-- nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
+
+local opt = { noremap = true, silent = true }
+vim.keymap.set("n", "<leader>dt", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.terminal)<CR>", opt)
+vim.keymap.set("n", "<leader>dc", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.code)<CR>", opt)
+vim.keymap.set("n", "<leader>dv", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.variables)<CR>", opt)
+vim.keymap.set("n", "<leader>dw", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.watches)<CR>", opt)
+vim.keymap.set("n", "<leader>ds", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.stack_trace)<CR>", opt)
+vim.keymap.set("n", "<leader>do", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.output)<CR>", opt)
+
+-- FINALLY, ENROLL AUTOGROUP
+-- Note that the dual vimscript of the lua's one.
+-- "User" is an event and "VimspectorJumpedToFrame" and "VimspectorDebugEnded" are the pattern
+local group = vim.api.nvim_create_augroup("VimspectorCustomBehavior", { clear = true })
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VimspectorJumpedToFrame",
+  command = "lua OnJumpToFrame()",
+  group = group,
+})
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VimspectorDebugEnded",
+  command = "lua OnDebugEnd()",
+  group = group
+})
+
+-- augroup VimspectorCustomBehavior
+--   au!
+--   autocmd User VimspectorJumpedToFrame lua OnJumpToFrame()
+--   autocmd User VimspectorDebugEnded lua OnDebugEnd()
+-- augroup END
