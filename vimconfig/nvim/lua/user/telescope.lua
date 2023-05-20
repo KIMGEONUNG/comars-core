@@ -41,11 +41,8 @@ require('telescope').setup{
     }
 }
 
-vim.cmd([[
-    " Find files using Telescope command-line sugar.
-    nnoremap <leader>ff <cmd>Telescope find_files<cr>
-    " nnoremap <leader>ff :lua require('telescope.builtin').find_files{previewer=true}<cr>
-    nnoremap <leader>fg :Telescope live_grep<cr>
-    nnoremap <leader>fb :Telescope buffers<cr>
-    nnoremap <leader>fh :Telescope help_tags<cr>
-]])
+local remap = vim.keymap.set
+remap('n', '<leader>ff', '<cmd>Telescope find_files<cr> ', { noremap = true, silent = true })
+remap('n', '<leader>fg', ':Telescope live_grep<cr>', { noremap = true, silent = true })
+remap('n', '<leader>fb', ':Telescope buffers<cr>', { noremap = true, silent = true })
+remap('n', '<leader>fh', ':Telescope help_tags<cr>', { noremap = true, silent = true })
