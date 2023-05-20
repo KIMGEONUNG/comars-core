@@ -19,34 +19,31 @@ function ExitDebug()
   vim.api.nvim_command("call vimspector#Reset()")
 end
 
-vim.cmd([[
-fun GoToWindow(id)
-    call win_gotoid(a:id)
-endfun
 
-let g:vimspector_enable_mappings = 'HUMAN'
+function GoToWindow(id)
+    vim.fn.win_gotoid(id)
+end
 
-nnoremap <leader>dd :lua StartDebug()<CR>
-nnoremap <leader>de :lua ExitDebug()<CR>
-nnoremap <leader>d<space> :call vimspector#Continue()<CR> 
+vim.g.vimspector_enable_mappings = 'HUMAN'
 
-nmap <leader>drc <Plug>VimspectorRunToCursor
-nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
-]])
+vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua StartDebug()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>de', '<Cmd>lua ExitDebug()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>d<space>', ':call vimspector#Continue()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>drc', '<Plug>VimspectorRunToCursor', {})
+vim.api.nvim_set_keymap('n', '<leader>dbp', '<Plug>VimspectorToggleBreakpoint', {})
+vim.api.nvim_set_keymap('n', '<leader>dbc', '<Plug>VimspectorToggleConditionalBreakpoint', {})
 -- nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
--- nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
 local opt = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>dc", ":call GoToWindow(g:vimspector_session_windows.code)<CR>", opt)
-vim.keymap.set("n", "<leader>dt", ":call GoToWindow(g:vimspector_session_windows.terminal)<CR>", opt)
-vim.keymap.set("n", "<leader>dv", ":call GoToWindow(g:vimspector_session_windows.variables)<CR>", opt)
-vim.keymap.set("n", "<leader>dw", ":call GoToWindow(g:vimspector_session_windows.watches)<CR>", opt)
-vim.keymap.set("n", "<leader>ds", ":call GoToWindow(g:vimspector_session_windows.stack_trace)<CR>", opt)
-vim.keymap.set("n", "<leader>do", ":call GoToWindow(g:vimspector_session_windows.output)<CR>", opt)
+vim.keymap.set("n", "<leader>dt", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.terminal)<CR>", opt)
+vim.keymap.set("n", "<leader>dc", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.code)<CR>", opt)
+vim.keymap.set("n", "<leader>dv", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.variables)<CR>", opt)
+vim.keymap.set("n", "<leader>dw", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.watches)<CR>", opt)
+vim.keymap.set("n", "<leader>ds", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.stack_trace)<CR>", opt)
+vim.keymap.set("n", "<leader>do", ":lua vim.fn.win_gotoid(vim.g.vimspector_session_windows.output)<CR>", opt)
 
 local mapped = {}
 local remaps = {
-
   { "n", "dl", "<Plug>VimspectorStepInto<CR>", },
   { "n", "dk", "<Plug>VimspectorStepOut<CR>", },
   { "n", "dj", "<Plug>VimspectorStepOver<CR>", },
@@ -64,8 +61,7 @@ function OnJumpToFrame()
     return
   end
   local status, err = pcall(function()
-    local option = { nobufremap = true, silent = true }
-    -- local option = {}
+    local option = { noremap = true, silent = true }
     for _, v in ipairs(remaps) do
       vim.api.nvim_buf_set_keymap(bufnr, v[1], v[2], v[3], option)
     end
