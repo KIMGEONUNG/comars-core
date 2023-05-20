@@ -1,16 +1,27 @@
+local group = vim.api.nvim_create_augroup("CustomSurround", { clear = true })
 
--- PYTHON-SPECIFIC
-vim.cmd([[
-autocmd FileType python let b:surround_{char2nr('p')} = "print(\r)"
-]])
+-- PYTHON 
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = "python",
+  command = "let b:surround_{char2nr('p')} = \"print(\\r)\"",
+  group = group,
+})
 
 -- LATEX-SPECIFIC
-vim.cmd([[
-autocmd FileType tex let b:surround_{char2nr('b')} = "{\\bf \r}"
-autocmd FileType tex let b:surround_{char2nr('i')} = "{\\it \r}"
-]])
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = "tex",
+  command = "let b:surround_{char2nr('b')} = \"{\\\\bf \\r}\"",
+  group = group,
+})
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = "tex",
+  command = "let b:surround_{char2nr('i')} = \"{\\\\if \\r}\"",
+  group = group,
+})
 
 -- BASH
-vim.cmd([[
-autocmd FileType sh let b:surround_{char2nr('v')} = "${\r}"
-]])
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = "tex",
+  command = "let b:surround_{char2nr('v')} = \"${\\r}\"",
+  group = group,
+})

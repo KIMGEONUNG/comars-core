@@ -25,7 +25,6 @@ local remaps = {
   { "n", "dk", "<Plug>VimspectorStepOut<CR>", },
   { "n", "dj", "<Plug>VimspectorStepOver<CR>", },
   { "n", "db", "<Plug>VimspectorToggleBreakpoint<CR>", },
-  { "n", "dp", ":call vimspector#Pause()<CR>", },
 
   { "n", "di", "<Plug>VimspectorBalloonEval<CR>", },
   { "x", "di", "<Plug>VimspectorBalloonEval<CR>", },
@@ -73,6 +72,7 @@ vim.g.vimspector_enable_mappings = 'HUMAN'
 vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua StartDebug()<CR>', {})
 vim.api.nvim_set_keymap('n', '<leader>de', '<Cmd>lua ExitDebug()<CR>', {})
 vim.api.nvim_set_keymap('n', '<leader>d<space>', ':call vimspector#Continue()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>dp', ':call vimspector#Pause()<CR>', {})
 vim.api.nvim_set_keymap('n', '<leader>drc', '<Plug>VimspectorRunToCursor', {})
 vim.api.nvim_set_keymap('n', '<leader>dbp', '<Plug>VimspectorToggleBreakpoint', {})
 vim.api.nvim_set_keymap('n', '<leader>dbc', '<Plug>VimspectorToggleConditionalBreakpoint', {})
