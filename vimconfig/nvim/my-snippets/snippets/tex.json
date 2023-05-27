@@ -1,6 +1,35 @@
 {
+  "algorithm": {
+    "prefix": [
+      "algo1"
+    ],
+    "body": [
+      "\\begin{algorithm}",
+      "\\caption{Ada-SDS}",
+      "  $\\epsilon \\sim \\mathcal{N}(0,I)$ ",
+      "",
+      "  \\$z_0'$ (zero init.)",
+      "",
+      "  \\For{$t$ from $T$ to 1}{",
+      "    \\$z_t'=\\sqrt{\\bar{\\alpha}_t}~z_0'  + \\sqrt{1 -\\bar{\\alpha}_t}~\\epsilon $",
+      "",
+      "    $\\epsilon' = \\epsilon_{\\theta}(z_t',y,t)$",
+      "",
+      "    \\$z_0' \\leftarrow z_0' - w(t)(\\epsilon' - \\epsilon)$",
+      "",
+      "    $\\epsilon \\leftarrow \\epsilon'$",
+      "}",
+      "  \\Return $\\boldsymbol{z}_{0}'$",
+      "\\end{algorithm}"
+    ],
+    "description": [
+      ""
+    ]
+  },
   "log": {
-    "prefix": ["log"],
+    "prefix": [
+      "log"
+    ],
     "body": [
       "\\log{${1:x}}"
     ],
@@ -9,7 +38,9 @@
     ]
   },
   "subfig4": {
-    "prefix": ["subfig4"],
+    "prefix": [
+      "subfig4"
+    ],
     "body": [
       "\\begin{figure}",
       "  \\centering",
@@ -26,7 +57,9 @@
     ]
   },
   "beta": {
-    "prefix": ["beta"],
+    "prefix": [
+      "beta"
+    ],
     "body": [
       "\\beta"
     ],
@@ -35,7 +68,9 @@
     ]
   },
   "alpha": {
-    "prefix": ["alpha"],
+    "prefix": [
+      "alpha"
+    ],
     "body": [
       "\\alpha"
     ],
@@ -44,7 +79,10 @@
     ]
   },
   "lambda": {
-    "prefix": ["lambda", "lam"],
+    "prefix": [
+      "lambda",
+      "lam"
+    ],
     "body": [
       "\\lambda"
     ],
@@ -53,7 +91,10 @@
     ]
   },
   "theta": {
-    "prefix": ["theta", "th" ],
+    "prefix": [
+      "theta",
+      "th"
+    ],
     "body": [
       "\\theta"
     ],
@@ -62,7 +103,9 @@
     ]
   },
   "sum": {
-    "prefix": ["sum"],
+    "prefix": [
+      "sum"
+    ],
     "body": [
       "\\sum_{${1:x}}"
     ],
@@ -71,7 +114,9 @@
     ]
   },
   "mathbb": {
-    "prefix": ["mb"],
+    "prefix": [
+      "mb"
+    ],
     "body": [
       "\\mathbb{${1:L}}"
     ],
@@ -80,7 +125,9 @@
     ]
   },
   "mathcal": {
-    "prefix": ["mc"],
+    "prefix": [
+      "mc"
+    ],
     "body": [
       "\\mathcal{${1:L}}"
     ],
@@ -89,7 +136,9 @@
     ]
   },
   "equation": {
-    "prefix": ["eq"],
+    "prefix": [
+      "eq"
+    ],
     "body": [
       "\\begin{equation}",
       "  \\begin{aligned}",
@@ -102,7 +151,9 @@
     ]
   },
   "equaltion-inline": {
-    "prefix": ["e"],
+    "prefix": [
+      "e"
+    ],
     "body": [
       "\\$${1:equation}\\$"
     ],
@@ -110,9 +161,10 @@
       "description"
     ]
   },
-  
   "frac": {
-    "prefix": ["frac"],
+    "prefix": [
+      "frac"
+    ],
     "body": [
       "\\frac{${1:1}}{${2:x}}"
     ],
@@ -121,7 +173,9 @@
     ]
   },
   "assumption": {
-    "prefix": ["as"],
+    "prefix": [
+      "as"
+    ],
     "body": [
       "\\assume{${1: Text}}"
     ],
@@ -129,16 +183,18 @@
       "description"
     ]
   },
-	"todo": {
-		"prefix": "todo",
-		"body": "\\todo{${1: Text}}"
-	},
-	"dash": {
-		"prefix": "---",
-		"body": "%-----------------------------------------------------------------------------"
-	},
+  "todo": {
+    "prefix": "todo",
+    "body": "\\todo{${1: Text}}"
+  },
+  "dash": {
+    "prefix": "---",
+    "body": "%-----------------------------------------------------------------------------"
+  },
   "macro": {
-    "prefix": ["macro"],
+    "prefix": [
+      "macro"
+    ],
     "body": [
       "\\definecolor{dkgreen}{rgb}{0,0.6,0}",
       "\\definecolor{gray}{rgb}{0.5,0.5,0.5}",
@@ -198,80 +254,80 @@
       "this is custom macro"
     ]
   },
-	"mytemplete": {
-		"prefix": "mytp1",
-		"body": [
-        "\\documentclass[runningheads]{llncs}",
-        "",
-        "\\usepackage{graphicx}",
-        "\\usepackage{subfigure}",
-        "\\usepackage{amsmath,amssymb} % define this before the line numbering.",
-        "\\usepackage{listings}",
-        "\\usepackage{color}",
-        "\\usepackage{kotex}",
-        "\\usepackage{tikz}",
-        "",
-        "\\usepackage[pagebackref,breaklinks,colorlinks]{hyperref}",
-        "% NARROW MARGIN AND LARGE FONTSIZE",
-        "\\usepackage[width=122mm,left=12mm,paperwidth=146mm,height=193mm,top=12mm,paperheight=217mm]{geometry}",
-        "",
-        "\\begin{document}",
-        "",
-        "\\title{${1:% Unknown Title}}",
-        "",
-        "\\titlerunning{Title} ",
-        "\\authorrunning{G. Kim et al.}",
-        "",
-        "\\author{",
-        "        Geonung Kim\\inst{1} \\",
-        "        % Sunghyun Cho\\inst{1} \\",
-        "}",
-        "\\institute{",
-        "        POSTECH\\inst{1}  \\\\",
-        "        % \\email{\\{k2woong92,s.cho\\}@postech.ac.kr}\\\\",
-        "        \\email{k2woong92@postech.ac.kr}\\\\",
-        "}",
-        "",
-        "\\maketitle",
-        "\\input{macro}",
-        "",
-        "\\begin{abstract}",
-        "  This is abtract ...",
-        "",
-        "\\keywords{Colorization, ...}",
-        "\\end{abstract}",
-        "",
-        "\\section{Introduction}",
-        "",
-        "We introduce...",
-        "",
-        "\\section{Method}",
-        "",
-        "cse changes the surrounding environment:",
-        "",
-        "\\begin{equation}",
-        "  v \\cdot \\nabla_x f_1 = -\\sigma_a f_1, \\quad f_1 \\rvert_{\\Gamma_-} = \\phi(x,v).",
-        "\\end{equation}",
-        "",
-        "tsd toggles between () and \\( \\left( \\right) \\):",
-        "",
-        "\\begin{equation*}",
-        "  \\frac{d}{ds} \\left[ e^{\\int_k^s \\sigma_a(x + tv)\\,dt} F_1(s) \\right] = 0",
-        "\\end{equation*}",
-        "",
-        "tse toggles the * in environments:",
-        "",
-        "\\begin{equation}",
-        "  f_1(x, v) = e^{-\\int_0^{\\tau_-(x, v)} \\sigma_a(x - sv)\\,dt} \\phi(x_-, v),",
-        "\\end{equation}",
-        "",
-        "\\section{Conclusion}",
-        "",
-        "The conclusion is ...",
-        "",
-        "\\bibliographystyle{splncs04}",
-        "\\bibliography{egbib}",
-        "\\end{document}"
-		]
-	}
+  "mytemplete": {
+    "prefix": "mytp1",
+    "body": [
+      "\\documentclass[runningheads]{llncs}",
+      "",
+      "\\usepackage{graphicx}",
+      "\\usepackage{subfigure}",
+      "\\usepackage{amsmath,amssymb} % define this before the line numbering.",
+      "\\usepackage{listings}",
+      "\\usepackage{color}",
+      "\\usepackage{kotex}",
+      "\\usepackage{tikz}",
+      "",
+      "\\usepackage[pagebackref,breaklinks,colorlinks]{hyperref}",
+      "% NARROW MARGIN AND LARGE FONTSIZE",
+      "\\usepackage[width=122mm,left=12mm,paperwidth=146mm,height=193mm,top=12mm,paperheight=217mm]{geometry}",
+      "",
+      "\\begin{document}",
+      "",
+      "\\title{${1:% Unknown Title}}",
+      "",
+      "\\titlerunning{Title} ",
+      "\\authorrunning{G. Kim et al.}",
+      "",
+      "\\author{",
+      "        Geonung Kim\\inst{1} \\",
+      "        % Sunghyun Cho\\inst{1} \\",
+      "}",
+      "\\institute{",
+      "        POSTECH\\inst{1}  \\\\",
+      "        % \\email{\\{k2woong92,s.cho\\}@postech.ac.kr}\\\\",
+      "        \\email{k2woong92@postech.ac.kr}\\\\",
+      "}",
+      "",
+      "\\maketitle",
+      "\\input{macro}",
+      "",
+      "\\begin{abstract}",
+      "  This is abtract ...",
+      "",
+      "\\keywords{Colorization, ...}",
+      "\\end{abstract}",
+      "",
+      "\\section{Introduction}",
+      "",
+      "We introduce...",
+      "",
+      "\\section{Method}",
+      "",
+      "cse changes the surrounding environment:",
+      "",
+      "\\begin{equation}",
+      "  v \\cdot \\nabla_x f_1 = -\\sigma_a f_1, \\quad f_1 \\rvert_{\\Gamma_-} = \\phi(x,v).",
+      "\\end{equation}",
+      "",
+      "tsd toggles between () and \\( \\left( \\right) \\):",
+      "",
+      "\\begin{equation*}",
+      "  \\frac{d}{ds} \\left[ e^{\\int_k^s \\sigma_a(x + tv)\\,dt} F_1(s) \\right] = 0",
+      "\\end{equation*}",
+      "",
+      "tse toggles the * in environments:",
+      "",
+      "\\begin{equation}",
+      "  f_1(x, v) = e^{-\\int_0^{\\tau_-(x, v)} \\sigma_a(x - sv)\\,dt} \\phi(x_-, v),",
+      "\\end{equation}",
+      "",
+      "\\section{Conclusion}",
+      "",
+      "The conclusion is ...",
+      "",
+      "\\bibliographystyle{splncs04}",
+      "\\bibliography{egbib}",
+      "\\end{document}"
+    ]
+  }
 }
