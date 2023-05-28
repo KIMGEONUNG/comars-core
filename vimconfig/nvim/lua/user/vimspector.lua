@@ -1,16 +1,23 @@
+Vimspector = {}
 -- SELECT CONFIG
-function SelectVimspectorConfig()
+function Vimspector.SelectVimspectorConfig()
   local dir_config = "vimspectorconfigs"
 
   local function get_file_list()
     local handle = io.popen('ls ' .. dir_config)
     local result = handle:read('*a')
     handle:close()
-    return vim.split(result, '\n')
+    local lines = vim.split(result, '\n')
+    for i, v in pairs(lines) do
+      if v == "" then
+        table.remove(lines, i)
+      end
+    end
+    return lines
   end
 
   -- Function to display the contents of a file
-  function link_config()
+  function Vimspector.link_config()
     local file = vim.api.nvim_get_current_line()
     local cmd = 'ln -sf ' .. dir_config .. '/' .. file .. ' .vimspector.json'
     local a = os.execute(cmd)
@@ -54,7 +61,8 @@ function SelectVimspectorConfig()
   local win2 = vim.api.nvim_open_win(buf2, true, opts)
 
   -- Fill buffer with file list
-  vim.api.nvim_buf_set_lines(buf1, 0, -1, false, get_file_list())
+  local file_list = get_file_list()
+  vim.api.nvim_buf_set_lines(buf1, 0, -1, false, file_list)
 
   -- Fill buffer with file list
   vim.api.nvim_buf_set_option(buf1, 'modifiable', false)
@@ -62,40 +70,40 @@ function SelectVimspectorConfig()
 
   vim.api.nvim_set_current_win(win1)
 
-  function on_cursor_move()
-    vim.api.nvim_buf_set_option(buf2, 'modifiable', true)
-    local file = vim.api.nvim_get_current_line()
-    local path = dir_config .. '/' .. file
-    local handle = io.open(path, 'r')
-    local contents = handle:read('*a')
-    handle:close()
-    vim.api.nvim_buf_set_lines(buf2, 0, -1, false, vim.split(contents, '\n'))
-    vim.api.nvim_buf_set_option(buf2, 'modifiable', false)
+  function Vimspector.on_cursor_move()
+      vim.api.nvim_buf_set_option(buf2, 'modifiable', true)
+      local file = vim.api.nvim_get_current_line()
+      local path = dir_config .. '/' .. file
+      local handle = io.open(path, 'r')
+      local contents = handle:read('*a')
+      handle:close()
+      vim.api.nvim_buf_set_lines(buf2, 0, -1, false, vim.split(contents, '\n'))
+      vim.api.nvim_buf_set_option(buf2, 'modifiable', false)
   end
 
-  function close_all()
+  function Vimspector.close_all()
     vim.api.nvim_win_close(win2, true)
     vim.api.nvim_win_close(win1, true)
   end
 
   vim.api.nvim_create_autocmd("CursorMoved", {
-    command = "lua on_cursor_move()",
+    command = "lua Vimspector.on_cursor_move()",
     buffer = buf1,
   })
 
-  vim.cmd("lua on_cursor_move()")
+  vim.cmd("lua Vimspector.on_cursor_move()")
 
   -- Close window when any key is pressed
-  vim.api.nvim_buf_set_keymap(buf1, 'n', '<CR>', '<cmd>lua link_config()<CR>', {})
-  vim.api.nvim_buf_set_keymap(buf1, 'n', '<Esc>', '<cmd>lua close_all()<CR>', {})
-  vim.api.nvim_buf_set_keymap(buf1, 'n', 'q', '<cmd>lua close_all()<CR>', {})
+  vim.api.nvim_buf_set_keymap(buf1, 'n', '<CR>', '<cmd>lua Vimspector.link_config()<CR>', {})
+  vim.api.nvim_buf_set_keymap(buf1, 'n', '<Esc>', '<cmd>lua Vimspector.close_all()<CR>', {})
+  vim.api.nvim_buf_set_keymap(buf1, 'n', 'q', '<cmd>lua Vimspector.close_all()<CR>', {})
 
-  vim.api.nvim_buf_set_keymap(buf2, 'n', '<CR>', '<cmd>lua link_config()<CR>', {})
-  vim.api.nvim_buf_set_keymap(buf2, 'n', '<Esc>', '<cmd>lua close_all()<CR>', {})
-  vim.api.nvim_buf_set_keymap(buf2, 'n', 'q', '<cmd>lua close_all()<CR>', {})
+  vim.api.nvim_buf_set_keymap(buf2, 'n', '<CR>', '<cmd>lua Vimspector.link_config()<CR>', {})
+  vim.api.nvim_buf_set_keymap(buf2, 'n', '<Esc>', '<cmd>lua Vimspector.close_all()<CR>', {})
+  vim.api.nvim_buf_set_keymap(buf2, 'n', 'q', '<cmd>lua Vimspector.close_all()<CR>', {})
 end
 
-vim.api.nvim_create_user_command("SelectVimspectorConfig", 'lua SelectVimspectorConfig()', {})
+vim.api.nvim_create_user_command("SelectVimspectorConfig", 'lua Vimspector.SelectVimspectorConfig()', {})
 
 -- FOR FAST SNIPPET EDITING
 function StartDebug()
