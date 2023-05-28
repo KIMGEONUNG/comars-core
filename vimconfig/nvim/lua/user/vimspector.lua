@@ -12,7 +12,7 @@ function SelectVimspectorConfig()
     end
 
     -- Function to display the contents of a file
-    function display_file_contents()
+    function link_config()
         local file = vim.api.nvim_get_current_line()
         local cmd = 'ln -sf ' .. dir_config .. '/' .. file .. ' .vimspector.json'
         local a = os.execute(cmd)
@@ -21,16 +21,17 @@ function SelectVimspectorConfig()
         end
     end
 
+
     -- Calculate window size
     local width = vim.o.columns
     local height = vim.o.lines
-    local ratio = 0.5
+    local ratio = 0.8
     local win_height = math.ceil(height * ratio - 4)
-    local win_width = math.ceil(width * ratio)
+    local win_width = math.ceil(width * ratio / 2) 
 
     -- Calculate window position
     local row = math.ceil((height - win_height) / 2 - 1)
-    local col = math.ceil((width - win_width) / 2)
+    local col = math.ceil((width - win_width * 2) / 2)
 
     -- Set window options
     local opts = {
@@ -41,21 +42,63 @@ function SelectVimspectorConfig()
         height = win_height,
         style = 'minimal',
         border = 'rounded',
+        -- title = 'Config list',
+        -- title_pos = 'center',
     }
 
     -- Create window and buffer
-    local buf = vim.api.nvim_create_buf(false, true)
-    local win = vim.api.nvim_open_win(buf, true, opts)
+    local buf1 = vim.api.nvim_create_buf(false, true)
+    local win1 = vim.api.nvim_open_win(buf1, true, opts)
+
+    --  -- Adjust position for second window
+    -- opts.row = opts.row + win_height / 4
+    opts.col = opts.col + win_width + 3
+    --
+    -- -- Create window and buffer for file contents
+    local buf2 = vim.api.nvim_create_buf(false, true)
+    local win2 = vim.api.nvim_open_win(buf2, true, opts)
+
 
     -- Fill buffer with file list
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, get_file_list())
+    vim.api.nvim_buf_set_lines(buf1, 0, -1, false, get_file_list())
+
     -- Fill buffer with file list
-    vim.api.nvim_buf_set_option(buf, 'modifiable', false)
+    vim.api.nvim_buf_set_option(buf1, 'modifiable', false)
+    vim.api.nvim_buf_set_option(buf2, 'modifiable', false)
+
+    vim.api.nvim_set_current_win(win1)
+
+    function on_cursor_move()
+        vim.api.nvim_buf_set_option(buf2, 'modifiable', true)
+        local file = vim.api.nvim_get_current_line()
+        local path = dir_config .. '/' .. file
+        local handle = io.open(path, 'r')
+        local contents = handle:read('*a')
+        handle:close()
+        vim.api.nvim_buf_set_lines(buf2, 0, -1, false, vim.split(contents, '\n'))
+        vim.api.nvim_buf_set_option(buf2, 'modifiable', false)
+    end
+
+    function close_all()
+      vim.api.nvim_win_close(win2, true)
+      vim.api.nvim_win_close(win1, true)
+    end
+
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      command = "lua on_cursor_move()",
+      buffer = buf1,
+    })
+
+    vim.cmd("lua on_cursor_move()")
 
     -- Close window when any key is pressed
-    vim.api.nvim_buf_set_keymap(buf, 'n', '<CR>', '<cmd>lua display_file_contents()<CR>', {})
-    vim.api.nvim_buf_set_keymap(buf, 'n', '<Esc>', '<cmd>lua vim.api.nvim_win_close(0, true)<CR>', {})
-    vim.api.nvim_buf_set_keymap(buf, 'n', 'q', '<cmd>lua vim.api.nvim_win_close(0, true)<CR>', {})
+    vim.api.nvim_buf_set_keymap(buf1, 'n', '<CR>', '<cmd>lua link_config()<CR>', {})
+    vim.api.nvim_buf_set_keymap(buf1, 'n', '<Esc>', '<cmd>lua close_all()<CR>', {})
+    vim.api.nvim_buf_set_keymap(buf1, 'n', 'q', '<cmd>lua close_all()<CR>', {})
+
+    vim.api.nvim_buf_set_keymap(buf2, 'n', '<CR>', '<cmd>lua link_config()<CR>', {})
+    vim.api.nvim_buf_set_keymap(buf2, 'n', '<Esc>', '<cmd>lua close_all()<CR>', {})
+    vim.api.nvim_buf_set_keymap(buf2, 'n', 'q', '<cmd>lua close_all()<CR>', {})
 end
 
 vim.api.nvim_create_user_command("SelectVimspectorConfig", 'lua SelectVimspectorConfig()', {}) 
