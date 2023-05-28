@@ -1,3 +1,65 @@
+-- SELECT CONFIG
+function SelectVimspectorConfig()
+    local dir_config = "vimspectorconfigs"
+  
+
+
+    local function get_file_list()
+        local handle = io.popen('ls ' ..  dir_config )
+        local result = handle:read('*a')
+        handle:close()
+        return vim.split(result, '\n')
+    end
+
+    -- Function to display the contents of a file
+    function display_file_contents()
+        local file = vim.api.nvim_get_current_line()
+        local cmd = 'ln -sf ' .. dir_config .. '/' .. file .. ' .vimspector.json'
+        local a = os.execute(cmd)
+        if a == 0 then
+          print("Command succeeded: " .. cmd)
+        end
+    end
+
+    -- Calculate window size
+    local width = vim.o.columns
+    local height = vim.o.lines
+    local ratio = 0.5
+    local win_height = math.ceil(height * ratio - 4)
+    local win_width = math.ceil(width * ratio)
+
+    -- Calculate window position
+    local row = math.ceil((height - win_height) / 2 - 1)
+    local col = math.ceil((width - win_width) / 2)
+
+    -- Set window options
+    local opts = {
+        relative = 'editor',
+        row = row,
+        col = col,
+        width = win_width,
+        height = win_height,
+        style = 'minimal',
+        border = 'rounded',
+    }
+
+    -- Create window and buffer
+    local buf = vim.api.nvim_create_buf(false, true)
+    local win = vim.api.nvim_open_win(buf, true, opts)
+
+    -- Fill buffer with file list
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, get_file_list())
+    -- Fill buffer with file list
+    vim.api.nvim_buf_set_option(buf, 'modifiable', false)
+
+    -- Close window when any key is pressed
+    vim.api.nvim_buf_set_keymap(buf, 'n', '<CR>', '<cmd>lua display_file_contents()<CR>', {})
+    vim.api.nvim_buf_set_keymap(buf, 'n', '<Esc>', '<cmd>lua vim.api.nvim_win_close(0, true)<CR>', {})
+    vim.api.nvim_buf_set_keymap(buf, 'n', 'q', '<cmd>lua vim.api.nvim_win_close(0, true)<CR>', {})
+end
+
+vim.api.nvim_create_user_command("SelectVimspectorConfig", 'lua SelectVimspectorConfig()', {}) 
+
 -- FOR FAST SNIPPET EDITING
 function StartDebug()
   vim.api.nvim_command(":w")

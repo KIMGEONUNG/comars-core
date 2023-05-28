@@ -42,7 +42,7 @@ require('telescope').setup{
 }
 
 local remap = vim.keymap.set
-remap('n', '<leader>ff', '<cmd>Telescope find_files<cr> ', { noremap = true, silent = true })
+remap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true, silent = true })
 remap('n', '<leader>fg', ':Telescope live_grep<cr>', { noremap = true, silent = true })
 remap('n', '<leader>fb', ':Telescope buffers<cr>', { noremap = true, silent = true })
 remap('n', '<leader>fh', ':Telescope help_tags<cr>', { noremap = true, silent = true })
