@@ -1,4 +1,5 @@
 Vimspector = {}
+
 -- SELECT CONFIG
 function Vimspector.SelectVimspectorConfig()
   local dir_config = "vimspectorconfigs"
@@ -79,6 +80,7 @@ function Vimspector.SelectVimspectorConfig()
       handle:close()
       vim.api.nvim_buf_set_lines(buf2, 0, -1, false, vim.split(contents, '\n'))
       vim.api.nvim_buf_set_option(buf2, 'modifiable', false)
+      vim.api.nvim_buf_set_option(buf2, 'filetype', 'json')
   end
 
   function Vimspector.close_all()
