@@ -68,6 +68,7 @@ remap('n', 'J', "mzJ'z", { noremap = true, silent = true })
 remap('n', '<leader>nh', ':nohlsearch<CR>', { noremap = true, silent = true })
 remap('n', 'ci,', ':call DeleteInnerArg()<CR>', { noremap = true, silent = true })
 remap({ 'n', 'i', 'v', 'c' }, '<c-q>', '<esc>', { noremap = true, silent = true })
+remap('v', 's', ':lua InsertTextWithBrace()<CR>', { noremap = true, silent = true })
 
 remap('n', 'Y', 'y$', { noremap = true, silent = true })
 

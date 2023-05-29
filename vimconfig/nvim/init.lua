@@ -1,9 +1,9 @@
+require("mydebug")
 require("set")
 require("remap")
 require("functions")
 require("plugins")
 require("color")
-require("debug")
 require("autocmd")
 
 -- NAVIGATION UTILITIES

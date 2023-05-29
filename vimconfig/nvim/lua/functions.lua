@@ -37,6 +37,54 @@ function QuitF()
   end
 end
 
+function InsertTextWithBrace()
+  local function insert_text_at(line, col, text)
+    -- Get the current line content
+    local current_line = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
+    -- Insert the new text at the specified column
+    local new_line = current_line:sub(1, col) .. text .. current_line:sub(col + 1)
+    -- Set the new line
+    vim.api.nvim_buf_set_lines(0, line - 1, line, false, { new_line })
+  end
+  -- FIND VISUAL POSITION
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
+
+  local start_line = start_pos[2]
+  local start_col = start_pos[3]
+  local end_line = end_pos[2]
+  local end_col = end_pos[3]
+  -- print("Visual selection starts at Line " .. start_line .. ", Column " .. start_col)
+  -- print("Visual selection ends at Line " .. end_line .. ", Column " .. end_col)
+
+  -- SPECIFIY
+  local prefix = vim.fn.input("Prefix: ")
+  if prefix == '' then
+    print('empty exit')
+    return
+  end
+
+  -- INSERT BRACKET AND CONTENT
+  local last = prefix:sub(-1)
+  local bracket_close = nil
+  if last == "(" then
+    bracket_close = ")"
+  elseif last == "{" then
+    bracket_close = "}"
+  elseif last == "[" then
+    bracket_close = "]"
+  end
+
+  if bracket_close == nil then
+    print('bracket_close is nil')
+  else
+    prefix = prefix:sub(1, -2)
+    insert_text_at(start_line, start_col - 1, last)
+    insert_text_at(end_line, end_col + 1, bracket_close)
+    insert_text_at(start_line, start_col - 1, prefix)
+  end
+end
+
 vim.cmd([[
 
 function! DeleteInnerArg()

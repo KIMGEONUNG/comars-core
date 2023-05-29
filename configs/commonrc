@@ -67,6 +67,7 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 alias xsel='xsel -ib'
+alias gcal='gcalcli'
 alias nvimn='nvim /dev/null'
 
 # SET PWD FOR TMUX
