@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd("Filetype", {
 })
 vim.api.nvim_create_autocmd("Filetype", {
   pattern = "tex",
-  command = "let b:surround_{char2nr('i')} = \"{\\\\if \\r}\"",
+  command = "let b:surround_{char2nr('i')} = \"{\\\\it \\r}\"",
   group = group,
 })
 
