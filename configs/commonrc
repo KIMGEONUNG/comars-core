@@ -58,6 +58,7 @@ PS1="$(echo "$PS1" | sed 's/(base) //')"
 # ENROLL LUA-LSP INTO PATH ENVIRONMENT VARIABLE
 alias luamake=$HOME/.config/lsp/lua-language-server/3rd/luamake/luamake
 export PATH="${HOME}/.config/lsp/lua-language-server/bin:${PATH}"
+export PATH="${HOME}/.local/kitty.app/bin:${PATH}"
 export PATH="$HOME/bin:$PATH"
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -69,6 +70,7 @@ HISTFILESIZE=2000
 alias xsel='xsel -ib'
 alias gcal='gcalcli'
 alias nvimn='nvim /dev/null'
+alias icat='kitten icat'
 
 # SET PWD FOR TMUX
 function set_tmux_pwd() {

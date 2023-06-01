@@ -6,6 +6,7 @@ if [[ -z ${1} ]]; then
 fi
 
 name_dir=postech_${1}
+subdir=${2}
 
 mkdir -p ./${name_dir}
-sshfs -p 6000 -o reconnect ${1}@141.223.92.10:/home/${1} ./${name_dir}
+sshfs -p 6000 -o reconnect ${1}@141.223.92.10:/home/${1}/${2} ./${name_dir}
