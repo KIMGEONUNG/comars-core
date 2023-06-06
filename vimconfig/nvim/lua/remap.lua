@@ -79,11 +79,13 @@ remap('n', 'Y', 'y$', { noremap = true, silent = true })
 remap('x', "<leader>p", "\"_dP", { noremap = true, silent = true })
 
 -- PARMANENT HIGHLIGHTING ON ONE LINE
--- define line highlight color. this can be written in vimL like "highlight
--- LineHighlight ctermbg=gray guibg=gray "
--- vim.api.nvim_set_hl('LineHighlight', {ctermbg='gray', guibg='gray'}, false)
+-- define line highlight color. this can be written in vimL like
+-- "highlight LineHighlight ctermbg=gray guibg=gray"
+-- local ns_id = vim.api.nvim_create_namespace('my_namespace')
+-- vim.api.nvim_set_hl(0, 'LineHighlight', { ctermbg = 'gray', guibg = 'gray' })
+-- vim.api.nvim_set_hl(0, 'LineHighlight', { ctermbg = 'gray' })
 -- highlight the current line
-remap("n", '<Leader>L', ":call matchadd('LineHighlight', '\\%'.line('.').'l')<CR>",
-{ noremap = true, silent = true })
+remap("n", '<Leader>L', ":call matchadd('TermCursor', '\\%'.line('.').'l')<CR>", { noremap = true, silent = true })
+-- remap("n", '<Leader>L', ":call matchadd('TermCursor', '\\%3l')<CR>", { noremap = true, silent = true })
 -- clear all the highlighted lines
 remap("n", '<Leader>C', ":call clearmatches()<CR>", { noremap = true, silent = true })

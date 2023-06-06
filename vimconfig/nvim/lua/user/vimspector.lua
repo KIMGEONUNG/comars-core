@@ -8,12 +8,15 @@ function Vimspector.SelectVimspectorConfig()
     local handle = io.popen('ls ' .. dir_config)
     local result = handle:read('*a')
     handle:close()
+
+    -- CODE SMELL START -----------------------------------------------
     local lines = vim.split(result, '\n')
     for i, v in pairs(lines) do
       if v == "" then
         table.remove(lines, i)
       end
     end
+    -- CODE SMELL END -----------------------------------------------
     return lines
   end
 
@@ -22,9 +25,12 @@ function Vimspector.SelectVimspectorConfig()
     local file = vim.api.nvim_get_current_line()
     local cmd = 'ln -sf ' .. dir_config .. '/' .. file .. ' .vimspector.json'
     local a = os.execute(cmd)
+
     if a == 0 then
       print("Command succeeded: " .. cmd)
     end
+    vim.api.nvim_command("call clearmatches()")
+    vim.api.nvim_command("call matchadd('TermCursor', '\\%'.line('.').'l')")
   end
 
   -- Calculate window size
