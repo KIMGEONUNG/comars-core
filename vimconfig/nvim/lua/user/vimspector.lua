@@ -159,9 +159,7 @@ local remaps = {
   { "n", "dk", "<Plug>VimspectorStepOut<CR>", },
   { "n", "dj", "<Plug>VimspectorStepOver<CR>", },
   { "n", "db", "<Plug>VimspectorToggleBreakpoint<CR>", },
-
   { "n", "di", "<Plug>VimspectorBalloonEval<CR>", },
-  { "x", "di", "<Plug>VimspectorBalloonEval<CR>", },
 }
 
 function OnJumpToFrame()
