@@ -1,5 +1,12 @@
 Vimspector = {}
 
+function GetCommandOutput(cmd)
+  local file = assert(io.popen(cmd, 'r'))
+  local output = file:read('*all')
+  file:close()
+  return output
+end
+
 -- SELECT CONFIG
 function Vimspector.SelectVimspectorConfig()
   local dir_config = "vimspectorconfigs"
@@ -77,16 +84,30 @@ function Vimspector.SelectVimspectorConfig()
 
   vim.api.nvim_set_current_win(win1)
 
+  -- HIGHLIGHT CURRENT CONFIG
+  -- 'match('([^/]+)$")' is to extract the file name from the file path
+  -- 'or ""' is to make the value empty string if the value is nil
+  local config_cur = GetCommandOutput("readlink .vimspector.json"):match("([^/]+)$") or ""
+  local config_cur_id = nil
+  for i, line in ipairs(vim.api.nvim_buf_get_lines(buf1, 0, -1, false)) do
+    if line:gsub("%s", "") == config_cur:gsub("%s", "") then
+      config_cur_id = i
+    end
+  end
+  if config_cur_id then
+    vim.api.nvim_command("call matchadd('TermCursor', '\\%" .. config_cur_id .. "l')")
+  end
+
   function Vimspector.on_cursor_move()
-      vim.api.nvim_buf_set_option(buf2, 'modifiable', true)
-      local file = vim.api.nvim_get_current_line()
-      local path = dir_config .. '/' .. file
-      local handle = io.open(path, 'r')
-      local contents = handle:read('*a')
-      handle:close()
-      vim.api.nvim_buf_set_lines(buf2, 0, -1, false, vim.split(contents, '\n'))
-      vim.api.nvim_buf_set_option(buf2, 'modifiable', false)
-      vim.api.nvim_buf_set_option(buf2, 'filetype', 'json')
+    vim.api.nvim_buf_set_option(buf2, 'modifiable', true)
+    local file = vim.api.nvim_get_current_line()
+    local path = dir_config .. '/' .. file
+    local handle = io.open(path, 'r')
+    local contents = handle:read('*a')
+    handle:close()
+    vim.api.nvim_buf_set_lines(buf2, 0, -1, false, vim.split(contents, '\n'))
+    vim.api.nvim_buf_set_option(buf2, 'modifiable', false)
+    vim.api.nvim_buf_set_option(buf2, 'filetype', 'json')
   end
 
   function Vimspector.close_all()
@@ -110,8 +131,6 @@ function Vimspector.SelectVimspectorConfig()
   vim.api.nvim_buf_set_keymap(buf2, 'n', '<Esc>', '<cmd>lua Vimspector.close_all()<CR>', {})
   vim.api.nvim_buf_set_keymap(buf2, 'n', 'q', '<cmd>lua Vimspector.close_all()<CR>', {})
 end
-
-vim.api.nvim_create_user_command("SelectVimspectorConfig", 'lua Vimspector.SelectVimspectorConfig()', {})
 
 -- FOR FAST SNIPPET EDITING
 function StartDebug()
@@ -182,6 +201,8 @@ function OnDebugEnd()
   vim.o.hidden = hidden
   mapped = {}
 end
+
+vim.api.nvim_create_user_command("SelectVimspectorConfig", 'lua Vimspector.SelectVimspectorConfig()', {})
 
 vim.g.vimspector_enable_mappings = 'HUMAN'
 vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua StartDebug()<CR>', {})
