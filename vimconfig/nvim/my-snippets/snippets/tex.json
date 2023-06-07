@@ -1,4 +1,17 @@
 {
+  "subfig": {
+    "prefix": ["subfig"],
+    "body": [
+     "\\begin{subfigure}[b]{0.20\\textwidth}",
+     "    \\centering",
+     "    \\includegraphics[width=\\textwidth]{assets/black.jpg}",
+     "    \\caption{Caption}",
+     "\\end{subfigure}"
+    ],
+    "description": [
+      "subfigure"
+    ]
+  },
   "algorithm": {
     "prefix": [
       "algo1"
