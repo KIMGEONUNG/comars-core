@@ -1,4 +1,13 @@
 {
+    "import": {
+      "prefix": ["i"],
+      "body": [
+        "import ${1:name}"
+      ],
+      "description": [
+        "import"
+      ]
+    },
     "arg": {
         "prefix": [
             "arg"
