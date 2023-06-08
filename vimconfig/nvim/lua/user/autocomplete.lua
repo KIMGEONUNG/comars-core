@@ -65,8 +65,13 @@ cmp.setup({
     -- { name = 'buffer', keyword_lenght = 5 },
   }),
 
+  view = {
+    -- entries = "native",
+    -- entries = "wildmenu",
+    entries = "custom",
+  },
+
   experimental = {
-    native_menu = false,
     ghost_text = true,
   },
 })
