@@ -28,7 +28,9 @@ require('telescope').setup{
         buffer_previewer_maker = custom_previewer_maker,
         preview = {
         },
-        file_ignore_patterns = {'%.pyc', '.git/*', '__pycache__/*',
+        file_ignore_patterns = {'%.pyc', 
+        -- '.git/*',
+        '__pycache__/*',
             '%.jpeg', '%.jpg', '%.JPEG', '%.png', '%.gif', '%.dat',
             '%.pkl', '%.ckpt', '%.pickle', 'events.*', '%.tfrecords',
             '%.xyzn', '%.xyz', '%.obj', '%.ply'
