@@ -1,4 +1,31 @@
 {
+  "textcolor": {
+    "prefix": ["tc"],
+    "body": [
+      "\\textcolor{${1:color}}{${2:contents}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "newcommand": {
+    "prefix": ["new"],
+    "body": [
+      "\\newcommand{${1:name}}[1]{${2:def}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "input": {
+    "prefix": ["i"],
+    "body": [
+      "\\input{${1:texfile}}"
+    ],
+    "description": [
+      "input"
+    ]
+  },
   "subfig": {
     "prefix": ["subfig"],
     "body": [

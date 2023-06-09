@@ -28,7 +28,7 @@ require("user.luasnip")
 require("user.markdown")
 
 -- TREESITTER
--- require("user.treesitter")
+require("user.treesitter")
 
 -- LAZYGIT
 require("user.lazygit")
