@@ -204,7 +204,7 @@ end
 
 vim.api.nvim_create_user_command("SelectVimspectorConfig", 'lua Vimspector.SelectVimspectorConfig()', {})
 
-vim.g.vimspector_enable_mappings = 'HUMAN'
+-- vim.g.vimspector_enable_mappings = 'HUMAN'
 vim.api.nvim_set_keymap('n', '<leader>dd', '<Cmd>lua StartDebug()<CR>', {})
 vim.api.nvim_set_keymap('n', '<leader>de', '<Cmd>lua ExitDebug()<CR>', {})
 vim.api.nvim_set_keymap('n', '<leader>d<space>', ':call vimspector#Continue()<CR>', {})

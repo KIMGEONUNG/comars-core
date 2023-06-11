@@ -17,6 +17,7 @@ require("user.autocomplete")
 
 -- DEBBUGER
 require("user.vimspector")
+require("user.nvimdap")
 
 -- LATEX USING VIM
 require("user.vimtex")
