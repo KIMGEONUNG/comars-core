@@ -16,9 +16,10 @@ end
 function Quit()
   -- CHECK THE NUMBER OF LISTED BUFFERS
   local cnt = NumListedBuf()
+  print("NumListedBuffer", cnt)
 
   -- SELECT OPERATION
-  if cnt <= 1 then
+  if cnt <= 1 or vim.bo.filetype == "tex" then
     vim.api.nvim_command('quit')
   else
     vim.api.nvim_command('bwipe')

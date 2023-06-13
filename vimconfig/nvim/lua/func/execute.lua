@@ -61,6 +61,12 @@ function ExecuteFile()
   local path_file = vim.fn.expand("%:p")
   local filetype = vim.bo.filetype
 
+  -- VERY SPECIFIC EXECUTION
+  if vim.fn.expand("%") == "autofig.yaml" then
+    vim.fn.jobstart("autofig")
+    return
+  end
+
   -- FIND EXECUTION PROGRAM
   local exe = lang_exe_pairs[filetype]
 
