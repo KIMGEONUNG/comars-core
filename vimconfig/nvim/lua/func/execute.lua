@@ -62,8 +62,8 @@ function ExecuteFile()
   local filetype = vim.bo.filetype
 
   -- VERY SPECIFIC EXECUTION
-  if vim.fn.expand("%") == "autofig.yaml" then
-    vim.fn.jobstart("autofig")
+  if string.match(vim.fn.expand("%"), "^autofig.*%.yaml$") then
+    vim.fn.jobstart("autofig --config ".. vim.fn.expand("%"))
     return
   end
 
