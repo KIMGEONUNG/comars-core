@@ -27,6 +27,10 @@ require("nvim-tree").setup({
 
 local previous_buf_id = nil
 local function NowInTree()
+  -- if vim.g.vimspector_session_windows ~= nil then
+  --   return false
+  -- end
+
   local buf_id = vim.api.nvim_get_current_buf()
   local name = vim.api.nvim_buf_get_name(buf_id)
   if string.find(name, "NvimTree_") then
@@ -38,6 +42,10 @@ local function NowInTree()
 end
 
 function Move2TreeOrNot()
+  if vim.g.vimspector_session_windows ~= nil then
+    return false
+  end
+
   if NowInTree() then
     vim.api.nvim_set_current_buf(previous_buf_id)
   else
