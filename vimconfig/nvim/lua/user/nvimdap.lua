@@ -7,12 +7,25 @@ dap.adapters.python = {
   args = { '-m', 'debugpy.adapter' };
 }
 
+-- dap.configurations.python = {
+--   {
+--     name = "Launch file";
+--     type = 'python';
+--     request = 'launch';
+--     program = "${file}";
+--     pythonPath = function()
+--       return os.getenv('HOME') .. '/anaconda3/bin/python'
+--     end;
+--   },
+-- }
+
 dap.configurations.python = {
   {
-    type = 'python';
-    request = 'launch';
     name = "Launch file";
+    type = 'python';
+    request = 'attach';
     program = "${file}";
+    connect = {host= "localhost"};
     pythonPath = function()
       return os.getenv('HOME') .. '/anaconda3/bin/python'
     end;
