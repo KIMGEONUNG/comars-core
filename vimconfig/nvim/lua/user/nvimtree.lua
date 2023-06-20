@@ -42,9 +42,9 @@ local function NowInTree()
 end
 
 function Move2TreeOrNot()
-  if vim.g.vimspector_session_windows ~= nil then
-    return false
-  end
+  -- if vim.g.vimspector_session_windows ~= nil then
+  --   return false
+  -- end
 
   if NowInTree() then
     vim.api.nvim_set_current_buf(previous_buf_id)

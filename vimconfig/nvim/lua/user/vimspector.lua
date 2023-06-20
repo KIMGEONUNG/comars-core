@@ -1,6 +1,6 @@
 Vimspector = {}
 
-vim.g.vimspector_enable_winbar=0
+vim.g.vimspector_enable_winbar = 0
 
 function GetCommandOutput(cmd)
   local file = assert(io.popen(cmd, 'r'))

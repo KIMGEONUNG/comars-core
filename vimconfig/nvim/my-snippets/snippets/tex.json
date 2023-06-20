@@ -1,4 +1,35 @@
 {
+  "partial": {
+    "prefix": ["p"],
+    "body": [
+      "\\partial"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "leftarrow": {
+    "prefix": ["la"],
+    "body": [
+      "\\leftarrow"
+    ],
+    "description": [
+      ""
+    ]
+  },
+  "algorithm0": {
+    "prefix": [
+      "algo0"
+    ],
+    "body": [
+      "\\begin{algorithm}",
+      "\\caption{Unknown}",
+      "\\end{algorithm}"
+    ],
+    "description": [
+      ""
+    ]
+  },
   "textcolor": {
     "prefix": ["tc"],
     "body": [
@@ -45,7 +76,7 @@
     ],
     "body": [
       "\\begin{algorithm}",
-      "\\caption{Ada-SDS}",
+      "\\caption{Unknown}",
       "  $\\epsilon \\sim \\mathcal{N}(0,I)$ ",
       "",
       "  \\$z_0'$ (zero init.)",
