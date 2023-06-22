@@ -12,7 +12,7 @@ do
     shift 2
     ;;
   -h|--help)
-    echo "mkdir with group"
+    echo "mkdir with files"
     exit 0
     ;;
   *)    # unknown option
@@ -21,7 +21,14 @@ do
   esac
 done
 
+
 if [ -z "$path" ]; then
   echo 'Missing -h or -u' >&2
   exit 1
 fi
+
+dir_name=${1}
+shift
+
+echo ${dir_name}
+echo ${@}
