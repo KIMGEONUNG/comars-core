@@ -63,7 +63,7 @@ function ExecuteFile()
 
   -- VERY SPECIFIC EXECUTION
   if string.match(vim.fn.expand("%"), "^autofig.*%.yaml$") then
-    vim.fn.jobstart("autofig --config ".. vim.fn.expand("%"))
+    vim.api.nvim_command("!" .. "autofig --config " .. vim.fn.expand("%"))
     return
   end
 
@@ -112,8 +112,8 @@ function ExecuteFile()
       vim.fn.jobstart(exe .. " " .. path_file, {
         stdout_buffered = true,
         stderr_buffered = true,
-        on_stdout = _on_stdout4log,
-        on_stderr = _on_stderr4log,
+        -- on_stdout = _on_stdout4log,
+        -- on_stderr = _on_stderr4log,
         on_exit = function()
           vim.api.nvim_command("wall")
         end
