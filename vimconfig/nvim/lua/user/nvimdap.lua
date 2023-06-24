@@ -1,3 +1,13 @@
+-- WIP 
+-- Now I attempt to build nvim-dap debugging setting.
+-- Not-implemented features are as follow
+-- * save and load of window identifier for code
+-- * debug only keymap (This feature has low priority if we use FX key mapping)
+-- * build generator of nvim-dap config
+-- * build configuration linker for nvim-dap
+
+Dap = {}
+
 local dap = require('dap')
 local dapui = require("dapui")
 require("neodev").setup({
@@ -54,7 +64,7 @@ vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
 vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
 vim.keymap.set('n', '<F9>', function() require('dap').toggle_breakpoint() end)
 
-function move_to_buffer(buffer_id)
+function Dap.move_to_buffer(buffer_id)
   -- first find the window for this buffer
   local win_id = nil
   for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -73,20 +83,20 @@ function move_to_buffer(buffer_id)
   -- now we should be viewing the buffer
 end
 
-local opt = { noremap = true, silent = true }
 if false then
+  local opt = { noremap = true, silent = true }
   -- {hover} `(dapui.elements.hover)`
-  --
   -- code..?
-  vim.keymap.set("n", "<leader>dw", function() move_to_buffer(dapui.elements.watches.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>do", function() move_to_buffer(dapui.elements.repl.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>dt", function() move_to_buffer(dapui.elements.console.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>ds", function() move_to_buffer(dapui.elements.stacks.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>dv", function() move_to_buffer(dapui.elements.scopes.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>db", function() move_to_buffer(dapui.elements.breakpoints.buffer()) end, opt)
-  vim.keymap.set('n', 'di', function() dapui.eval() end)
+  vim.keymap.set("n", "<leader>dw", function() Dap.move_to_buffer(dapui.elements.watches.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>do", function() Dap.move_to_buffer(dapui.elements.repl.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>dt", function() Dap.move_to_buffer(dapui.elements.console.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>ds", function() Dap.move_to_buffer(dapui.elements.stacks.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>dv", function() Dap.move_to_buffer(dapui.elements.scopes.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>db", function() Dap.move_to_buffer(dapui.elements.breakpoints.buffer()) end, opt)
 
+  vim.keymap.set('n', 'di', function() dapui.eval() end)
   vim.keymap.set('n', '<leader>d<leader>', function() require('dap').continue() end)
+
   vim.keymap.set('n', 'dj', function() require('dap').step_over() end)
   vim.keymap.set('n', 'dk', function() require('dap').step_into() end)
   vim.keymap.set('n', 'dl', function() require('dap').step_out() end)
