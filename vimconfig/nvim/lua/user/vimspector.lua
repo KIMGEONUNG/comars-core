@@ -226,6 +226,12 @@ vim.keymap.set("n", "<leader>do", ":lua vim.fn.win_gotoid(vim.g.vimspector_sessi
 -- FINALLY, ENROLL AUTOGROUP
 -- Note that the dual vimscript of the lua's one.
 -- "User" is an event and "VimspectorJumpedToFrame" and "VimspectorDebugEnded" are the pattern
+--
+-- VimspectorJumpedToFrame >
+-- triggered whenever a 'break' event happens, or when selecting a stack from to jump to. This can be used to create (for example) buffer-local mappings for any files opened in the code window.
+-- VimspectorDebugEnded >
+-- triggered when the debug session is terminated (actually when Vimspector is fully reset)
+
 local group = vim.api.nvim_create_augroup("VimspectorCustomBehavior", { clear = true })
 vim.api.nvim_create_autocmd("User", {
   pattern = "VimspectorJumpedToFrame",

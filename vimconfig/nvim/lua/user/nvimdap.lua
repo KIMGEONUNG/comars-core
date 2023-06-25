@@ -1,18 +1,26 @@
--- WIP 
+-- WIP
 -- Now I attempt to build nvim-dap debugging setting.
 -- Not-implemented features are as follow
--- * save and load of window identifier for code
--- * debug only keymap (This feature has low priority if we use FX key mapping)
+-- * set unmodifiable 
 -- * build generator of nvim-dap config
 -- * build configuration linker for nvim-dap
+-- * implement run-to-cursor
 
 Dap = {}
 
 local dap = require('dap')
 local dapui = require("dapui")
+
+-- Note that omitting the "dapui.setup({})" invokes error.
+-- The setup method has a role of initializtion
+dapui.setup({})
+
+-- As this is a recommended setting described in offical README,
+-- I'm not sure what the code acually does
 require("neodev").setup({
   library = { plugins = { "nvim-dap-ui" }, types = true },
 })
+
 -- ONLY FOR DEBUGGING
 -- dap.set_log_level('TRACE')
 
@@ -58,13 +66,26 @@ dap.adapters.remote_python = {
 -- this code should be located after the definition of configurations.<filetype>
 require('dap.ext.vscode').load_launchjs('launch.json', { debugpy = { 'py' } })
 
-vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
-vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
-vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
-vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
-vim.keymap.set('n', '<F9>', function() require('dap').toggle_breakpoint() end)
 
-function Dap.move_to_buffer(buffer_id)
+-- KEYMAPS
+-- vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
+-- vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
+-- vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
+-- vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
+-- vim.keymap.set('n', '<F9>', function() require('dap').toggle_breakpoint() end)
+
+Dap.window_id_code = nil
+
+local mapped = {}
+local remaps = {
+  { 'n', 'dj', function() require('dap').step_over() end },
+  { 'n', 'dk', function() require('dap').step_into() end },
+  { 'n', 'dl', function() require('dap').step_out() end },
+  { 'n', 'di', function() dapui.eval() end }
+}
+
+
+function Dap.move_to_element(buffer_id)
   -- first find the window for this buffer
   local win_id = nil
   for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -83,30 +104,63 @@ function Dap.move_to_buffer(buffer_id)
   -- now we should be viewing the buffer
 end
 
-if false then
+function Dap.move_to_code()
+  vim.api.nvim_set_current_win(Dap.window_id_code)
+end
+
+if true then
   local opt = { noremap = true, silent = true }
   -- {hover} `(dapui.elements.hover)`
   -- code..?
-  vim.keymap.set("n", "<leader>dw", function() Dap.move_to_buffer(dapui.elements.watches.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>do", function() Dap.move_to_buffer(dapui.elements.repl.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>dt", function() Dap.move_to_buffer(dapui.elements.console.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>ds", function() Dap.move_to_buffer(dapui.elements.stacks.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>dv", function() Dap.move_to_buffer(dapui.elements.scopes.buffer()) end, opt)
-  vim.keymap.set("n", "<leader>db", function() Dap.move_to_buffer(dapui.elements.breakpoints.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>dc", function() Dap.move_to_code() end, opt)
+  vim.keymap.set("n", "<leader>dw", function() Dap.move_to_element(dapui.elements.watches.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>do", function() Dap.move_to_element(dapui.elements.repl.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>dt", function() Dap.move_to_element(dapui.elements.console.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>ds", function() Dap.move_to_element(dapui.elements.stacks.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>dv", function() Dap.move_to_element(dapui.elements.scopes.buffer()) end, opt)
+  vim.keymap.set("n", "<leader>db", function() Dap.move_to_element(dapui.elements.breakpoints.buffer()) end, opt)
 
-  vim.keymap.set('n', 'di', function() dapui.eval() end)
-  vim.keymap.set('n', '<leader>d<leader>', function() require('dap').continue() end)
-
-  vim.keymap.set('n', 'dj', function() require('dap').step_over() end)
-  vim.keymap.set('n', 'dk', function() require('dap').step_into() end)
-  vim.keymap.set('n', 'dl', function() require('dap').step_out() end)
-  vim.keymap.set('n', '<leader>dbp', function() require('dap').toggle_breakpoint() end)
-
+  vim.keymap.set('n', '<leader>d<leader>', function() dap.continue() end)
+  vim.keymap.set('n', '<leader>de', function() dap.terminate() end)
+  vim.keymap.set('n', '<leader>bp', function() require('dap').toggle_breakpoint() end)
 end
 
--- Note that omitting the "dapui.setup({})" invokes error.
--- The setup method has a role of initializtion
-dapui.setup({})
+function Dap.SetDapSepecific()
+  local opt = { noremap = true, silent = true }
+  for _, v in ipairs(remaps) do
+    vim.keymap.set(v[1], v[2], v[3], opt)
+  end
+  -- mapped[bufnr] = { modifiable = vim.api.nvim_buf_get_option(bufnr, 'modifiable') }
+  -- vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
+end
+
+function Dap.DelDapSepecific()
+  for _, v in ipairs(remaps) do
+    local status, err = pcall(function()
+      vim.keymap.del(v[1], v[2])
+    end)
+  end
+end
+
+-- LISTENER OR CALLBACKS
+
+dap.listeners.after['event_initialized']['my-start'] = function()
+  Dap.window_id_code = vim.api.nvim_get_current_win()
+  Dap.SetDapSepecific()
+end
+
+dap.listeners.before['event_terminated']['my-terminate'] = function()
+  Dap.window_id_code = nil
+  Dap.DelDapSepecific()
+end
+
+dap.listeners.before['event_exited']['my-exited'] = function()
+  Dap.window_id_code = nil
+  Dap.DelDapSepecific()
+end
+
+-- required
+dap.listeners.after.event_stopped["mytest"] = function () print('event stopped') end 
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
