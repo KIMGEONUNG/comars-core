@@ -63,7 +63,7 @@
      "\\begin{subfigure}[b]{0.20\\textwidth}",
      "    \\centering",
      "    \\includegraphics[width=\\textwidth]{assets/black.jpg}",
-     "    \\caption{Caption}",
+     "    % \\caption{Caption}",
      "\\end{subfigure}"
     ],
     "description": [

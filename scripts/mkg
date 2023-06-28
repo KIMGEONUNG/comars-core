@@ -11,7 +11,7 @@ mkdir -pv $dirname
 shift
 
 for i in $@; do
-  ln -sv $(pwd)/$i $dirname
+  ln -srv $(pwd)/$i $dirname
   echo $i
 done
 

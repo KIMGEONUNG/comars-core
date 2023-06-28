@@ -63,7 +63,7 @@ function ExecuteFile()
 
   -- VERY SPECIFIC EXECUTION
   if string.match(vim.fn.expand("%"), "^autofig.*%.yaml$") then
-    vim.api.nvim_command("!" .. "autofig --config " .. vim.fn.expand("%"))
+    vim.api.nvim_command("!" .. "aufig --config " .. vim.fn.expand("%"))
     return
   end
 
