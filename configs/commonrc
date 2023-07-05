@@ -37,6 +37,7 @@ alias cdlog='cd ~/mnt/log'
 alias cddata='cd ~/mnt/data'
 alias iccv='cd ~/wip/iccv2023'
 alias lg='lazygit'
+alias hi='highlight -O ansi'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
