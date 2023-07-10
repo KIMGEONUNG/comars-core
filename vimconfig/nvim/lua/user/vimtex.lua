@@ -1,3 +1,5 @@
+Vimtex = {}
+
 -- SHORCUTS
 -- Press \ll to start (or stop) compiling the document.
 -- Press \lk to stop the compilation process
@@ -21,6 +23,7 @@ vim.cmd([[ syntax enable ]])
 -- Or with a generic interface:
 vim.g.vimtex_view_general_viewer = 'okular'
 vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
+vim.g.vimtex_quickfix_enabled = false
 
 -- VimTeX uses latexmk as the default compiler backend. If you use it, which is
 -- strongly recommended, you probably don't need to configure anything. If you
@@ -40,4 +43,77 @@ let g:vimtex_quickfix_ignore_filters = [
       \]
 ]])
 
+function Vimtex.AddExp()
+  -- DEFINE ID
+  local id = vim.fn.input('ID: ')
+  -- local id = vim.fn.expand('%:r')
 
+  -- ADD NEW DIRECTORY FOR ASSETS
+  local cmd = 'mkdir -p assets/' .. id
+  local a = os.execute(cmd)
+  if a ~= 0 then
+    print("Fail")
+    return
+  end
+
+  -- ADD FILE
+  local cmd = 'touch ' .. id .. '.tex'
+  local a = os.execute(cmd)
+  if a ~= 0 then
+    print("Fail")
+    return
+  end
+
+  -- OPEN THE FILE
+  vim.api.nvim_command('e ' .. id .. '.tex')
+
+  -- ADD FILE AND BUFFER
+  local lines = {
+    "\\clearpage",
+    "\\subsection{E026-0C0}",
+    "% \\label{subsec:" .. id .. "}",
+    "",
+    "\\subsubsection{} ",
+    "",
+    "\\begin{equation}",
+    "  \\begin{aligned}",
+    "  \\end{aligned}",
+    "  % \\label{eq:" .. id .. "}",
+    "\\end{equation}",
+    "",
+    "\\begin{algorithm}",
+    "\\caption{Unknown}",
+    "% \\label{algo:" .. id .. "}",
+    "\\end{algorithm}",
+    "",
+    "\\begin{figure}[ht]",
+    "  \\begin{center}",
+    "    \\includegraphics[width=0.95\textwidth]{assets/" .. id .. "/autofig.pdf}",
+    "  \\end{center}",
+    "  \\caption{Unknown}",
+    "  % \\label{fig:" .. id .. "}",
+    "\\end{figure}",
+    "",
+    "\\subsubsection{Conclusions} ",
+    "",
+    "\\clearpage",
+  }
+
+
+  local buf = vim.api.nvim_get_current_buf() -- Get the current buffer
+  local line_count = vim.api.nvim_buf_line_count(buf) -- Get the line count
+
+  -- Add lines at the end of the buffer
+  vim.api.nvim_buf_set_lines(buf, 0, 0, false, lines)
+end
+
+function Vimtex.CustomKeymap()
+  vim.api.nvim_buf_set_keymap(0, 'n', '\\ln', ':lua Vimtex.AddExp()<CR>', { noremap = true, silent = true })
+end
+
+local group = vim.api.nvim_create_augroup("VimtexCustom", {})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "tex",
+  command = "lua Vimtex.CustomKeymap()",
+  group = group
+})
