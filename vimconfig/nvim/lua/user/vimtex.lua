@@ -70,7 +70,7 @@ function Vimtex.AddExp()
   -- ADD FILE AND BUFFER
   local lines = {
     "\\clearpage",
-    "\\subsection{E026-0C0}",
+    "\\subsection{" .. id .. "}",
     "% \\label{subsec:" .. id .. "}",
     "",
     "\\subsubsection{} ",
@@ -88,7 +88,7 @@ function Vimtex.AddExp()
     "",
     "\\begin{figure}[ht]",
     "  \\begin{center}",
-    "    \\includegraphics[width=0.95\textwidth]{assets/" .. id .. "/autofig.pdf}",
+    "    \\includegraphics[width=0.95\\textwidth]{assets/" .. id .. "/autofig.pdf}",
     "  \\end{center}",
     "  \\caption{Unknown}",
     "  % \\label{fig:" .. id .. "}",
@@ -98,11 +98,7 @@ function Vimtex.AddExp()
     "",
     "\\clearpage",
   }
-
-
   local buf = vim.api.nvim_get_current_buf() -- Get the current buffer
-  local line_count = vim.api.nvim_buf_line_count(buf) -- Get the line count
-
   -- Add lines at the end of the buffer
   vim.api.nvim_buf_set_lines(buf, 0, 0, false, lines)
 end
