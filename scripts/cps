@@ -14,7 +14,7 @@ do
 
     echo "echo From cps program with flatten" > $path
     for i in $@; do
-      i_hat=$(echo $i | sed "s/^\.\///" | sed "s:/:_:g") 
+      i_hat=$(echo $i | sed "s/^\.\///" | sed "s:/:-:g") 
       echo "cp $(pwd)/$i ${i_hat} -rnv" >> $path
     done
     echo "echo cps end" >> $path
