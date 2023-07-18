@@ -1,12 +1,88 @@
 {
+    "ablation": {
+        "prefix": [
+            "ablation"
+        ],
+        "body": [
+            "from itertools import product",
+            "from omegaconf import OmegaConf",
+            "from collections import OrderedDict",
+            "",
+            "",
+            "class Ablation():",
+            "    def __init__(self, info: OrderedDict):",
+            "        self.info = info",
+            "        self.length = 1",
+            "        self.keys = []",
+            "        self.lengths = []",
+            "        for key, value in info.items():",
+            "            self.keys.append(key)",
+            "            self.lengths.append(len(value[\"values\"]))",
+            "            self.length *= len(value[\"values\"])",
+            "        self.pointers = list(product(*[range(item) for item in self.lengths]))",
+            "        self.num_keys = len(self.keys)",
+            "        self.cnt = 0",
+            "",
+            "    def __len__(self):",
+            "        return self.length",
+            "        pass",
+            "",
+            "    def __iter__(self):",
+            "        return self",
+            "",
+            "    def __next__(self):",
+            "        if self.cnt >= self.length:",
+            "            raise StopIteration",
+            "",
+            "        pointer = self.pointers[self.cnt]",
+            "        env = {}",
+            "        ids = []",
+            "        for i in range(self.num_keys):",
+            "            value = self.info[self.keys[i]][\"values\"][pointer[i]]",
+            "            format = self.info[self.keys[i]][\"format\"]",
+            "            env[self.keys[i]] = value",
+            "            ids.append(format % value)",
+            "",
+            "        id = '-'.join(ids)",
+            "        env = OmegaConf.create(env)",
+            "",
+            "        self.cnt += 1",
+            "        return id, env",
+            "",
+            "",
+            "info = OrderedDict({",
+            "    \"steps\": {",
+            "        \"values\": [",
+            "            1,",
+            "            2,",
+            "            3,",
+            "            4,",
+            "        ],",
+            "        \"format\": \"step:%03d\",",
+            "    },",
+            "    \"hello\": {",
+            "        \"values\": [",
+            "            \"a\",",
+            "            \"b\",",
+            "        ],",
+            "        \"format\": \"hello:%s\",",
+            "    },",
+            "})"
+        ],
+        "description": [
+            "ablation class"
+        ]
+    },
     "import": {
-      "prefix": ["i"],
-      "body": [
-        "import ${1:name}"
-      ],
-      "description": [
-        "import"
-      ]
+        "prefix": [
+            "i"
+        ],
+        "body": [
+            "import ${1:name}"
+        ],
+        "description": [
+            "import"
+        ]
     },
     "arg": {
         "prefix": [
