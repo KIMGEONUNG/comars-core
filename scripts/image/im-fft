@@ -33,6 +33,8 @@ def main():
         fourier_spectrum_shifted = np.log(
             abs(fourier_transform_shifted) + 1e-5)
         fourier_spectrum_shifted = torch.from_numpy(fourier_spectrum_shifted)
+        # print("min:", fourier_spectrum_shifted.min())
+        # print("max:", fourier_spectrum_shifted.max())
         fourier_spectrum_shifted = (
             (fourier_spectrum_shifted - fourier_spectrum_shifted.min()) /
             fourier_spectrum_shifted.max())
@@ -52,4 +54,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
