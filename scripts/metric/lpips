@@ -3,6 +3,9 @@
 import lpips
 from PIL import Image
 from torchvision.transforms import ToTensor
+from os.path import join
+from glob import glob
+from tqdm import tqdm
 import argparse
 import contextlib
 import sys
@@ -12,16 +15,21 @@ def parse():
     parser = argparse.ArgumentParser(description='Calculate LPIPS')
     parser.add_argument('path', nargs='+')
     parser.add_argument('--verbose', action='store_true')
-    parser.add_argument('--net', type=str, default='vgg',
+    parser.add_argument('--net',
+                        type=str,
+                        default='vgg',
                         choices=['vgg', 'alex'])
     parser.add_argument('--device', default='cuda:0')
+    parser.add_argument('-g', '--group', action='store_true')
     # parser.add_argument('--size_batch', type=int,
     #                     default=100)
     return parser.parse_args()
 
 
 class DummyFile(object):
-    def write(self, x): pass
+
+    def write(self, x):
+        pass
 
 
 @contextlib.contextmanager
@@ -34,31 +42,37 @@ def nostdout():
 
 def main():
     args = parse()
-
-    num_path = len(args.path)
-    if num_path < 2:
-        raise Exception('It need at least two path')
-    if num_path % 2 == 1:
-        raise Exception('The number of path must be even number')
-
-    print("target  files: %d EA" % num_path, file=sys.stderr)
-
+    assert len(args.path) == 2
     with nostdout():
         loss_fn = lpips.LPIPS(net=args.net).to(args.device)
     print('model loaded', file=sys.stderr)
 
-    for i in range(0, num_path, 2):
-        path1, path2 = args.path[i], args.path[i + 1]
+    path1, path2 = args.path
+    if args.group:
+        paths1 = sorted(glob(join(path1, "*")))
+        paths2 = sorted(glob(join(path2, "*")))
+        assert len(paths1) == len(paths2)
 
-        if args.verbose:
-            print(path1, path2)
+        vals = []
+        for path1, path2 in tqdm(list(zip(paths1, paths2))):
+            im1 = Image.open(path1)
+            im2 = Image.open(path2)
+            x1 = ToTensor()(im1).unsqueeze(0).mul(2).sub(1).to(args.device)
+            x2 = ToTensor()(im2).unsqueeze(0).mul(2).sub(1).to(args.device)
 
+            d = loss_fn(x1, x2).reshape(-1)
+            vals.append(d.item())
+
+        total = sum(vals)
+        num = len(vals)
+        psnr = total / num
+        print(psnr)
+
+    else:
         im1 = Image.open(path1)
         im2 = Image.open(path2)
-
         x1 = ToTensor()(im1).unsqueeze(0).mul(2).sub(1).to(args.device)
         x2 = ToTensor()(im2).unsqueeze(0).mul(2).sub(1).to(args.device)
-
         d = loss_fn(x1, x2).reshape(-1)
         print(d.item())
 

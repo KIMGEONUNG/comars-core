@@ -4,6 +4,9 @@ from skimage.metrics import peak_signal_noise_ratio as compare_psnr
 
 from PIL import Image
 from torchvision.transforms import ToTensor
+from glob import glob
+from os.path import join
+from tqdm import tqdm
 
 import argparse
 
@@ -12,6 +15,7 @@ def parse():
     parser = argparse.ArgumentParser(description='Calculate PSNR')
     parser.add_argument('path', nargs=2)
     parser.add_argument('--verbose', action='store_true')
+    parser.add_argument('-g','--group', action='store_true')
     return parser.parse_args()
 
 
@@ -22,11 +26,32 @@ if args.verbose:
     print('1st path: %s' % (path1))
     print('2nd path: %s' % (path2))
 
-im1 = Image.open(path1)
-im2 = Image.open(path2)
+if args.group:
+    paths1 = sorted(glob(join(path1, "*")))
+    paths2 = sorted(glob(join(path2, "*")))
+    assert len(paths1) == len(paths2)
 
-x1 = ToTensor()(im1).permute(2, 1, 0).numpy()
-x2 = ToTensor()(im2).permute(2, 1, 0).numpy()
+    vals = []
+    for path1, path2 in tqdm(list(zip(paths1, paths2))):
+        im1 = Image.open(path1)
+        im2 = Image.open(path2)
+        x1 = ToTensor()(im1).permute(2, 1, 0).numpy()
+        x2 = ToTensor()(im2).permute(2, 1, 0).numpy()
 
-psnr = compare_psnr(x1, x2)
-print(psnr)
+        psnr = compare_psnr(x1, x2)
+        vals.append(psnr)
+
+    total = sum(vals)
+    num = len(vals)
+    psnr = total / num
+    print(psnr)
+
+else:
+    im1 = Image.open(path1)
+    im2 = Image.open(path2)
+
+    x1 = ToTensor()(im1).permute(2, 1, 0).numpy()
+    x2 = ToTensor()(im2).permute(2, 1, 0).numpy()
+
+    psnr = compare_psnr(x1, x2)
+    print(psnr)
