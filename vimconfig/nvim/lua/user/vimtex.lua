@@ -23,7 +23,7 @@ vim.cmd([[ syntax enable ]])
 -- Or with a generic interface:
 vim.g.vimtex_view_general_viewer = 'okular'
 vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
-vim.g.vimtex_quickfix_enabled = false
+vim.g.vimtex_quickfix_enabled = true
 
 -- VimTeX uses latexmk as the default compiler backend. If you use it, which is
 -- strongly recommended, you probably don't need to configure anything. If you

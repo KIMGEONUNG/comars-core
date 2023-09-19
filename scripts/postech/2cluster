@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh -p7777 k2woong92@gsai-cluster.postech.ac.kr -o ServerAliveInterval=60
