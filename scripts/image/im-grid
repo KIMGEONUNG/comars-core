@@ -20,7 +20,7 @@ def parse():
     parser.add_argument('--mode',
                         type=str,
                         default='sort',
-                        choices=['sort', 'random'])
+                        choices=['sort', 'random', 'reverse'])
     parser.add_argument('--seed', type=int, default=None)
 
     parser.add_argument('-r', '--num_row', type=int, default=10)
@@ -57,6 +57,8 @@ def main():
         if args.seed is not None:
             random.seed(args.seed)
         shuffle(paths)
+    elif args.mode == 'reverse':
+        paths.reverse()
 
     num_unit = args.num_row * args.num_col
     num_iter = len(paths) // num_unit

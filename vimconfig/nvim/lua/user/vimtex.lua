@@ -46,6 +46,10 @@ let g:vimtex_quickfix_ignore_filters = [
 function Vimtex.AddExp()
   -- DEFINE ID
   local id = vim.fn.input('ID: ')
+  if id == "" then
+     print("Exit with ESC or empty string")
+     return
+  end
   -- local id = vim.fn.expand('%:r')
 
   -- ADD NEW DIRECTORY FOR ASSETS
@@ -73,28 +77,32 @@ function Vimtex.AddExp()
     "\\subsection{" .. id .. "}",
     "% \\label{subsec:" .. id .. "}",
     "",
-    "\\subsubsection{} ",
+    "\\begin{itemize} ",
+    "  \\item",
+    "\\end{itemize} ",
     "",
-    "\\begin{equation}",
-    "  \\begin{aligned}",
-    "  \\end{aligned}",
-    "  % \\label{eq:" .. id .. "}",
-    "\\end{equation}",
-    "",
-    "\\begin{algorithm}",
-    "\\caption{Unknown}",
-    "% \\label{algo:" .. id .. "}",
-    "\\end{algorithm}",
-    "",
-    "\\begin{figure}[ht]",
-    "  \\begin{center}",
-    "    \\includegraphics[width=0.95\\textwidth]{assets/" .. id .. "/autofig.pdf}",
-    "  \\end{center}",
-    "  \\caption{Unknown}",
-    "  % \\label{fig:" .. id .. "}",
-    "\\end{figure}",
-    "",
-    "\\subsubsection{Conclusions} ",
+    -- "\\subsubsection{} ",
+    -- "",
+    -- "\\begin{equation}",
+    -- "  \\begin{aligned}",
+    -- "  \\end{aligned}",
+    -- "  % \\label{eq:" .. id .. "}",
+    -- "\\end{equation}",
+    -- "",
+    -- "\\begin{algorithm}",
+    -- "\\caption{Unknown}",
+    -- "% \\label{algo:" .. id .. "}",
+    -- "\\end{algorithm}",
+    -- "",
+    -- "\\begin{figure}[ht]",
+    -- "  \\begin{center}",
+    -- "    \\includegraphics[width=0.95\\textwidth]{assets/" .. id .. "/autofig.pdf}",
+    -- "  \\end{center}",
+    -- "  \\caption{Unknown}",
+    -- "  % \\label{fig:" .. id .. "}",
+    -- "\\end{figure}",
+    -- "",
+    -- "\\subsubsection{Conclusions} ",
     "",
     "\\clearpage",
   }
