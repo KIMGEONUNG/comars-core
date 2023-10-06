@@ -1,4 +1,31 @@
 {
+  "pa": {
+    "prefix": ["pa"],
+    "body": [
+      "\\paragraph{${1:name}}"
+    ],
+    "description": [
+      "paragraph simple"
+    ]
+  },
+  "ss": {
+    "prefix": ["ss"],
+    "body": [
+      "\\subsection{${1:name}}"
+    ],
+    "description": [
+      "subsection simple"
+    ]
+  },
+  "sss": {
+    "prefix": ["sss"],
+    "body": [
+      "\\subsubsection{${1:name}}"
+    ],
+    "description": [
+      "subsubsection simple"
+    ]
+  },
   "partial": {
     "prefix": ["p"],
     "body": [

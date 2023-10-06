@@ -2,8 +2,36 @@
 # mv script generation
 path=$MY_CACHE_LN
 
-echo "echo From lns program" > $path
-for i in $@; do
-  echo "ln -sv $(pwd)/$i ./" >> $path
+while [[ $# -gt 0 ]]
+do
+  key="${1}"
+
+  case ${key} in
+  -f|--flatten)
+    shift 1
+
+    echo "echo From cps program with flatten" > $path
+    for i in $@; do
+      i_hat=$(echo $i | sed "s/^\.\///" | sed "s:/:-:g") 
+      echo "ln -sv $(pwd)/$i ${i_hat}" >> $path
+    done
+    echo "echo cps end" >> $path
+    break;
+
+    ;;
+  -h|--help)
+    echo "Copy script genaration"
+    exit 0
+    ;;
+  *)    # unknown option
+
+    echo "echo From lns program" > $path
+    for i in $@; do
+      echo "ln -sv $(pwd)/$i ./" >> $path
+    done
+    echo "echo lns end" >> $path
+    break;
+
+    ;;
+  esac
 done
-echo "echo lns end" >> $path
