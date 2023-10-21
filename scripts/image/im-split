@@ -23,7 +23,7 @@ def parse():
 def main():
     args = parse()
     im = Image.open(args.path)
-    x = ToTensor()()
+    x = ToTensor()(im)
     length = x.shape[-1]
     sublength = length // args.num
 
