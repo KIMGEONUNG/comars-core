@@ -24,18 +24,45 @@ require("neodev").setup({
 -- ONLY FOR DEBUGGING
 -- dap.set_log_level('TRACE')
 
-dap.adapters.python = {
-  type = 'executable';
-  command = os.getenv('HOME') .. '/anaconda3/bin/python';
-  -- command = os.getenv('CONDA_PREFIX') .. '/bin/python';
-  args = { '-m', 'debugpy.adapter' };
-}
+dap.adapters.python = function(cb, config)
+  if config.request == 'attach' then
+    ---@diagnostic disable-next-line: undefined-field
+    local port = (config.connect or config).port
+    ---@diagnostic disable-next-line: undefined-field
+    local host = (config.connect or config).host or '127.0.0.1'
+    cb({
+      type = 'server',
+      port = assert(port, '`connect.port` is required for a python `attach` configuration'),
+      host = host,
+      options = {
+        source_filetype = 'python',
+      },
+    })
+  else
+    cb({
+      type = 'executable',
+      command = os.getenv('HOME') .. '/anaconda3/bin/python',
+      args = { '-m', 'debugpy.adapter' },
+      options = {
+        source_filetype = 'python',
+      },
+    })
+  end
+end
 
-dap.adapters.remote_python = {
-  type = 'server';
-  host = "127.0.0.1"; -- this is the server-side host
-  port = 5678; -- this is the server-side port
-}
+-- dap.adapters.python = {
+--   type = 'executable';
+--   command = os.getenv('HOME') .. '/anaconda3/bin/python';
+--   -- command = os.getenv('CONDA_PREFIX') .. '/bin/python';
+--   args = { '-m', 'debugpy.adapter' };
+-- }
+
+-- dap.adapters.remote_python = {
+--   type = 'server';
+--   host = "127.0.0.1"; -- this is the server-side host
+--   port = 5678; -- this is the server-side port
+-- }
+
 
 -- dap.configurations.python = { {
 --   name = "Launch config";
@@ -48,21 +75,21 @@ dap.adapters.remote_python = {
 -- },
 -- }
 
-dap.configurations.python = {
-  {
-    name = "Attach config";
-    type = 'remote_python';
-    request = 'attach';
-    port = 5678; -- this is the client-side port
-    host = "127.0.0.1";
-    pathMappings = {
-      {
-        localRoot = "${workspaceFolder}";
-        remoteRoot = ".";
-      }
-    };
-  },
-}
+-- dap.configurations.python = {
+--   {
+--     name = "Attach config";
+--     type = 'remote_python';
+--     request = 'attach';
+--     port = 5678; -- this is the client-side port
+--     host = "127.0.0.1";
+--     pathMappings = {
+--       {
+--         localRoot = "${workspaceFolder}";
+--         remoteRoot = ".";
+--       }
+--     };
+--   },
+-- }
 
 -- this code should be located after the definition of configurations.<filetype>
 require('dap.ext.vscode').load_launchjs('launch.json', { debugpy = { 'py' } })

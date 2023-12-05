@@ -25,21 +25,19 @@ cat > $target_dir/remote.json <<EOF
   "version": "0.2.0",
   "configurations": [
       {
-        "type": "remote_python",
+        "type": "python",
         "request": "attach",
         "name": "Attach",
         "port": 5678,
         "host": "127.0.0.1",
-        "pathMappings": {
-            "localRoot": "\${workspaceFolder}",
-            "remoteRoot": "."
-        }
+        "localRoot": "\${workspaceFolder}",
+        "remoteRoot": "."
       }
   ]
 }
 EOF
 
-ln -s $target_dir/local.json launch.json
+ln -s $target_dir/local.json launch.json 2> /dev/null
 
 # cat > .vimspector.json <<EOF
 # {
