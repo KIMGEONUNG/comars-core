@@ -1,28 +1,71 @@
-cat > .vimspector.json <<EOF
+#!/bin/bash
+
+set -e 
+
+target_dir=nvimdapconfigs
+mkdir $target_dir 
+
+cat > $target_dir/local.json <<EOF
 {
-    "configurations": {
-         "run": {
-              "adapter": "debugpy",
-              "configuration": {
-                  "request": "launch",
-                  "type": "python",
-                  "cwd": "\${workspaceRoot}",
-                  "python": "\${CONDA_PREFIX}/bin/python",
-                  "program": "\${file}",
-                  "args":[],
-                  "stopOnEntry": true,
-                  "console": "integratedTerminal",
-                  "env": {"FOO": "123"},
-                  "justMyCode": true
-             },
-             "breakpoints": {
-                 "exception": {
-                     "raised": "N",
-                     "uncaught": "",
-                     "userUnhandled": ""
-                }
-            }
-        }
-    }
+  "version": "0.2.0",
+  "configurations": [
+      {
+        "type": "python",
+        "request": "launch",
+        "name": "Launch file",
+        "program": "\${file}",
+        "pythonPath": "\${env:CONDA_PREFIX}/bin/python"
+      }
+  ]
 }
 EOF
+
+cat > $target_dir/remote.json <<EOF
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+        "type": "remote_python",
+        "request": "attach",
+        "name": "Attach",
+        "port": 5678,
+        "host": "127.0.0.1",
+        "pathMappings": {
+            "localRoot": "\${workspaceFolder}",
+            "remoteRoot": "."
+        }
+      }
+  ]
+}
+EOF
+
+ln -s $target_dir/local.json launch.json
+
+# cat > .vimspector.json <<EOF
+# {
+#     "configurations": {
+#          "run": {
+#               "adapter": "debugpy",
+#               "configuration": {
+#                   "request": "launch",
+#                   "type": "python",
+#                   "cwd": "\${workspaceRoot}",
+#                   "python": "\${CONDA_PREFIX}/bin/python",
+#                   "program": "\${file}",
+#                   "args":[],
+#                   "stopOnEntry": true,
+#                   "console": "integratedTerminal",
+#                   "env": {"FOO": "123"},
+#                   "justMyCode": true
+#              },
+#              "breakpoints": {
+#                  "exception": {
+#                      "raised": "N",
+#                      "uncaught": "",
+#                      "userUnhandled": ""
+#                 }
+#             }
+#         }
+#     }
+# }
+# EOF
