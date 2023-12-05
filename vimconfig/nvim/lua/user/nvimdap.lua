@@ -25,6 +25,7 @@ require("neodev").setup({
 -- dap.set_log_level('TRACE')
 
 dap.adapters.python = function(cb, config)
+  -- print('In adapters:' .. config.request)
   if config.request == 'attach' then
     ---@diagnostic disable-next-line: undefined-field
     local port = (config.connect or config).port

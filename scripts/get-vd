@@ -37,8 +37,33 @@ cat > $target_dir/remote.json <<EOF
 }
 EOF
 
+cat > $target_dir/all.json <<EOF
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+        "type": "python",
+        "request": "launch",
+        "name": "Launch file",
+        "program": "\${file}",
+        "pythonPath": "\${env:CONDA_PREFIX}/bin/python"
+      },
+      {
+        "type": "python",
+        "request": "attach",
+        "name": "Attach",
+        "port": 5678,
+        "host": "127.0.0.1",
+        "localRoot": "\${workspaceFolder}",
+        "remoteRoot": "."
+      }
+  ]
+}
+EOF
+
 ln -s $target_dir/local.json launch.json 2> /dev/null
 
+# VIMSPECTOR LAGACY
 # cat > .vimspector.json <<EOF
 # {
 #     "configurations": {
