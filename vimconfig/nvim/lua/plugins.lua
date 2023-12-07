@@ -26,11 +26,13 @@ return require('packer').startup(function(use)
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
+  use 'nvim-tree/nvim-tree.lua'
+  use 'kyazdani42/nvim-web-devicons'
+
   -- UI
   use 'morhetz/gruvbox'
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
-  use 'kyazdani42/nvim-web-devicons'
   use 'folke/tokyonight.nvim'
   use { "catppuccin/nvim", as = "catppuccin" }
 
@@ -55,8 +57,8 @@ return require('packer').startup(function(use)
   use "folke/neodev.nvim"
 
   -- NERDTREE
-  use 'preservim/nerdtree'
-  use 'ryanoasis/vim-devicons'
+  -- use 'preservim/nerdtree'
+  -- use 'ryanoasis/vim-devicons'
 
   -- LATEX WITH VIM
   use 'lervag/vimtex'
@@ -79,13 +81,6 @@ return require('packer').startup(function(use)
   -- LAZYGIT IN VIM
   use 'kdheepak/lazygit.nvim'
 
-  use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons', -- optional, for file icons
-    },
-    -- tag = 'nightly' -- optional, updated every week. (see issue #1193)
-  }
 
   -- TREESITTER
   use {

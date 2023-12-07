@@ -35,7 +35,9 @@ require("user.treesitter")
 require("user.lazygit")
 
 require("user.nvimtree")
-require("user.condicon")
+
+-- require("user.condicon")
+-- require("user.devicons")
 
 require("func.execute")
 require("func.vclip")

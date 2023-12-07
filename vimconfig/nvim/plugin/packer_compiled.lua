@@ -119,6 +119,11 @@ _G.packer_plugins = {
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["codicons.nvim"] = {
+    loaded = true,
+    path = "/home/comar/.local/share/nvim/site/pack/packer/start/codicons.nvim",
+    url = "https://github.com/mortepau/codicons.nvim"
+  },
   delimitMate = {
     loaded = true,
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/delimitMate",
@@ -153,11 +158,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/neodev.nvim",
     url = "https://github.com/folke/neodev.nvim"
-  },
-  nerdtree = {
-    loaded = true,
-    path = "/home/comar/.local/share/nvim/site/pack/packer/start/nerdtree",
-    url = "https://github.com/preservim/nerdtree"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -233,11 +233,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/vim-airline-themes",
     url = "https://github.com/vim-airline/vim-airline-themes"
-  },
-  ["vim-devicons"] = {
-    loaded = true,
-    path = "/home/comar/.local/share/nvim/site/pack/packer/start/vim-devicons",
-    url = "https://github.com/ryanoasis/vim-devicons"
   },
   ["vim-eunuch"] = {
     loaded = true,

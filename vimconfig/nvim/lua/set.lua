@@ -23,6 +23,8 @@ vim.opt.backup = false
 vim.opt.swapfile = false
 vim.opt.errorbells = false
 
+-- vim.opt.guifont = "Hack:12"
+
 vim.cmd([[
 set colorcolumn=80
 ]])
