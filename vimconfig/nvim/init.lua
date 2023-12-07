@@ -35,9 +35,11 @@ require("user.treesitter")
 require("user.lazygit")
 
 require("user.nvimtree")
+require("user.condicon")
 
 require("func.execute")
 require("func.vclip")
+
 
 -- POST DEFINITIONS
 vim.cmd([[

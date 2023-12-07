@@ -147,8 +147,8 @@ end
 local mapped = {}
 local remaps = {
   { 'n', 'dj', function() require('dap').step_over() end },
-  { 'n', 'dk', function() require('dap').step_into() end },
-  { 'n', 'dl', function() require('dap').step_out() end },
+  { 'n', 'dl', function() require('dap').step_into() end },
+  { 'n', 'dk', function() require('dap').step_out() end },
   { 'n', 'di', function() dapui.eval() end }
 }
 

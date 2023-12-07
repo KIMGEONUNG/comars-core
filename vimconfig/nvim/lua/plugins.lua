@@ -93,5 +93,7 @@ return require('packer').startup(function(use)
     -- run = ":TSUpdate",
   }
   -- use 'p00f/nvim-ts-rainbow'
+  --
+  use 'mortepau/codicons.nvim'
 
 end)
