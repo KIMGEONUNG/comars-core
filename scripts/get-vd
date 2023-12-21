@@ -14,6 +14,8 @@ cat > $target_dir/local.json <<EOF
         "request": "launch",
         "name": "Launch file",
         "program": "\${file}",
+        "cwd": "\${workspaceFolder}",
+        "justMyCode": true
         "pythonPath": "\${env:CONDA_PREFIX}/bin/python"
       }
   ]
