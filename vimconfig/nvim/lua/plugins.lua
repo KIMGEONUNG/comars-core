@@ -53,7 +53,7 @@ return require('packer').startup(function(use)
   -- VIM DEBUGGER
   use 'puremourning/vimspector'
   use 'mfussenegger/nvim-dap'
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
   use "folke/neodev.nvim"
 
   -- NERDTREE
@@ -85,7 +85,7 @@ return require('packer').startup(function(use)
   -- TREESITTER
   use {
     'nvim-treesitter/nvim-treesitter',
-    -- run = ":TSUpdate",
+    run = ':TSUpdate'
   }
   -- use 'p00f/nvim-ts-rainbow'
   --
