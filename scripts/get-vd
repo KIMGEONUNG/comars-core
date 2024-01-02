@@ -16,7 +16,7 @@ cat > $target_dir/local.json <<EOF
         "program": "\${file}",
         "cwd": "\${workspaceFolder}",
         "console": "integratedTerminal",
-        "justMyCode": true
+        "justMyCode": true,
         "pythonPath": "\${env:CONDA_PREFIX}/bin/python"
       }
   ]
