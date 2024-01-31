@@ -141,3 +141,10 @@ require'lspconfig'.lua_ls.setup {
   },
 }
 require 'lspconfig'.bashls.setup {}
+
+-- latex
+require 'lspconfig'.texlab.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  -- capabilities = capabilities,
+}

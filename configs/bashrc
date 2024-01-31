@@ -237,3 +237,4 @@ bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 
 source "$HOME/.commonrc"
+. "$HOME/.cargo/env"
