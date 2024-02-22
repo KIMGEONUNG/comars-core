@@ -139,6 +139,7 @@ if true then
   vim.keymap.set("n", "<leader>ds", function() Dap.move_to_element(dapui.elements.stacks.buffer()) end, opt)
   vim.keymap.set("n", "<leader>dv", function() Dap.move_to_element(dapui.elements.scopes.buffer()) end, opt)
   vim.keymap.set("n", "<leader>db", function() Dap.move_to_element(dapui.elements.breakpoints.buffer()) end, opt)
+  -- vim.api.nvim_set_keymap('n', '<leader>dp', ':call vimspector#Pause()<CR>', {})
 
   vim.keymap.set('n', '<leader>d<leader>', function() dap.continue() end)
   -- vim.keymap.set('n', '<leader>d<leader>', function() dap.run() end)
@@ -153,6 +154,7 @@ local remaps = {
   { 'n', 'dj', function() require('dap').step_over() end },
   { 'n', 'dl', function() require('dap').step_into() end },
   { 'n', 'dk', function() require('dap').step_out() end },
+  { 'n', 'dp', function() require('dap').pause() end },
   { 'n', 'di', function() dapui.eval() end }
 }
 

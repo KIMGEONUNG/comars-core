@@ -33,8 +33,10 @@ cat > $target_dir/remote.json <<EOF
         "name": "Attach",
         "port": 5678,
         "host": "127.0.0.1",
-        "localRoot": "\${workspaceFolder}",
-        "remoteRoot": "."
+        "pathMappings": [{
+            "localRoot": "\${workspaceFolder}",
+            "remoteRoot": "."
+        }]
       }
   ]
 }
@@ -57,8 +59,10 @@ cat > $target_dir/all.json <<EOF
         "name": "Attach",
         "port": 5678,
         "host": "127.0.0.1",
-        "localRoot": "\${workspaceFolder}",
-        "remoteRoot": "."
+        "pathMappings": [{
+            "localRoot": "\${workspaceFolder}",
+            "remoteRoot": "."
+        }]
       }
   ]
 }
