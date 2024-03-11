@@ -47,6 +47,8 @@ cmp.setup({
       end
     end, { "i", "s" }),
 
+    ['<C-x><C-o>'] = cmp.mapping.complete(),
+
     ["<c-j>"] = cmp.mapping(function()
       if luasnip.jumpable(-1) then
         luasnip.jump(-1)
