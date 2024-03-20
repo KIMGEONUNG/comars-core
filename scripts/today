@@ -1,5 +1,8 @@
 #!/bin/bash
 
-cdwrite
+set -e
+
+cd ~/repos/comar-write
 cd daily
-nvim $(date + '%Y%m%d').md
+a=$(date -I)
+nvim ${a}.md

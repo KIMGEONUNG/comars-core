@@ -1,3 +1,28 @@
+-- vim.cmd([[
+-- command! Godoc lua GoToDoc()
+-- ]])
+-- vim.api.commk
+
+
+function GoToDoc()
+  local path_buf = vim.api.nvim_buf_get_name(0)
+  local cwd = vim.fn.getcwd()
+  local relative = string.sub(path_buf, #cwd + 2, #path_buf)
+  local filename = path_buf:match("^.+/(.+)$")
+  local id = string.match(filename, "^([A-Z]%d%d%d)%-")
+
+  if string.match(filename, "^[A-Z]%d%d%d%-.*%.py$") ~= nil then
+    local path_new = cwd .. '/docs/' .. id .. ".tex"
+    print('pass: ' .. id .. ", open: " .. path_new)
+    vim.cmd("edit " .. path_new)
+  else
+    print('Current buffer file does not have proper name for document mapping')
+  end
+end
+
+vim.api.nvim_create_user_command('Godoc', GoToDoc, {})
+-------------------------------------------------------------------------------
+
 function OpenNullBuffer()
   vim.api.nvim_command("vs /dev/null")
 end
@@ -48,6 +73,7 @@ function InsertTextWithBrace()
     -- Set the new line
     vim.api.nvim_buf_set_lines(0, line - 1, line, false, { new_line })
   end
+
   -- FIND VISUAL POSITION
   local start_pos = vim.fn.getpos("'<")
   local end_pos = vim.fn.getpos("'>")
