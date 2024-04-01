@@ -5,40 +5,46 @@ from PIL import Image
 
 
 def parse():
-  import argparse
-  parser = argparse.ArgumentParser(description='GIF generation')
-  parser.add_argument('-o',
-                      '--output',
-                      type=str,
-                      default='./animation.gif',
-                      help='output path')
-  parser.add_argument('-d',
-                      '--duration',
-                      type=int,
-                      default=200,
-                      help='for each frame time')
-  parser.add_argument('--loop', type=int, default=0, help='number of loop')
-  return parser.parse_args()
+    import argparse
+    parser = argparse.ArgumentParser(description='GIF generation')
+    parser.add_argument('-o',
+                        '--output',
+                        type=str,
+                        default='./animation.gif',
+                        help='output path')
+    parser.add_argument('-d',
+                        '--duration',
+                        type=int,
+                        default=200,
+                        help='for each frame time')
+    parser.add_argument('--loop', type=int, default=0, help='number of loop')
+    parser.add_argument('--circular', action='store_true')
+    return parser.parse_args()
 
 
 def main():
-  args = parse()
+    args = parse()
 
-  target_files = sys.stdin.read().splitlines()
-  print("# Target files", file=sys.stderr)
-  for i in target_files:
-    print(i, file=sys.stderr)
+    target_files = sys.stdin.read().splitlines()
+    print("# Target files", file=sys.stderr)
+    for i in target_files:
+        print(i, file=sys.stderr)
 
-  images = [Image.open(f).convert('P') for f in target_files]
-  images[0].save(args.output,
-                 save_all=True,
-                 append_images=images[1:],
-                 optimize=False,
-                 duration=args.duration,
-                 loop=args.loop)
+    images = [Image.open(f).convert('P') for f in target_files]
 
-  print(args.output)
+    if args.circular:
+        images = images + list(reversed(images[1:-1]))
+
+    images[0].save(args.output,
+                   save_all=True,
+                   append_images=images[1:],
+                   optimize=False,
+                   duration=args.duration,
+                   loop=args.loop)
+
+    print(args.output)
 
 
 if __name__ == '__main__':
-  main()
+    main()
+
