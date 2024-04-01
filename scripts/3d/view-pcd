@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+
+import numpy as np
+from plyfile import PlyData
+import open3d as o3d
+import argparse
+
+
+def parse():
+    p = argparse.ArgumentParser()
+    p.add_argument('path', type=str)
+    return p.parse_args()
+
+
+def extract_point_and_color_data(ply_file_path):
+    # Load the PLY file
+    ply_data = PlyData.read(ply_file_path)
+
+    # Extract vertex data
+    vertex = ply_data['vertex']
+
+    # Extract points (coordinates)
+    points = np.array([vertex[t] for t in ('x', 'y', 'z')]).T
+
+    # Check if color data is available and extract it
+    if all(c in vertex.data.dtype.names for c in ('red', 'green', 'blue')):
+        colors = np.array([vertex[t] for t in ('red', 'green', 'blue')]).T
+    else:
+        # If color data is not available, fill with zeros
+        colors = np.zeros_like(points)
+
+    return points, colors
+
+
+def visualize_point_cloud_with_colors(np_points, np_colors):
+    """
+    Visualizes a point cloud with a predefined color for each point using an interactive viewer.
+    
+    Parameters:
+    - np_points: numpy.ndarray, the point cloud data as a NumPy array with shape (3, N),
+                 where N is the number of points and each column represents a point in 3D space.
+    - np_colors: numpy.ndarray, the colors for each point as a NumPy array with shape (3, N),
+                 where N is the number of points and each column represents the RGB color in the range [0, 1].
+    """
+    # Ensure the NumPy arrays are in the correct shape (N, 3)
+    if np_points.shape[0] == 3:
+        np_points = np_points.T  # Transpose to get shape (N, 3)
+    if np_colors.shape[0] == 3:
+        np_colors = np_colors.T  # Transpose to get shape (N, 3)
+
+    # Convert the NumPy arrays to an open3d point cloud object
+    point_cloud = o3d.geometry.PointCloud()
+    point_cloud.points = o3d.utility.Vector3dVector(np_points)
+    point_cloud.colors = o3d.utility.Vector3dVector(np_colors)
+
+    # Create a coordinate frame for reference
+    coordinate_frame = o3d.geometry.TriangleMesh.create_coordinate_frame(
+        size=0.6, origin=[0, 0, 0])  # Adjust size as needed
+
+    # Visualize the point cloud along with the coordinate frame
+    o3d.visualization.draw_geometries([point_cloud, coordinate_frame])
+
+
+if __name__ == "__main__":
+    args = parse()
+    points, colors = extract_point_and_color_data(args.path)
+    colors = colors / 255
+    visualize_point_cloud_with_colors(points, colors)
