@@ -4,6 +4,7 @@ import numpy as np
 from plyfile import PlyData
 import open3d as o3d
 import argparse
+from pathlib import Path
 
 
 def parse():
@@ -63,6 +64,15 @@ def visualize_point_cloud_with_colors(np_points, np_colors):
 
 if __name__ == "__main__":
     args = parse()
-    points, colors = extract_point_and_color_data(args.path)
-    colors = colors / 255
+    path = args.path
+    ext = Path(path).suffix
+    if ext == '.ply':
+        points, colors = extract_point_and_color_data(path)
+        colors = colors / 255
+    elif ext == '.pt':
+        pcd = np.load(path, allow_pickle=True)
+        points = pcd['points'].T  # (3, N)
+        colors = pcd['colors'].T  # (3, N)
+    else:
+        raise Exception("Invalid extention")
     visualize_point_cloud_with_colors(points, colors)

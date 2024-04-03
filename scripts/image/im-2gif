@@ -17,8 +17,15 @@ def parse():
                         type=int,
                         default=200,
                         help='for each frame time')
+    parser.add_argument('-s', '--size',
+                        type=int,
+                        default=None,
+                        help='resize')
     parser.add_argument('--loop', type=int, default=0, help='number of loop')
-    parser.add_argument('--circular', action='store_true')
+    parser.add_argument('--shift', type=int, default=0, help='number of loop')
+    parser.add_argument('--circular',
+                        action='store_true',
+                        help='for circular animation')
     return parser.parse_args()
 
 
@@ -32,8 +39,15 @@ def main():
 
     images = [Image.open(f).convert('P') for f in target_files]
 
+    # APPLY SHIFT
+    images = images[:args.shift] + images[args.shift:]
+
+    # APPLY CIRCULAR
     if args.circular:
         images = images + list(reversed(images[1:-1]))
+
+    if args.size:
+        images = [image.resize((args.size, args.size)) for image in images]
 
     images[0].save(args.output,
                    save_all=True,
@@ -47,4 +61,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

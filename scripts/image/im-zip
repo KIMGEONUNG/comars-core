@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 
-import torch
-import torchvision.transforms as transforms
-from torchvision.transforms import ToTensor, Compose, Resize, CenterCrop
-from torchvision.utils import make_grid
-import random
-from random import shuffle
-
 import numpy as np
 from PIL import Image
 import os
@@ -34,12 +27,14 @@ def main():
     args = parse()
     dir_output = '_'.join(args.path_dirs)
     os.makedirs(dir_output, exist_ok=True)
-    for i, items in tqdm(
-            enumerate(zip(*[sorted(glob(f"{d}/*")) for d in args.path_dirs]))):
+    for i, items in enumerate(
+            tqdm(zip(*[sorted(glob(f"{d}/*")) for d in args.path_dirs]))):
         imgs = [Image.open(path).convert('RGB') for path in items]
         x = [np.array(img) for img in imgs]
         x = np.concatenate(x, axis=1)
         img = Image.fromarray(x)
         img.save(os.path.join(dir_output, f'{i:05d}.png'))
+
+
 if __name__ == '__main__':
     main()
