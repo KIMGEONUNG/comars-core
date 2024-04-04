@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 import sys
-import torch
 import argparse
-from pycomar.images import load_img, torchimg2cvimg
+from PIL import Image
 import numpy as np
 from cv2 import cv2
 
@@ -16,8 +15,8 @@ def parse():
 
 
 def get_img(path):
-    img: torch.Tensor = load_img(path)
-    img: np.ndarray = torchimg2cvimg(img)
+    img: np.ndarray = np.array(Image.open(path))
+    img = img[:, :, ::-1]
     return img
 
 
@@ -33,10 +32,9 @@ def main():
     h, w, _ = imgs[0].shape
 
     out = cv2.VideoWriter(args.path_output,
-            cv2.VideoWriter_fourcc(*'mp4v'),
-            args.fps,
-            (w, h),
-            isColor=True)
+                          cv2.VideoWriter_fourcc(*'mp4v'),
+                          args.fps, (w, h),
+                          isColor=True)
 
     for img in imgs:
         out.write(img)
