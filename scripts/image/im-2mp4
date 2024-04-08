@@ -15,7 +15,7 @@ def parse():
 
 
 def get_img(path):
-    img: np.ndarray = np.array(Image.open(path))
+    img: np.ndarray = np.array(Image.open(path).convert("RGB"))
     img = img[:, :, ::-1]
     return img
 

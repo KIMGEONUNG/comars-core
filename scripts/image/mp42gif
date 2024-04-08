@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+from moviepy.editor import VideoFileClip
+
+
+def convert_mp4_to_gif(input_path, output_path, start_time=0, end_time=None):
+    """
+    Converts an MP4 file to a GIF.
+
+    Parameters:
+    - input_path: Path to the input MP4 file.
+    - output_path: Path where the output GIF should be saved.
+    - start_time: Start time for the GIF in seconds. Defaults to 0.
+    - end_time: End time for the GIF in seconds. If None, converts until the end of the video.
+
+    Returns:
+    None
+    """
+    # Load the video file
+    clip = VideoFileClip(input_path)
+
+    # If an end time is not specified, use the duration of the clip
+    if end_time is None:
+        end_time = clip.duration
+
+    # Subclip (if needed) and convert to gif
+    clip.subclip(start_time, end_time).write_gif(output_path)
+
+
+if __name__ == "__main__":
+
+    convert_mp4_to_gif(
+        'input_video.mp4',
+        'output_video.gif',
+        # start_time=10,
+        # end_time=20,
+    )
+
