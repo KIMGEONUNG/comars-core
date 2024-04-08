@@ -1,38 +1,63 @@
 #!/usr/bin/env python3
 
+import cv2
 from moviepy.editor import VideoFileClip
+from PIL import Image
 
 
-def convert_mp4_to_gif(input_path, output_path, start_time=0, end_time=None):
-    """
-    Converts an MP4 file to a GIF.
+def parse():
+    import argparse
+    parser = argparse.ArgumentParser(description='mp4 to gif conversion')
+    parser.add_argument('path', help='input')
+    parser.add_argument('-o',
+                        '--output',
+                        type=str,
+                        default=None,
+                        help='output path')
+    parser.add_argument('-d',
+                        '--duration',
+                        type=int,
+                        default=200,
+                        help='for each frame time')
+    parser.add_argument('-i',
+                        '--interval',
+                        type=int,
+                        default=3,
+                        help='frame interval')
 
-    Parameters:
-    - input_path: Path to the input MP4 file.
-    - output_path: Path where the output GIF should be saved.
-    - start_time: Start time for the GIF in seconds. Defaults to 0.
-    - end_time: End time for the GIF in seconds. If None, converts until the end of the video.
-
-    Returns:
-    None
-    """
-    # Load the video file
-    clip = VideoFileClip(input_path)
-
-    # If an end time is not specified, use the duration of the clip
-    if end_time is None:
-        end_time = clip.duration
-
-    # Subclip (if needed) and convert to gif
-    clip.subclip(start_time, end_time).write_gif(output_path)
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
+    args = parse()
+    path_input = args.path
+    path_output = args.output
 
-    convert_mp4_to_gif(
-        'input_video.mp4',
-        'output_video.gif',
-        # start_time=10,
-        # end_time=20,
-    )
+    if path_output is None:
+        path_output = path_input + ".gif"
 
+    print(path_output)
+
+    vidcap = cv2.VideoCapture(path_input)
+    frames = []
+    count = 0
+    interval = args.interval
+
+    success, image = vidcap.read()
+    while success:
+        # Save frame as JPEG file if it's the nth frame
+        if count % interval == 0:
+            frames.append(Image.fromarray(image[:,:,::-1]))
+
+        success, image = vidcap.read()
+        count += 1
+
+    print(f'Total Count : {count}')
+    print(f'Frame Count : {len(frames)}')
+
+    frames[0].save(path_output,
+                   save_all=True,
+                   append_images=frames[1:],
+                   optimize=False,
+                   duration=args.duration,
+                   loop=0)
