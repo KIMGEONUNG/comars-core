@@ -109,6 +109,10 @@ function Dap.exit()
   dapui.close()
 end
 
+function Dap.start()
+  dap.continue()
+end
+
 function Dap.move_to_element(buffer_id)
   -- first find the window for this buffer
   local win_id = nil
@@ -141,7 +145,7 @@ if true then
   vim.keymap.set("n", "<leader>db", function() Dap.move_to_element(dapui.elements.breakpoints.buffer()) end, opt)
   -- vim.api.nvim_set_keymap('n', '<leader>dp', ':call vimspector#Pause()<CR>', {})
 
-  vim.keymap.set('n', '<leader>d<leader>', function() dap.continue() end)
+  vim.keymap.set('n', '<leader>d<leader>', function() Dap.start() end)
   -- vim.keymap.set('n', '<leader>d<leader>', function() dap.run() end)
   vim.keymap.set('n', '<leader>de', function() Dap.exit() end)
   -- vim.keymap.set('n', '<leader>de', function() dap.terminate() end)
@@ -202,6 +206,7 @@ end
 dap.listeners.after.event_stopped["mytest"] = function() print('event stopped') end
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
+  vim.api.nvim_command("NvimTreeClose")
   dapui.open()
 end
 
