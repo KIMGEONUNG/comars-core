@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+cd ~/repos/comar-write
+cd daily
+a=$(date -d 'tomorrow' -I)
+nvim ${a}.md
