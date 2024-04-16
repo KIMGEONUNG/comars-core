@@ -1,4 +1,13 @@
 {
+    "bpy_import_obj": {
+      "prefix": ["bpy_import_obj"],
+      "body": [
+        "bpy.ops.import_scene.obj(filepath=${1:path})"
+      ],
+      "description": [
+        "Import obj file"
+      ]
+    },
     "ablation": {
         "prefix": [
             "ablation"

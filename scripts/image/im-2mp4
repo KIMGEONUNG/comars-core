@@ -4,7 +4,8 @@ import sys
 import argparse
 from PIL import Image
 import numpy as np
-from cv2 import cv2
+# from cv2 import cv2
+import cv2
 
 
 def parse():
