@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+
+import cv2
+from moviepy.editor import VideoFileClip
+from PIL import Image
+
+
+def parse():
+    import argparse
+    parser = argparse.ArgumentParser(description='mp4 to gif conversion')
+    parser.add_argument('path', help='input')
+    parser.add_argument('-o',
+                        '--output',
+                        type=str,
+                        default=None,
+                        help='output path')
+    parser.add_argument('-d',
+                        '--duration',
+                        type=int,
+                        default=200,
+                        help='for each frame time')
+    parser.add_argument('-i',
+                        '--interval',
+                        type=int,
+                        default=3,
+                        help='frame interval')
+    parser.add_argument('--limit',
+                        type=int,
+                        default=1000,
+                        help='frame interval')
+    parser.add_argument('--size',
+                        type=int,
+                        default=None,
+                        help='frame interval')
+
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse()
+    path_input = args.path
+    path_output = args.output
+
+    if path_output is None:
+        path_output = path_input + ".gif"
+
+    print(path_output)
+
+    vidcap = cv2.VideoCapture(path_input)
+    frames = []
+    count = 0
+    interval = args.interval
+
+    success, image = vidcap.read()
+    while success:
+        if args.limit < len(frames):
+            break
+
+        # Save frame as JPEG file if it's the nth frame
+        if count % interval == 0:
+            frames.append(Image.fromarray(image[:, :, ::-1]))
+
+        success, image = vidcap.read()
+        count += 1
+
+    print(f'Total Count : {count}')
+    print(f'Frame Count : {len(frames)}')
+
+    if args.size is not None:
+        w, h = frames[0].size
+        h = int(h / w * args.size)
+        w = args.size
+        frames = [f.resize((w, h)) for f in frames]
+
+    frames[0].save(path_output,
+                   save_all=True,
+                   append_images=frames[1:],
+                   optimize=False,
+                   duration=args.duration,
+                   loop=0)
