@@ -209,7 +209,7 @@ dap.listeners.after.event_stopped["mytest"] = function() print('event stopped') 
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   vim.api.nvim_command("NvimTreeClose")
-  dapui.open()
+  dapui.open({ reset = true })
 end
 
 -- IF UNCOMMENT, THE DAP-UI IS AUTOMATICALLY CLOSED AFTER THE PROGRAM HAS FINISHED
