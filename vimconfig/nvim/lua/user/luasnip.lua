@@ -7,7 +7,7 @@ load_snippets()
 
 -- RELOAD SNIPPETS
 function RefreshSnippet()
-  require("luasnip").cleanup()
+  require("luasnip").cleanup() -- Err occurs
   load_snippets()
 end
 

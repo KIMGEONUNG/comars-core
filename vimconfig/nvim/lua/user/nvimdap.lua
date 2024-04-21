@@ -93,7 +93,7 @@ end
 -- }
 
 -- this code should be located after the definition of configurations.<filetype>
-require('dap.ext.vscode').load_launchjs('launch.json', { debugpy = { 'py' } })
+-- require('dap.ext.vscode').load_launchjs('launch.json', { debugpy = { 'py' } })
 
 
 -- KEYMAPS
@@ -110,6 +110,8 @@ function Dap.exit()
 end
 
 function Dap.start()
+  dap.configurations = {}
+  require('dap.ext.vscode').load_launchjs('launch.json', { debugpy = { 'py' } })
   dap.continue()
 end
 

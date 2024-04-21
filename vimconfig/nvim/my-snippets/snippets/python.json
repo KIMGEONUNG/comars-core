@@ -1,4 +1,13 @@
 {
+    "name": {
+      "prefix": ["prefix"],
+      "body": [
+        "contents"
+      ],
+      "description": [
+        "description"
+      ]
+    },
     "bpy_import_obj": {
       "prefix": ["bpy_import_obj"],
       "body": [
