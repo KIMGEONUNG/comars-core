@@ -17,7 +17,10 @@ cat > $target_dir/local.json <<EOF
         "cwd": "\${workspaceFolder}",
         "console": "integratedTerminal",
         "justMyCode": true,
-        "pythonPath": "\${env:CONDA_PREFIX}/bin/python"
+        "pythonPath": "\${env:CONDA_PREFIX}/bin/python",
+        "autoReload": {
+        "enable": true
+        }
       }
   ]
 }
