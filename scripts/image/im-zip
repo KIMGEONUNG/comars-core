@@ -11,6 +11,7 @@ def parse():
     import argparse
     parser = argparse.ArgumentParser(description='Image view with grid')
     parser.add_argument('path_dirs', nargs='+', type=str)
+    parser.add_argument('--extension', type=str, default=None)
     # parser.add_argument('--size', type=int, default=256)
     # parser.add_argument('--ccrop', action='store_true')
 
@@ -25,10 +26,11 @@ def parse():
 
 def main():
     args = parse()
+    ext = "." + args.extension if args.extension is not None else ''
     dir_output = '_'.join(args.path_dirs)
     os.makedirs(dir_output, exist_ok=True)
     for i, items in enumerate(
-            tqdm(zip(*[sorted(glob(f"{d}/*")) for d in args.path_dirs]))):
+            tqdm(zip(*[sorted(glob(f"{d}/*{ext}")) for d in args.path_dirs]))):
         imgs = [Image.open(path).convert('RGB') for path in items]
         x = [np.array(img) for img in imgs]
         x = np.concatenate(x, axis=1)

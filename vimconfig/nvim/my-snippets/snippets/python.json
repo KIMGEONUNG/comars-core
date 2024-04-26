@@ -1,21 +1,81 @@
 {
+    "flow_vis": {
+        "prefix": [
+            "flow_vis"
+        ],
+        "body": [
+            "import flow_vis",
+            "flows_forward_vis = flow_vis.flow_to_color(",
+            "    flows_forward[0].detach().cpu().permute(1, 2, 0).numpy(),",
+            "    convert_to_bgr=False)",
+            "flows_forward_vis = Image.fromarray(flows_forward_vis)",
+            "flows_backward_vis = flow_vis.flow_to_color(",
+            "    flows_backward[0].detach().cpu().permute(1, 2, 0).numpy(),",
+            "    convert_to_bgr=False)",
+            "flows_backward_vis = Image.fromarray(flows_backward_vis)"
+        ],
+        "description": [
+            "description"
+        ]
+    },
+    "raft": {
+        "prefix": [
+            "raft"
+        ],
+        "body": [
+            "from torchvision.models.optical_flow import Raft_Large_Weights",
+            "from torchvision.models.optical_flow import raft_large",
+            "device = 'cuda:0'",
+            "model = raft_large(weights=Raft_Large_Weights.DEFAULT, progress=False).to(device).eval()",
+            "flows_forward = model(x1.to(device), x2.to(device))[-1]",
+            "flows_backward = model(x2.to(device), x1.to(device))[-1]",
+            "dist = torch.linalg.norm(flows_forward + flows_backward, dim=-3)",
+            "confidence = 1 / (1 + dist)"
+        ],
+        "description": [
+            "description"
+        ]
+    },
+    "imagebase": {
+        "prefix": [
+            "imagebase"
+        ],
+        "body": [
+            "import numpy as np",
+            "from PIL import Image",
+            "from glob import glob",
+            "from tqdm import tqdm",
+            "from os.path import join",
+            "from os import makedirs"
+        ],
+        "description": [
+            "description"
+        ]
+    },
     "name": {
-      "prefix": ["prefix"],
-      "body": [
-        "contents"
-      ],
-      "description": [
-        "description"
-      ]
+        "prefix": [
+            "name"
+        ],
+        "body": [
+            "import os",
+            "from pathlib import Path",
+            "name = Path(os.path.basename(__file__)).stem",
+            "os.makedirs(f'{name}', exist_ok=True)"
+        ],
+        "description": [
+            "description"
+        ]
     },
     "bpy_import_obj": {
-      "prefix": ["bpy_import_obj"],
-      "body": [
-        "bpy.ops.import_scene.obj(filepath=${1:path})"
-      ],
-      "description": [
-        "Import obj file"
-      ]
+        "prefix": [
+            "bpy_import_obj"
+        ],
+        "body": [
+            "bpy.ops.import_scene.obj(filepath=${1:path})"
+        ],
+        "description": [
+            "Import obj file"
+        ]
     },
     "ablation": {
         "prefix": [

@@ -117,7 +117,7 @@ require 'lspconfig'.cssls.setup {
 }
 
 -- LUA
-require'lspconfig'.lua_ls.setup {
+require 'lspconfig'.lua_ls.setup {
   on_attach = on_attach,
   settings = {
     Lua = {
@@ -127,7 +127,7 @@ require'lspconfig'.lua_ls.setup {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
+        globals = { 'vim' },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -140,11 +140,20 @@ require'lspconfig'.lua_ls.setup {
     },
   },
 }
-require 'lspconfig'.bashls.setup {}
+require 'lspconfig'.bashls.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
 
 -- latex
 require 'lspconfig'.texlab.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   -- capabilities = capabilities,
+}
+
+-- markdown
+require 'lspconfig'.marksman.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
 }
