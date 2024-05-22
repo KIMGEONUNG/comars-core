@@ -22,3 +22,15 @@ require('gen').setup({
   -- no_auto_close = false, -- Never closes the window automatically.
   -- debug = false -- Prints errors and the command which is run.
 })
+
+-- Custom table
+local prompts = require('gen.prompts')
+prompts["Make_Table_Latex"] = {
+  prompt = "Render the following text as a latex table:\n$text",
+  replace = true,
+}
+
+
+require('gen')["model"] = "aaa"
+
+-- print(require('inspect')())
