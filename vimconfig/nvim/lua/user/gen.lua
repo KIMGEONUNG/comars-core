@@ -17,12 +17,13 @@ M.setup({
   -- -- The executed command must return a JSON object with { response, context }
   -- -- (context property is optional).
   -- -- list_models = '<omitted lua function>', -- Retrieves a list of model names
-  -- display_mode = "float", -- The display mode. Can be "float" or "split".
+  display_mode = "float", -- The display mode. Can be "float" or "split".
   -- show_prompt = false, -- Shows the prompt submitted to Ollama.
   -- show_model = false, -- Displays which model you are using at the beginning of your chat session.
   -- no_auto_close = false, -- Never closes the window automatically.
   -- debug = false -- Prints errors and the command which is run.
 })
+
 
 -- Custom table
 local prompts = require('gen.prompts')
@@ -31,7 +32,8 @@ prompts["Make_Table_Latex"] = {
   replace = true,
 }
 
--- change model
+-- Change model
+-- This is actually same with M.select_model()
 vim.api.nvim_create_user_command('GenChm', function(arg)
   if arg.args == "" then
     print("Empty input")
@@ -42,6 +44,6 @@ vim.api.nvim_create_user_command('GenChm', function(arg)
 end, {
   nargs = "?",
   complete = function(ArgLead, CmdLine, CursorPos)
-    return { "codellama", "llama3" }
+    return { "codellama", "llama3", "llama3:70b" }
   end
 })

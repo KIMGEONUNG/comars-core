@@ -1,6 +1,5 @@
-
 local previewers = require('telescope.previewers')
-local bad_extentions = { '.*%.csv', '.*%.json'} 
+local bad_extentions = { '.*%.csv', '.*%.json' }
 local size_max = 100000
 local bad_files = function(filepath)
   for _, v in ipairs(bad_extentions) do
@@ -23,24 +22,47 @@ local custom_previewer_maker = function(filepath, bufnr, opts)
   previewers.buffer_previewer_maker(filepath, bufnr, opts)
 end
 
-require('telescope').setup{
-    defaults = {
-        buffer_previewer_maker = custom_previewer_maker,
-        preview = {
-        },
-        file_ignore_patterns = {'%.pyc', 
-        -- '.git/*',
-        '__pycache__/*',
-            '%.jpeg', '%.jpg', '%.JPEG', '%.png', '%.gif', '%.dat',
-            '%.pkl', '%.ckpt', '%.pickle', 'events.*', '%.tfrecords',
-            '%.xyzn', '%.xyz', '%.obj', '%.ply'
-        }
+require('telescope').setup {
+  defaults = {
+    buffer_previewer_maker = custom_previewer_maker,
+    preview = {
     },
-    pickers = {
-        find_files = {
-            theme = "dropdown",
-        }
+    file_ignore_patterns = { '%.pyc',
+      -- '.git/*',
+      '__pycache__/*',
+      '%.jpeg', '%.jpg', '%.JPEG', '%.png', '%.gif', '%.dat',
+      '%.pkl', '%.ckpt', '%.pickle', 'events.*', '%.tfrecords',
+      '%.xyzn', '%.xyz', '%.obj', '%.ply'
     }
+  },
+  pickers = {
+    find_files = {
+      theme = "dropdown",
+    }
+  },
+  -- Telescope selection UI
+  -- This is your opts table
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      }
+
+      -- pseudo code / specification for writing custom displays, like the one
+      -- for "codeactions"
+      -- specific_opts = {
+      --   [kind] = {
+      --     make_indexed = function(items) -> indexed_items, width,
+      --     make_displayer = function(widths) -> displayer
+      --     make_display = function(displayer) -> function(e)
+      --     make_ordinal = function(e) -> string
+      --   },
+      --   -- for example to disable the custom builtin "codeactions" display
+      --      do the following
+      --   codeactions = false,
+      -- }
+    }
+  }
 }
 
 local remap = vim.keymap.set
@@ -48,3 +70,8 @@ remap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true, sile
 remap('n', '<leader>fg', ':Telescope live_grep<cr>', { noremap = true, silent = true })
 remap('n', '<leader>fb', ':Telescope buffers<cr>', { noremap = true, silent = true })
 remap('n', '<leader>fh', ':Telescope help_tags<cr>', { noremap = true, silent = true })
+
+
+-- To get ui-select loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require("telescope").load_extension("ui-select")

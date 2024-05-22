@@ -27,7 +27,7 @@ def main():
 
     parts = target_file.split('.')
     head = ''.join(parts[:-1])
-    ext = 'jpg'
+    ext = 'png'
     path_output = head + '.' + ext
 
     im.save(path_output, quality=100, subsampling=0)
