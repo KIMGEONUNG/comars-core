@@ -1,4 +1,13 @@
 {
+  "inspect": {
+    "prefix": ["inspt"],
+    "body": [
+      "print(require('inspect')($1))"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "stdin": {
     "prefix": ["stdin"],
     "body": [

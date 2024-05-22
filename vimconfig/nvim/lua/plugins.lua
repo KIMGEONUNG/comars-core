@@ -91,4 +91,8 @@ return require('packer').startup(function(use)
   --
   use 'mortepau/codicons.nvim'
 
+  -- COPILOT
+  -- use 'huggingface/llm.nvim'
+  use "David-Kunz/gen.nvim"
+
 end)

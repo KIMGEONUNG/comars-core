@@ -1,4 +1,19 @@
 {
+    "profile": {
+        "prefix": [
+            "profile"
+        ],
+        "body": [
+            "import time",
+            "start = time.time()",
+            "...",
+            "end = time.time()",
+            "print(f\"{end - start:2.10f} sec\")"
+        ],
+        "description": [
+            "description"
+        ]
+    },
     "flow_vis": {
         "prefix": [
             "flow_vis"

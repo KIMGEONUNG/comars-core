@@ -2,7 +2,15 @@
 
 set -e
 
-cd ~/repos/comar-write
-cd daily
+cd ~/repos/comar-write/daily
+
 a=$(date -I)
-nvim ${a}.md
+file=${a}.md
+
+# If not exist, copy the last one for today.
+if ! [[ -a ${file} ]]; then
+  target=$(ls | sort | tail -n 1)
+  cp ${target} ${file} -v
+fi
+
+nvim ${file}

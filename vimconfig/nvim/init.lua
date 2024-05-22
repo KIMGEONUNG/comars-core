@@ -36,11 +36,17 @@ require("user.lazygit")
 
 require("user.nvimtree")
 
+-- This is for LLM-LS. I failed to setup for it. There are too abstract document,
+-- And I think, It is a little in WIP.
+-- require("user.copilot")
+require("user.gen")
+
 -- require("user.condicon")
 -- require("user.devicons")
 
 require("func.execute")
 require("func.vclip")
+
 
 
 -- POST DEFINITIONS

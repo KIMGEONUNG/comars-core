@@ -1,4 +1,13 @@
 {
+  "redtext": {
+    "prefix": ["rt"],
+    "body": [
+      "\\rt{${1:text}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "pa": {
     "prefix": ["pa"],
     "body": [
