@@ -24,6 +24,7 @@ M.setup({
   -- debug = false -- Prints errors and the command which is run.
 })
 
+vim.keymap.set({ 'n', 'v' }, '<leader>]', ':Gen<CR>')
 
 -- Custom table
 local prompts = require('gen.prompts')
@@ -35,15 +36,16 @@ prompts["Make_Table_Latex"] = {
 -- Change model
 -- This is actually same with M.select_model()
 vim.api.nvim_create_user_command('GenChm', function(arg)
-  if arg.args == "" then
-    print("Empty input")
-    return
-  end
-  M["model"] = arg.args
-  print("Change model into " .. M["model"])
+  M.select_model()
+  -- if arg.args == "" then
+  --   print("Empty input")
+  --   return
+  -- end
+  -- M["model"] = arg.args
+  -- print("Change model into " .. M["model"])
 end, {
-  nargs = "?",
-  complete = function(ArgLead, CmdLine, CursorPos)
-    return { "codellama", "llama3", "llama3:70b" }
-  end
+  -- nargs = "?",
+  -- complete = function(ArgLead, CmdLine, CursorPos)
+  --   return { "codellama", "llama3", "llama3:70b" }
+  -- end
 })
