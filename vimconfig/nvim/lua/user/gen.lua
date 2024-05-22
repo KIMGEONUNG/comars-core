@@ -1,4 +1,5 @@
-require('gen').setup({
+local M = require('gen')
+M.setup({
   model = "codellama",
   -- model = "mistral", -- The default model to use.
   -- host = "localhost", -- The host running the Ollama service.
@@ -30,7 +31,17 @@ prompts["Make_Table_Latex"] = {
   replace = true,
 }
 
-
-require('gen')["model"] = "aaa"
-
--- print(require('inspect')())
+-- change model
+vim.api.nvim_create_user_command('GenChm', function(arg)
+  if arg.args == "" then
+    print("Empty input")
+    return
+  end
+  M["model"] = arg.args
+  print("Change model into " .. M["model"])
+end, {
+  nargs = "?",
+  complete = function(ArgLead, CmdLine, CursorPos)
+    return { "codellama", "llama3" }
+  end
+})
