@@ -25,11 +25,11 @@ return require('packer').startup(function(use)
     'nvim-telescope/telescope.nvim',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
-  
+
   use 'nvim-telescope/telescope-ui-select.nvim'
 
   use 'nvim-tree/nvim-tree.lua'
-  use 'kyazdani42/nvim-web-devicons'
+  use 'nvim-tree/nvim-web-devicons'
 
   -- UI
   use 'morhetz/gruvbox'
@@ -55,7 +55,7 @@ return require('packer').startup(function(use)
   -- VIM DEBUGGER
   use 'puremourning/vimspector'
   use 'mfussenegger/nvim-dap'
-  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
   use "folke/neodev.nvim"
 
   -- NERDTREE
@@ -96,5 +96,18 @@ return require('packer').startup(function(use)
   -- COPILOT
   -- use 'huggingface/llm.nvim'
   use "David-Kunz/gen.nvim"
+
+  use({
+    "jackMort/ChatGPT.nvim",
+    config = function()
+      require("chatgpt").setup()
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
+  })
 
 end)

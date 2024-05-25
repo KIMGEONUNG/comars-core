@@ -51,58 +51,6 @@ dap.adapters.python = function(cb, config)
   end
 end
 
--- dap.adapters.python = {
---   type = 'executable';
---   command = os.getenv('HOME') .. '/anaconda3/bin/python';
---   -- command = os.getenv('CONDA_PREFIX') .. '/bin/python';
---   args = { '-m', 'debugpy.adapter' };
--- }
-
--- dap.adapters.remote_python = {
---   type = 'server';
---   host = "127.0.0.1"; -- this is the server-side host
---   port = 5678; -- this is the server-side port
--- }
-
-
--- dap.configurations.python = { {
---   name = "Launch config";
---   type = 'python';
---   request = 'launch';
---   program = "${file}";
---   pythonPath = function()
---     return os.getenv('CONDA_PREFIX') .. '/bin/python'
---   end;
--- },
--- }
-
--- dap.configurations.python = {
---   {
---     name = "Attach config";
---     type = 'remote_python';
---     request = 'attach';
---     port = 5678; -- this is the client-side port
---     host = "127.0.0.1";
---     pathMappings = {
---       {
---         localRoot = "${workspaceFolder}";
---         remoteRoot = ".";
---       }
---     };
---   },
--- }
-
--- this code should be located after the definition of configurations.<filetype>
--- require('dap.ext.vscode').load_launchjs('launch.json', { debugpy = { 'py' } })
-
-
--- KEYMAPS
--- vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
--- vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
--- vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
--- vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
--- vim.keymap.set('n', '<F9>', function() require('dap').toggle_breakpoint() end)
-
 
 function Dap.exit()
   dap.terminate()

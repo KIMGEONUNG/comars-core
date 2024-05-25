@@ -1,10 +1,4 @@
--- vim.cmd([[
--- command! Godoc lua GoToDoc()
--- ]])
--- vim.api.commk
-
-
-function GoToDoc()
+vim.api.nvim_create_user_command('Godoc', function(args)
   local path_buf = vim.api.nvim_buf_get_name(0)
   local cwd = vim.fn.getcwd()
   local relative = string.sub(path_buf, #cwd + 2, #path_buf)
@@ -18,9 +12,7 @@ function GoToDoc()
   else
     print('Current buffer file does not have proper name for document mapping')
   end
-end
-
-vim.api.nvim_create_user_command('Godoc', GoToDoc, {})
+end, {})
 -------------------------------------------------------------------------------
 
 function OpenNullBuffer()

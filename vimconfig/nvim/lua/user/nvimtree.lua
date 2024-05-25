@@ -1,4 +1,10 @@
 -- examples for your init.lua
+vim.cmd([[
+    :hi      NvimTreeExecFile    guifg=#ffa0a0
+    :hi      NvimTreeSpecialFile guifg=#ff80ff gui=underline
+    :hi      NvimTreeSymlink     guifg=Yellow  gui=italic
+    :hi link NvimTreeImageFile   Title
+]])
 
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
@@ -14,7 +20,7 @@ vim.opt.termguicolors = true
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
   view = {
-    width = 50,
+    width = 40,
   },
   renderer = {
     group_empty = true,
