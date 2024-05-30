@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+import sys
+import torchvision.transforms as transforms
+from PIL import Image
+
+
+def parse():
+  import argparse
+  parser = argparse.ArgumentParser(description='Image center crop')
+  parser.add_argument('-r',
+                      '--replace',
+                      action='store_true',
+                      help='replace input')
+  parser.add_argument('--short', action='store_true', help='use short length')
+  parser.add_argument('-s',
+                      '--size',
+                      type=int,
+                      default=100,
+                      help='target image size')
+  return parser.parse_args()
+
+
+def main():
+  args = parse()
+
+  target_files = sys.stdin.read().splitlines()
+  print("image center-crop target  files: %d EA" % len(target_files),
+        file=sys.stderr)
+
+  for target_file in target_files:
+    im = Image.open(target_file)
+
+    size = args.size
+    if args.short:
+      size = min(im.size)
+
+    im = transforms.CenterCrop(size)(im)
+
+    path_output = None
+    if args.replace:
+      path_output = target_file
+    else:
+      parts = target_file.split('.')
+      head = ''.join(parts[:-1])
+      ext = parts[-1]
+      path_output = head + '_ccrop_%04d.' % (size) + ext
+
+    im.save(path_output, quality=100, subsampling=0)
+    print(path_output)
+
+
+if __name__ == '__main__':
+  main()
