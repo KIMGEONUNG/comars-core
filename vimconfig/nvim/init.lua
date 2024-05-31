@@ -40,7 +40,7 @@ require("user.nvimtree")
 -- And I think, It is a little in WIP.
 -- require("user.copilot")
 require("user.gen")
-require("user.chatgpt") -- In test
+-- require("user.chatgpt") -- In test
 
 -- require("user.condicon")
 -- require("user.devicons")
