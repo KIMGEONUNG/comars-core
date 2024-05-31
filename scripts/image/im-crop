@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+
+import sys
+import PIL
+from PIL import Image, ImageSequence
+import numpy as np
+
+
+def parse():
+    import argparse
+    parser = argparse.ArgumentParser(description='Image crop')
+    parser.add_argument('-r',
+                        '--replace',
+                        action='store_true',
+                        help='replace input')
+    parser.add_argument('--short',
+                        action='store_true',
+                        help='use short length')
+    parser.add_argument('--position',
+                        type=int,
+                        nargs=4,
+                        required=True,
+                        help='point from')
+    return parser.parse_args()
+
+
+def crop_gif(img, output_path, crop_area):
+    # Create a list to hold the cropped frames
+    cropped_frames = []
+
+    # Loop through each frame in the original GIF
+    for frame in ImageSequence.Iterator(img):
+        # Crop the frame
+        cropped_frame = frame.crop(crop_area)
+        cropped_frames.append(cropped_frame)
+
+    # Save the cropped frames as a new GIF
+    cropped_frames[0].save(output_path,
+                           save_all=True,
+                           append_images=cropped_frames[1:],
+                           loop=0,
+                           duration=img.info['duration'])
+
+
+def main():
+    args = parse()
+
+    target_files = sys.stdin.read().splitlines()
+    print("image center-crop target  files: %d EA" % len(target_files),
+          file=sys.stderr)
+
+    for target_file in target_files:
+
+        path_output = None
+        if args.replace:
+            path_output = target_file
+        else:
+            parts = target_file.split('.')
+            head = ''.join(parts[:-1])
+            ext = parts[-1]
+            path_output = head + '_crop.' + ext
+
+        im = Image.open(target_file)
+        x0, y0, x1, y1 = args.position
+        if isinstance(im, PIL.GifImagePlugin.GifImageFile):
+            crop_area = (x0, y0, x1, y1)
+            crop_gif(im, path_output, crop_area)
+        else:
+            im = Image.fromarray(np.array(im)[y0:y1, x0:x1, :])
+            im.save(path_output, quality=100, subsampling=0)
+        print(path_output)
+
+
+if __name__ == '__main__':
+    main()
