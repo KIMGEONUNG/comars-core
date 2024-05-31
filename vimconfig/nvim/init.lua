@@ -7,6 +7,7 @@ require("color")
 require("autocmd")
 
 require("func.execute")
+require("func.visual")
 
 -- NAVIGATION UTILITIES
 require("user.telescope")

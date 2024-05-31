@@ -1,4 +1,13 @@
 {
+  "keymap": {
+    "prefix": ["keymap"],
+    "body": [
+      "vim.api.nvim_set_keymap('n', '<c-a>', ':lua MyDebug()<cr>', {})"
+    ],
+    "description": [
+      "keymap"
+    ]
+  },
   "inspect": {
     "prefix": ["inspt"],
     "body": [
