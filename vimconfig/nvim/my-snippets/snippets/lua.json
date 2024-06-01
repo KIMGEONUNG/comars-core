@@ -1,15 +1,19 @@
 {
   "keymap": {
-    "prefix": ["keymap"],
+    "prefix": [
+      "keymap"
+    ],
     "body": [
-      "vim.api.nvim_set_keymap('n', '<c-a>', ':lua MyDebug()<cr>', {})"
+      "vim.keymap.set('n', '$1', function() foo() end, { noremap = true })"
     ],
     "description": [
       "keymap"
     ]
   },
   "inspect": {
-    "prefix": ["inspt"],
+    "prefix": [
+      "inspt"
+    ],
     "body": [
       "print(require('inspect')($1))"
     ],
@@ -18,7 +22,9 @@
     ]
   },
   "stdin": {
-    "prefix": ["stdin"],
+    "prefix": [
+      "stdin"
+    ],
     "body": [
       "io.read(\"*l\")"
     ],

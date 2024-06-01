@@ -1,4 +1,5 @@
-require("chatgpt").setup({
+local M = require("chatgpt")
+M.setup({
   -- api_key_cmd = "op read op://private/OpenAI/credential --no-newline",
   -- api_key_cmd = nil,
   api_key_cmd = "secret-tool lookup openai nvim",
@@ -173,3 +174,5 @@ require("chatgpt").setup({
     help_description = "@comment",
   },
 })
+
+vim.keymap.set('n', '<c-\\>', ':ChatGPT<cr>', { noremap = true })

@@ -75,7 +75,7 @@ return require('packer').startup(function(use)
   use 'tpope/vim-eunuch'
 
   -- VIM IN TERMINAL
-  use 'akinsho/toggleterm.nvim'
+  -- use 'akinsho/toggleterm.nvim'
 
   -- TEXT NAVIGATION
   use 'justinmk/vim-sneak'
