@@ -8,11 +8,22 @@ local function getVisualSelectionRange()
   return diff
 end
 
+function log_message_to_file(message)
+  local file = io.open("log.txt", "a")
+  file:write(message .. "\n")
+  file:close()
+end
+
 local function visualSelectRange(start_pos, end_pos)
   local diff = end_pos - start_pos
 
+  log_message_to_file(tostring(start_pos))
+
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("0", true, false, true), 'n', true)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(tostring(start_pos - 1) .. "l", true, false, true), 'n', true)
+
+  if start_pos ~= 1 then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(tostring(start_pos - 1) .. "l", true, false, true), 'n', true)
+  end
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, false, true), 'n', true)
 
   if diff ~= 0 then
