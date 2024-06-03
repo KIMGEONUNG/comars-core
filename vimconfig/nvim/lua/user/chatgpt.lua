@@ -175,4 +175,8 @@ M.setup({
   },
 })
 
+
+-- key binding
 vim.keymap.set('n', '<c-\\>', ':ChatGPT<cr>', { noremap = true })
+vim.keymap.set('n', '<leader>\\', ':ChatGPTCompleteCode<cr>', { noremap = true })
+vim.keymap.set('v', '<leader>\\', ':ChatGPTEditWithInstructions<cr>', { noremap = true })

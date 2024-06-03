@@ -110,4 +110,6 @@ return require('packer').startup(function(use)
     }
   })
 
+  use "KIMGEONUNG/memo.nvim"
+
 end)

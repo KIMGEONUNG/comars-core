@@ -1,4 +1,13 @@
 {
+  "command": {
+    "prefix": ["command"],
+    "body": [
+      "vim.api.nvim_create_user_command('${1:hello}', function(args) ${2:print('hello')} end, {})"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "keymap": {
     "prefix": [
       "keymap"

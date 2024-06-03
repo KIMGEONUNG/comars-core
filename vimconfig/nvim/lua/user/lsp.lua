@@ -46,6 +46,11 @@ require('lspconfig').pylsp.setup {
     pylsp = {
       -- configurationSources = {"flake8"},
       plugins = {
+        pycodestyle = {
+          enabled = true,
+          ignore = { 'E402' },
+          maxLineLength = 120
+        },
         autopep8 = {
           enabled = false,
         },
@@ -54,7 +59,9 @@ require('lspconfig').pylsp.setup {
         },
         --
         -- flake8 = {
-        --   indentSize = 2,
+        -- indentSize = 2,
+        -- enabled = true,
+        -- ignore = {"E402"},
         -- }
       }
     }
