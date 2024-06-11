@@ -1,3 +1,13 @@
+local function file_exists(file)
+  local f = io.open(file, "r")
+  if f ~= nil then
+    io.close(f)
+    return true
+  else
+    return false
+  end
+end
+
 vim.api.nvim_create_user_command('Godoc', function(args)
   local path_buf = vim.api.nvim_buf_get_name(0)
   local cwd = vim.fn.getcwd()
@@ -9,6 +19,17 @@ vim.api.nvim_create_user_command('Godoc', function(args)
     local path_new = cwd .. '/docs/' .. id .. ".tex"
     print('pass: ' .. id .. ", open: " .. path_new)
     vim.cmd("edit " .. path_new)
+
+    if not file_exists(path_new) then
+      local buf = vim.api.nvim_get_current_buf()
+      vim.api.nvim_buf_set_lines(buf, 0, -1, false,
+        { "\\section{" .. id .. "} % (fold)", "\\label{sec:" .. id .. "}", "", "% section  (end)" })
+
+      -- Set the cursor position to the third line (indexing starts from 0)
+      vim.api.nvim_win_set_cursor(0, { 3, 0 })
+    end
+
+
   else
     print('Current buffer file does not have proper name for document mapping')
   end

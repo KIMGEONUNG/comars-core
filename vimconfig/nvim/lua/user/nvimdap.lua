@@ -16,17 +16,52 @@ vim.api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg = 0, fg = '#993939', bg = '#31
 vim.api.nvim_set_hl(0, 'DapLogPoint', { ctermbg = 0, fg = '#61afef', bg = '#31353f' })
 vim.api.nvim_set_hl(0, 'DapStopped', { ctermbg = 0, fg = '#98c379', bg = '#31353f' })
 
-vim.fn.sign_define('DapBreakpoint', { text='🛑', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
-vim.fn.sign_define('DapBreakpointCondition', { text='ﳁ', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
-vim.fn.sign_define('DapBreakpointRejected', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl= 'DapBreakpoint' })
-vim.fn.sign_define('DapLogPoint', { text='', texthl='DapLogPoint', linehl='DapLogPoint', numhl= 'DapLogPoint' })
-vim.fn.sign_define('DapStopped', { text='', texthl='DapStopped', linehl='DapStopped', numhl= 'DapStopped' })
+vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint',
+  numhl = 'DapBreakpoint' })
+vim.fn.sign_define('DapBreakpointCondition',
+  { text = 'ﳁ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+vim.fn.sign_define('DapBreakpointRejected',
+  { text = '', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+vim.fn.sign_define('DapLogPoint', { text = '', texthl = 'DapLogPoint', linehl = 'DapLogPoint', numhl = 'DapLogPoint' })
+vim.fn.sign_define('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
 
 -- vim.fn.sign_define('DapBreakpoint', {text='•', texthl='red', linehl='', numhl=''})
 
 -- Note that omitting the "dapui.setup({})" invokes error.
 -- This setup method has a role of initializtion
-dapui.setup({})
+dapui.setup({
+  layouts = {
+    {
+      -- You can change the order of elements in the sidebar
+      elements = {
+        -- Provide IDs as strings or tables with "id" and "size" keys
+        {
+          id = "scopes",
+          size = 0.25, -- Can be float or integer > 1
+        },
+        { id = "breakpoints", size = 0.25 },
+        { id = "stacks", size = 0.25 },
+        { id = "watches", size = 0.25 },
+      },
+      size = 40,
+      position = "left", -- Can be "left" or "right"
+    },
+    {
+      elements = {
+        "repl",
+      },
+      size = 50,
+      position = "right", -- Can be "bottom" or "top"
+    },
+    {
+      elements = {
+        "console",
+      },
+      size = 10,
+      position = "bottom", -- Can be "bottom" or "top"
+    },
+  },
+})
 
 -- As this is a recommended setting described in offical README,
 -- I'm not sure what the code acually does
