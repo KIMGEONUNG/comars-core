@@ -75,7 +75,8 @@
             "import os",
             "from pathlib import Path",
             "name = Path(os.path.basename(__file__)).stem",
-            "os.makedirs(f'{name}', exist_ok=True)"
+            "path_log = f'logs/{name}'",
+            "os.makedirs(path_log, exist_ok=True)"
         ],
         "description": [
             "description"
