@@ -57,3 +57,4 @@ hi LineNr guifg=#cdb923 ctermfg=gray
 set cursorline
 highlight CursorLineNR guifg=yellow
 ]])
+
