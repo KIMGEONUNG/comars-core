@@ -5,7 +5,6 @@
 -- vim.cmd[[colorscheme nordic]]
 
 local C = require 'nordic.colors'
-require('nordic').load()
 require('nordic').setup {
   -- For some reason, this override does not work. So I change it to the original code.
   override = {
@@ -19,6 +18,7 @@ require('nordic').setup {
     }
   },
 }
+require('nordic').load()
 
 -- AIRLINE
 vim.cmd([[let g:airline#extensions#tabline#enabled = 1]])
