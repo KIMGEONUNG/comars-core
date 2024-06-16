@@ -204,3 +204,16 @@ function! DeleteInnerArg()
 endfunction
  
 ]])
+
+vim.api.nvim_create_user_command('Restore',
+  function(args)
+    -- Run the shell command and capture its output
+    local handle = io.popen("who | head -n1 | awk -F ' ' '{ print $2 }'")
+    local result = handle:read("*a")
+    handle:close()
+    -- Remove any trailing newline characters
+    result = result:gsub("\n", "")
+    -- Print the result
+    print("Display number: " .. result)
+    vim.fn.setenv("DISPLAY", result)
+  end, {})
