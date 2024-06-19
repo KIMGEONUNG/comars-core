@@ -55,7 +55,7 @@ local lang_exe_pairs = {
 --   end
 -- end
 
-function ExecuteFile()
+local function executeFile()
   -- INIT
   vim.api.nvim_command('write')
   local path_file = vim.fn.expand("%:p")
@@ -123,6 +123,8 @@ function ExecuteFile()
     vim.api.nvim_command("!" .. exe .. " %")
   end
 end
+
+vim.keymap.set('n', '<leader>e', function() executeFile() end, { noremap = true, silent = false })
 
 -- elseif !empty(matchstr(arg, '.html$')) then
 --   vim.api.nvim_command("!google-chrome %")

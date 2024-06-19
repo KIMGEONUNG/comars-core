@@ -31,35 +31,31 @@ require("nvim-tree").setup({
 })
 
 
-local previous_buf_id = nil
-local function NowInTree()
+local previous_win_id = nil
+
+local function nowInTree()
   -- if vim.g.vimspector_session_windows ~= nil then
   --   return false
   -- end
-
   local buf_id = vim.api.nvim_get_current_buf()
+  local win_id = vim.api.nvim_get_current_win()
   local name = vim.api.nvim_buf_get_name(buf_id)
   if string.find(name, "NvimTree_") then
     return true
   else
-    previous_buf_id = buf_id
+    previous_win_id = win_id
     return false
   end
 end
 
-function Move2TreeOrNot()
-  -- if vim.g.vimspector_session_windows ~= nil then
-  --   return false
-  -- end
+vim.keymap.set('n', '<leader>T', function()
+  vim.api.nvim_command("NvimTreeToggle")
+end, { noremap = true })
 
-  if NowInTree() then
-    vim.api.nvim_set_current_buf(previous_buf_id)
+vim.keymap.set('n', '<leader>t', function()
+  if nowInTree() then
+    vim.api.nvim_set_current_win(previous_win_id)
   else
     vim.api.nvim_command("NvimTreeFocus")
   end
-end
-
-local remap = vim.keymap.set
-remap('n', '<leader>T', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
-remap('n', '<leader>t', ':lua Move2TreeOrNot()<CR>', { noremap = true, silent = true })
--- remap('n', '<leader>t', ':NvimTreeFocus<CR>', { noremap = true, silent = true })
+end, { noremap = true })

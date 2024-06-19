@@ -58,7 +58,7 @@ return require('packer').startup(function(use)
   -- VIM DEBUGGER
   use 'puremourning/vimspector'
   use 'mfussenegger/nvim-dap'
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
+  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } }
   use "folke/neodev.nvim"
 
   -- NERDTREE
@@ -86,7 +86,6 @@ return require('packer').startup(function(use)
   -- LAZYGIT IN VIM
   use 'kdheepak/lazygit.nvim'
 
-
   -- TREESITTER
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -112,6 +111,12 @@ return require('packer').startup(function(use)
       "nvim-telescope/telescope.nvim"
     }
   })
+
+  use "HakonHarnes/img-clip.nvim"
+  use { "folke/noice.nvim", requires = {
+    "rcarriga/nvim-notify",
+    "MunifTanjim/nui.nvim"
+  } }
 
   use "KIMGEONUNG/memo.nvim"
 
