@@ -48,6 +48,7 @@ require("user.chatgpt")
 -- require("user.condicon")
 -- require("user.devicons")
 require("user.noice")
+require("user.notify")
 
 
 -- POST DEFINITIONS
