@@ -9,7 +9,7 @@ file=${a}.md
 
 # If not exist, copy the last one for today.
 if ! [[ -a ${file} ]]; then
-  target=$(ls | sort | tail -n 1)
+  target=$(ls *.md | sort | tail -n 1)
   cp ${target} ${file} -v
 fi
 
