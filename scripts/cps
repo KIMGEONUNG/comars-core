@@ -4,6 +4,11 @@ set -e
 
 path=$MY_CACHE_CP
 
+function process_name 
+{
+  echo './'
+}
+
 while [[ $# -gt 0 ]]
 do
   key="${1}"
@@ -12,14 +17,10 @@ do
   -f|--flatten)
     shift 1
 
-    echo "echo From cps program with flatten" > $path
-    for i in $@; do
-      i_hat=$(echo $i | sed "s/^\.\///" | sed "s:/:-:g") 
-      echo "cp $(pwd)/$i ${i_hat} -rnv" >> $path
-    done
-    echo "echo cps end" >> $path
-    break;
-
+    function process_name 
+    {
+      echo "$@" | sed "s/^\.\///" | sed "s:/:-:g" 
+    }
     ;;
   -h|--help)
     echo "Copy script genaration"
@@ -28,12 +29,12 @@ do
   *)    # unknown option
 
     echo "echo From cps program" > $path
-    for i in $@; do
-      echo "cp $(pwd)/$i ./ -rnv" >> $path
+    for i in "$@"; do
+      dst=$(process_name $i)
+      echo "cp \"$(pwd)/$i\" \"$dst\" -rnv" >> $path
     done
     echo "echo cps end" >> $path
     break;
-
     ;;
   esac
 done
