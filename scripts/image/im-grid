@@ -13,7 +13,7 @@ def parse():
     parser.add_argument('-o',
                         '--out',
                         type=str,
-                        required=True,
+                        default=None,
                         help='output path')
     return parser.parse_args()
 
@@ -44,7 +44,10 @@ def main():
         ls.append(np.concatenate(xs[i * n_col:(i + 1) * n_col], axis=1))
     x = np.concatenate(ls, axis=0)
     im: Image = Image.fromarray(x)
-    im.save(args.out, quality=100, subsampling=0)
+    if args.out is None:
+        im.show()
+    else:
+        im.save(args.out, quality=100, subsampling=0)
 
 
 if __name__ == '__main__':

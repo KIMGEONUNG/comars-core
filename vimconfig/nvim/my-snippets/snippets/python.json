@@ -1,4 +1,41 @@
 {
+    "ipil": {
+      "prefix": ["ipil"],
+      "body": [
+        "from PIL import Image"
+      ],
+      "description": [
+        "description"
+      ]
+    },
+    "inp": {
+      "prefix": ["inp"],
+      "body": [
+        "import numpy as np"
+      ],
+      "description": [
+        "description"
+      ]
+    },
+    "ios": {
+      "prefix": ["ios"],
+      "body": [
+        "import os",
+        "from os.path import join"
+      ],
+      "description": [
+        "description"
+      ]
+    },
+    "iglob": {
+      "prefix": ["iglob"],
+      "body": [
+        "from glob import glob"
+      ],
+      "description": [
+        "description"
+      ]
+    },
     "profile": {
         "prefix": [
             "profile"
