@@ -4,6 +4,11 @@ set -e
 
 path=$MY_CACHE_CP
 
+if [ -z "$path" ]; then
+  echo 'Missing -h or -u' >&2
+  exit 1
+fi
+
 function process_name 
 {
   echo './'

@@ -1,5 +1,7 @@
 #!/bin/bash
-# mv script generation
+
+set -e
+
 path=$MY_CACHE_MV
 
 if [ -z "$path" ]; then
@@ -7,8 +9,40 @@ if [ -z "$path" ]; then
   exit 1
 fi
 
-echo "echo From mvs program" > $path
-for i in $@; do
-  echo "mv $(pwd)/$i ./ -v" >> $path
+function process_name 
+{
+  echo './'
+}
+
+while [[ $# -gt 0 ]]
+do
+  key="${1}"
+
+  case ${key} in
+  -f|--flatten)
+    shift 1
+
+    function process_name 
+    {
+      echo "$@" | sed "s/^\.\///" | sed "s:/:-:g" 
+    }
+    ;;
+  -h|--help)
+    echo "Copy script genaration"
+    exit 0
+    ;;
+  *)    # unknown option
+
+    echo "echo From mvs program" > $path
+    for i in "$@"; do
+      dst=$(process_name $i)
+      echo "mv \"$(pwd)/$i\" \"$dst\" -v" >> $path
+    done
+    echo "echo mvs end" >> $path
+    break;
+    ;;
+  esac
 done
-echo "echo mvs end" >> $path
+
+echo -e "\033[32mSCRIPT DESCRIBTION \033[0m" >&2
+highlight -S bash -O ansi $MY_CACHE_MV
