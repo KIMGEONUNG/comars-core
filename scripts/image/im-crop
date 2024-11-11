@@ -20,7 +20,7 @@ def parse():
                         type=int,
                         nargs=4,
                         required=True,
-                        help='point from')
+                        help='point from (x0, y0, x1, y1)')
     return parser.parse_args()
 
 

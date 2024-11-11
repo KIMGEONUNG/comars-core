@@ -48,7 +48,7 @@ require('lspconfig').pylsp.setup {
       plugins = {
         pycodestyle = {
           enabled = true,
-          ignore = { 'E402' },
+          ignore = { 'E402', 'E701' },
           maxLineLength = 120
         },
         autopep8 = {
