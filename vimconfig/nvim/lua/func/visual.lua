@@ -112,6 +112,7 @@ local function selectVisualRighthand()
   local current_line_content = vim.api.nvim_get_current_line()
   local last_char_pos = #current_line_content
 
+  -- Find the position of the first equal character
   local first_eq_pos = nil
   for i = 1, #current_line_content do
     if current_line_content:sub(i, i) == '=' then
@@ -120,13 +121,25 @@ local function selectVisualRighthand()
     end
   end
 
+  -- If no equal character, finish
   if first_eq_pos == nil then
     return
   end
 
+  -- The start position is set the next of equal character
+  local start_pos = first_eq_pos + 1
+
+  -- If empty space exists, bypass the start postion unitl meeting non-empty character
+  for i = start_pos, #current_line_content do
+    if current_line_content:sub(i, i) ~= ' ' then
+      start_pos = i
+      break
+    end
+  end
+
   local esc_key = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
   vim.api.nvim_feedkeys(esc_key, 'n', false)
-  visualSelectRange(first_eq_pos + 1, last_char_pos)
+  visualSelectRange(start_pos, last_char_pos)
 end
 
 vim.keymap.set('v', 'H', function() selectVisualWhole() end, { noremap = true })
