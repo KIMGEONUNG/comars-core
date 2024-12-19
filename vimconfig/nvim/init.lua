@@ -50,6 +50,7 @@ require("user.chatgpt")
 require("user.noice")
 require("user.notify")
 
+require("user.lualine")
 
 -- POST DEFINITIONS
 vim.cmd([[

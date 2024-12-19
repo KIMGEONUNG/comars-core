@@ -33,13 +33,18 @@ return require('packer').startup(function(use)
 
   -- UI
   use 'morhetz/gruvbox'
-  use 'vim-airline/vim-airline'
-  use 'vim-airline/vim-airline-themes'
-  use 'folke/tokyonight.nvim'
-  use { "catppuccin/nvim", as = "catppuccin" }
+  -- use 'vim-airline/vim-airline'
+  -- use 'vim-airline/vim-airline-themes'
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
+  use 'Mofiqul/dracula.nvim'
+  -- use 'folke/tokyonight.nvim'
+  -- use { "catppuccin/nvim", as = "catppuccin" }
 
-  use 'AlexvZyl/nordic.nvim'
-  use 'nordtheme/vim'
+  -- use 'AlexvZyl/nordic.nvim'
+  -- use 'nordtheme/vim'
 
   -- PREVIEW
   use 'turbio/bracey.vim' -- HTML PREVIEW

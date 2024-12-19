@@ -49,7 +49,7 @@ require('lspconfig').pylsp.setup {
         pycodestyle = {
           enabled = true,
           ignore = { 'E402', 'E701' },
-          maxLineLength = 120
+          maxLineLength = 100,
         },
         autopep8 = {
           enabled = false,
@@ -58,11 +58,12 @@ require('lspconfig').pylsp.setup {
           enabled = true,
         },
         --
-        -- flake8 = {
-        -- indentSize = 2,
-        -- enabled = true,
-        -- ignore = {"E402"},
-        -- }
+        flake8 = {
+          -- indentSize = 2,
+          enabled = false,
+          maxLineLength = 100,
+          -- ignore = { "E402" },
+        }
       }
     }
   }

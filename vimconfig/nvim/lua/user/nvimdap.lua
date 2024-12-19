@@ -102,6 +102,7 @@ end
 
 function Dap.exit()
   dap.terminate()
+  dap.disconnect()
   dapui.close()
 end
 
