@@ -21,7 +21,7 @@ def main():
         while 1:
             im.seek(im.tell() + 1)
             i = i + 1
-            path_out = path.replace(".gif", "%04d.jpg" % i)
+            path_out = path.replace(".gif", "%04d.png" % i)
             im.save(path_out, quality=100, subsampling=0)
     except EOFError:
         pass  #
