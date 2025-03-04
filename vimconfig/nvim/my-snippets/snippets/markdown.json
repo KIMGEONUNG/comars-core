@@ -1,4 +1,40 @@
 {
+  "mci": {
+    "prefix": ["mci"],
+    "body": [
+      "\\mathcal{${1:src}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "mbi": {
+    "prefix": ["mbi"],
+    "body": [
+      "\\mathbb{${1:src}}"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "mc": {
+    "prefix": ["mc"],
+    "body": [
+      "$\\mathcal{${1:src}}$"
+    ],
+    "description": [
+      "description"
+    ]
+  },
+  "mb": {
+    "prefix": ["mb"],
+    "body": [
+      "$\\mathbb{${1:src}}$"
+    ],
+    "description": [
+      "description"
+    ]
+  },
   "breakthrough": {
     "prefix": ["breakthrough"],
     "body": [

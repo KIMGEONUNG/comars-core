@@ -3,4 +3,4 @@
 if [[ -z ${1} ]]; then
     echo Error: enter user name as first argument
 fi
-ssh ${1}@141.223.92.10 -p 6000
+ssh ${1}@141.223.92.10 -p 6000 -L localhost:8898:localhost:6009
