@@ -12,11 +12,12 @@ def parse():
                       '--replace',
                       action='store_true',
                       help='replace input')
-  parser.add_argument('--short', action='store_true', help='use short length')
+  # parser.add_argument('--short', action='store_true', help='use short length')
   parser.add_argument('-s',
                       '--size',
                       type=int,
-                      default=100,
+                      nargs='+',
+                      default=[100],
                       help='target image size')
   return parser.parse_args()
 
@@ -32,8 +33,10 @@ def main():
     im = Image.open(target_file)
 
     size = args.size
-    if args.short:
-      size = min(im.size)
+    if len(size) == 1:
+        size = size[0]
+    # if args.short:
+    #   size = min(im.size)
 
     im = transforms.CenterCrop(size)(im)
 
@@ -44,7 +47,7 @@ def main():
       parts = target_file.split('.')
       head = ''.join(parts[:-1])
       ext = parts[-1]
-      path_output = head + '_ccrop_%04d.' % (size) + ext
+      path_output = head + '_ccrop_%04d.' % (size[0]) + ext
 
     im.save(path_output, quality=100, subsampling=0)
     print(path_output)
