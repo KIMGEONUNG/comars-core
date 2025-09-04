@@ -12,8 +12,10 @@ export MY_CACHE_LN="$HOME/.cache/lnscript.txt"
 
 export VISUAL="/usr/bin/nvim"
 export EDITOR="$VISUAL"
-export CUDA_HOME="/usr/local/cuda-11.3"
+export CUDA_HOME="/usr/local/cuda-11.8"
 export PATH=$PATH:$CUDA_HOME/bin
+
+export OPENAI_API_KEY=$(secret-tool lookup openai nvim)
 # export PAGER="most"
 
 #######################

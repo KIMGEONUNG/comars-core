@@ -142,3 +142,36 @@ vim.keymap.set('n', '<leader>e', function() executeFile() end, { noremap = true,
 -- elseif !empty(matchstr(arg, '.vim$')) then
 --   vim.api.nvim_command("so % ")
 -- end
+--
+vim.api.nvim_create_user_command("CloseWindows", function()
+  local current_buf = vim.api.nvim_get_current_buf()
+  local tabpages = vim.api.nvim_list_tabpages()
+
+  for _, tab in ipairs(tabpages) do
+    local wins = vim.api.nvim_tabpage_list_wins(tab)
+    for _, win in ipairs(wins) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      if buf ~= current_buf then
+        -- Only close the window if it's not current window
+        -- and not linked to the current buffer
+        vim.api.nvim_win_close(win, false)
+      end
+    end
+  end
+end, {})
+
+vim.api.nvim_create_user_command("CloseFloatingWindows", function()
+  local tabpages = vim.api.nvim_list_tabpages()
+
+  for _, tab in ipairs(tabpages) do
+    local wins = vim.api.nvim_tabpage_list_wins(tab)
+    for _, win in ipairs(wins) do
+      if vim.api.nvim_win_is_valid(win) then
+        local config = vim.api.nvim_win_get_config(win)
+        if config.relative ~= "" then
+          vim.api.nvim_win_close(win, true)
+        end
+      end
+    end
+  end
+end, {})

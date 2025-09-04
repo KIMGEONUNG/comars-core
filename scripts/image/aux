@@ -13,7 +13,7 @@ def parse():
     parser.add_argument('--type',
                         '-t',
                         type=str,
-                        choices=['hed, canny, depth, normal'],
+                        # choices=['hed, canny, depth, normal'],
                         default='hed')
 
     return parser.parse_args()
@@ -22,7 +22,7 @@ def parse():
 def main():
     args = parse()
     target_files = sys.stdin.read().splitlines()
-    print("image resize target files: %d EA" % len(target_files), file=sys.stderr)
+    print("image aux: %d EA" % len(target_files), file=sys.stderr)
 
     model = None
     device = 'cpu'
@@ -33,7 +33,6 @@ def main():
         model = HEDdetector.from_pretrained("lllyasviel/Annotators").to(device)
     elif args.type == 'canny':
         model = CannyDetector()
-        pass
     elif args.type == 'depth':
         model = MidasDetector.from_pretrained("lllyasviel/Annotators").to(device)
     elif args.type == 'normal':
@@ -55,3 +54,6 @@ def main():
 
         im.save(path_output, quality=100, subsampling=0)
         print(path_output)
+
+if __name__ == "__main__":
+    main()

@@ -52,6 +52,8 @@ require("user.notify")
 
 require("user.lualine")
 
+require("user.avante")
+
 -- POST DEFINITIONS
 vim.cmd([[
 hi Comment guifg=red ctermfg=red gui=italic 

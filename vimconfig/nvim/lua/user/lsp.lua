@@ -78,14 +78,14 @@ require 'lspconfig'.clangd.setup {
 }
 
 -- JAVASCRIPT
-require 'lspconfig'.tsserver.setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  -- capabilities = capabilities,
-  cmd = { "typescript-language-server", "--stdio" },
-  -- settings = {
-  -- }
-}
+-- require 'lspconfig'.tsserver.setup {
+--   on_attach = on_attach,
+--   flags = lsp_flags,
+--   -- capabilities = capabilities,
+--   cmd = { "typescript-language-server", "--stdio" },
+--   -- settings = {
+--   -- }
+-- }
 
 -- JSON
 require 'lspconfig'.jsonls.setup {
