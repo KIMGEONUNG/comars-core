@@ -9,12 +9,10 @@ def parse():
     parser = argparse.ArgumentParser(description='Image view with grid')
     parser.add_argument('paths', nargs='+', type=str)
     parser.add_argument('--size', nargs='+', type=int, default=None)
-    parser.add_argument('-r', '--num_row', type=int, default=1)
-    parser.add_argument('-o',
-                        '--out',
-                        type=str,
-                        default=None,
-                        help='output path')
+    parser.add_argument('-r', '--num_row', type=int, default=None)
+    parser.add_argument('-c', '--num_col', type=int, default=None)
+    parser.add_argument('-t', '--transpose', action='store_true')
+    parser.add_argument('-o', '--out', type=str, default=None, help='output path')
     return parser.parse_args()
 
 
@@ -29,14 +27,61 @@ def main():
     xs = [np.array(img) for img in imgs]
 
     # PADDING FOR REMAINS
-    n_row = args.num_row
-    n = len(xs)
-    if n % n_row != 0:
-        n_col = n // n_row + 1
-        n_add = n_col * n_row - n
-        xs = xs + [np.zeros_like(xs[0])] * n_add
+    if args.num_row is not None and args.num_col is not None:
+        print('num_row and num_col must be xor')
+
+    if args.num_row is None and args.num_col is None:
+        args.num_row = 1
+
+    if args.num_row:
+        n_row = args.num_row
+        n = len(xs)
+        if n % n_row != 0:
+            n_col = n // n_row + 1
+            n_add = n_col * n_row - n
+            xs = xs + [np.zeros_like(xs[0])] * n_add
+        else:
+            n_col = n // n_row
+
+    if args.num_col:
+        n_col = args.num_col
+        n = len(xs)
+        if n % n_col != 0:
+            n_row = n // n_col + 1
+            n_add = n_row * n_row - n
+            xs = xs + [np.zeros_like(xs[0])] * n_add
+        else:
+            n_row = n // n_col
+
+    grid = []
+    for i in range(n_row):
+        grid.append([])
+        for j in range(n_col):
+            grid[-1].append(xs[i * n_col + j])
+
+    # Transpose
+    if args.transpose:
+        grid = list(map(list, zip(*grid)))
+        n_row, n_col = n_col, n_row
+        # raise NotImplementedError
+
+    # concat
+    ls = []
+    for i in range(n_row):
+        ls.append(np.concatenate(grid[i], axis=1))
+    x = np.concatenate(ls, axis=0)
+    im: Image = Image.fromarray(x)
+    if args.out is None:
+        im.show()
     else:
-        n_col = n // n_row
+        im.save(args.out, quality=100, subsampling=0)
+
+
+    exit()
+
+    # Transpose
+    if args.transpose:
+        raise NotImplementedError
 
     # concat
     ls = []

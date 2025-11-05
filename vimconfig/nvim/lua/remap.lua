@@ -42,7 +42,7 @@ remap('n', '<leader>=', ':vertical resize +10<cr>', { noremap = true, silent = t
 remap('n', '<leader>-', ':vertical resize -10<cr>', { noremap = true, silent = true })
 
 -- READ, WRITE, EXECUTE
-remap('n', '<leader>w', function() vim.api.nvim_command('write') end, { noremap = true, silent = false })
+remap('n', '<leader>w', function() vim.api.nvim_command('write!') end, { noremap = true, silent = false })
 remap('n', '<leader>q', ':lua Quit()<cr>', { noremap = true, silent = true })
 remap('n', '<leader>Q', ':lua QuitF()<cr>', { noremap = true, silent = false })
 

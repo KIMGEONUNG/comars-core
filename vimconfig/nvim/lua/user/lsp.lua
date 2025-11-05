@@ -37,7 +37,10 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
+vim.deprecate = function() end
+
 -- PYTHON
+-- require('lspconfig').pylsp.setup {
 require('lspconfig').pylsp.setup {
   on_attach = on_attach,
   flags = lsp_flags,
