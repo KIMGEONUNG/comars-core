@@ -130,12 +130,15 @@ return require('packer').startup(function(use)
   use 'stevearc/dressing.nvim'
   use 'MeanderingProgrammer/render-markdown.nvim'
   use 'zbirenbaum/copilot.lua'
+  use 'folke/snacks.nvim'
   use {
     'yetone/avante.nvim',
     branch = 'main',
     run = 'make',
     config = function()
-      require('avante').setup()
+      require('avante').setup({
+        -- provider = "openai",
+      })
     end
   }
 

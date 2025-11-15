@@ -15,7 +15,7 @@ export EDITOR="$VISUAL"
 export CUDA_HOME="/usr/local/cuda-11.8"
 export PATH=$PATH:$CUDA_HOME/bin
 
-export OPENAI_API_KEY=$(secret-tool lookup openai nvim)
+export AVANTE_OPENAI_API_KEY=$(secret-tool lookup openai nvim)
 # export PAGER="most"
 
 #######################
