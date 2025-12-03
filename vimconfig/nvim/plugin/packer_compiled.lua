@@ -86,7 +86,7 @@ _G.packer_plugins = {
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
   ["avante.nvim"] = {
-    config = { "\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vavante\frequire\0" },
+    config = { "\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vavante\frequire\0" },
     loaded = true,
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/avante.nvim",
     url = "https://github.com/yetone/avante.nvim"
@@ -271,6 +271,11 @@ _G.packer_plugins = {
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/render-markdown.nvim",
     url = "https://github.com/MeanderingProgrammer/render-markdown.nvim"
   },
+  ["snacks.nvim"] = {
+    loaded = true,
+    path = "/home/comar/.local/share/nvim/site/pack/packer/start/snacks.nvim",
+    url = "https://github.com/folke/snacks.nvim"
+  },
   tcomment_vim = {
     loaded = true,
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/tcomment_vim",
@@ -341,7 +346,7 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: avante.nvim
 time([[Config for avante.nvim]], true)
-try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vavante\frequire\0", "config", "avante.nvim")
+try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vavante\frequire\0", "config", "avante.nvim")
 time([[Config for avante.nvim]], false)
 -- Config for: ChatGPT.nvim
 time([[Config for ChatGPT.nvim]], true)
