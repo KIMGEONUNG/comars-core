@@ -1,4 +1,14 @@
 {
+   "wait4process": {
+     "prefix": ["wait"],
+     "body": [
+       "PID=${1:pid}",
+       "while kill -0 \"\\$PID\" 2>/dev/null; do echo Wait for end of \\$PID; sleep 5; done"
+     ],
+     "description": [
+       "wait for the program"
+     ]
+   },
   "endprogram": {
     "prefix": [
       "end"

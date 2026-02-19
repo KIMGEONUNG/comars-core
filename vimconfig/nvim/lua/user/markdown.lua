@@ -3,6 +3,8 @@ function MarkdownCustom()
   vim.api.nvim_buf_set_keymap(0, 'n', '\\ll', ':MarkdownPreview<CR>', { noremap = true, silent = true })
 end
 
+vim.g.mkdp_theme = 'light'
+
 local group = vim.api.nvim_create_augroup("MarkdownCustom", {})
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",

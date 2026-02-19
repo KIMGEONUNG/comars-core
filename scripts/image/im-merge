@@ -20,7 +20,7 @@ from glob import glob
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('targets', type=str, nargs='+')
-    parser.add_argument('--direction', '-d', type=int, choices=[0, 1], default=0)
+    parser.add_argument('--direction', '-d', type=int, choices=[0, 1], default=1)
     return parser.parse_args()
 
 
@@ -34,7 +34,7 @@ def main(args):
 
     groups = [sorted(glob(join(target, '*.*'))) for target in targets]
     for group in tqdm(list(zip(*groups))):
-        xs = [np.array(Image.open(path)) for path in group]
+        xs = [np.array(Image.open(path).convert('RGB')) for path in group]
         x = np.concatenate(xs, axis=args.direction)
         img = Image.fromarray(x)
         names = [Path(path).stem for path in group]
