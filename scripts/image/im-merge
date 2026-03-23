@@ -30,6 +30,7 @@ def main(args):
     # define output path
     targets = args.targets
     dir_out = '_'.join(targets)
+    dir_out = dir_out.replace('/', '_')
     os.makedirs(dir_out, exist_ok=True)
 
     groups = [sorted(glob(join(target, '*.*'))) for target in targets]

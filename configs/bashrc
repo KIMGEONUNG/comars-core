@@ -238,3 +238,5 @@ bind 'TAB:menu-complete'
 
 source "$HOME/.commonrc"
 . "$HOME/.cargo/env"
+
+. "$HOME/.local/bin/env"

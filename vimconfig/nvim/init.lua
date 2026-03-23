@@ -30,6 +30,7 @@ require("user.surround")
 require("user.sneak")
 require("user.luasnip")
 require("user.markdown")
+require("user.render-markdown")
 
 -- TREESITTER
 require("user.treesitter")

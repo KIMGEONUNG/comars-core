@@ -113,3 +113,5 @@ prompt_dir() {
 source $ZSH_CUSTOM_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source "$HOME/.commonrc"
+
+. "$HOME/.local/bin/env"
