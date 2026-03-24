@@ -25,7 +25,7 @@ def load_mesh(mesh_path):
 
 def visualize_mesh(mesh):
     coordinate_frame = o3d.geometry.TriangleMesh.create_coordinate_frame(
-        size=0.6, origin=[0, 0, 0]
+        size=10.0, origin=[0, 0, 0]
     )
     o3d.visualization.draw_geometries([mesh, coordinate_frame])
 
