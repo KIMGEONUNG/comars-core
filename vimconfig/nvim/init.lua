@@ -44,7 +44,6 @@ require("user.nvimtree")
 -- And I think, It is a little in WIP.
 -- require("user.copilot")
 require("user.gen")
-require("user.chatgpt")
 
 -- require("user.condicon")
 -- require("user.devicons")
@@ -52,8 +51,6 @@ require("user.noice")
 require("user.notify")
 
 require("user.lualine")
-
-require("user.avante")
 
 -- POST DEFINITIONS
 vim.cmd([[

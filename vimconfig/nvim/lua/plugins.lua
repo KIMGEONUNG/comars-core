@@ -104,19 +104,6 @@ return require('packer').startup(function(use)
   -- use 'huggingface/llm.nvim'
   use "David-Kunz/gen.nvim"
 
-  use({
-    "jackMort/ChatGPT.nvim",
-    config = function()
-      require("chatgpt").setup()
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "folke/trouble.nvim",
-      "nvim-telescope/telescope.nvim"
-    }
-  })
-
   use "HakonHarnes/img-clip.nvim"
   use { "folke/noice.nvim", requires = {
     "rcarriga/nvim-notify",
@@ -126,21 +113,10 @@ return require('packer').startup(function(use)
   use "KIMGEONUNG/memo.nvim"
 
 
-  -- Avante.nvim with build process
   use 'stevearc/dressing.nvim'
   use 'MeanderingProgrammer/render-markdown.nvim'
   use 'zbirenbaum/copilot.lua'
   use 'folke/snacks.nvim'
-  use {
-    'yetone/avante.nvim',
-    branch = 'main',
-    run = 'make',
-    config = function()
-      require('avante').setup({
-        -- provider = "openai",
-      })
-    end
-  }
 
 
 end)
