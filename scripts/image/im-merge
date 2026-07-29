@@ -5,15 +5,9 @@ import argparse
 import os
 import numpy as np
 from os.path import join
-from random import shuffle
-# from cv2 import cv2 as cv
 import cv2 as cv
-from torchvision.utils import make_grid
-from torchvision.transforms import ToPILImage
 from PIL import Image
 from tqdm import tqdm
-import torch
-import matplotlib.pyplot as plt
 from glob import glob
 
 
@@ -24,9 +18,35 @@ def parse():
     return parser.parse_args()
 
 
-def main(args):
-    args = parse()
+def normalize_to_uint8(img):
+    if np.issubdtype(img.dtype, np.integer):
+        max_value = np.iinfo(img.dtype).max
+        if max_value <= 255:
+            return img.astype(np.uint8)
+        img = img.astype(np.float32) * (255.0 / max_value)
+    elif np.issubdtype(img.dtype, np.floating):
+        max_value = 1.0 if img.max() <= 1.0 else 255.0
+        img = img.astype(np.float32) * (255.0 / max_value)
 
+    return np.clip(img, 0, 255).astype(np.uint8)
+
+
+def load_image(path):
+    img = cv.imread(path, cv.IMREAD_UNCHANGED)
+    if img is None:
+        raise FileNotFoundError(path)
+
+    if img.ndim == 2:
+        img = cv.cvtColor(img, cv.COLOR_GRAY2RGB)
+    elif img.shape[2] == 4:
+        img = cv.cvtColor(img, cv.COLOR_BGRA2RGB)
+    else:
+        img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+
+    return normalize_to_uint8(img)
+
+
+def main(args):
     # define output path
     targets = args.targets
     dir_out = '_'.join(targets)
@@ -35,7 +55,7 @@ def main(args):
 
     groups = [sorted(glob(join(target, '*.*'))) for target in targets]
     for group in tqdm(list(zip(*groups))):
-        xs = [np.array(Image.open(path).convert('RGB')) for path in group]
+        xs = [load_image(path) for path in group]
         x = np.concatenate(xs, axis=args.direction)
         img = Image.fromarray(x)
         names = [Path(path).stem for path in group]

@@ -29,6 +29,18 @@ def parse():
     return parser.parse_args()
 
 
+def resize_by_shorter_side(image, size):
+    width, height = image.size
+    shorter_side = min(width, height)
+    if shorter_side == 0:
+        return image
+
+    scale = size / shorter_side
+    resized_width = int(width * scale)
+    resized_height = int(height * scale)
+    return image.resize((resized_width, resized_height))
+
+
 def main():
     args = parse()
 
@@ -47,7 +59,7 @@ def main():
         images = images + list(reversed(images[1:-1]))
 
     if args.size:
-        images = [image.resize((args.size, args.size)) for image in images]
+        images = [resize_by_shorter_side(image, args.size) for image in images]
 
     images[0].save(args.output,
                    save_all=True,

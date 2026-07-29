@@ -87,6 +87,7 @@ function my_cd() {
 }
 set_tmux_pwd
 alias cd=my_cd
+alias paper='nvim ~/repos/comar-write/papers/wip.md'
 
 # if [[ -n "$SSH_CONNECTION" ]] || [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
 #     echo "You are connected via SSH (even in tmux)."

@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 
-import numpy as np
-from plyfile import PlyData
-import open3d as o3d
 import argparse
+import gzip
+from pathlib import Path
+import shutil
+import struct
+import subprocess
+
+import numpy as np
+import open3d as o3d
+from plyfile import PlyData
 
 C0 = 0.28209479177387814
+SPZ_COLOR_SCALE = 0.15
+SPZ_MAGIC = 0x5053474e
+SPZ_MAGIC_BYTES = b"NGSP"
 
 
 def parse():
@@ -22,7 +31,7 @@ def SH2RGB(sh):
     return sh * C0 + 0.5
 
 
-def extract_point_and_color_data(ply_file_path):
+def extract_ply_point_and_color_data(ply_file_path):
     # Load the PLY file
     ply_data = PlyData.read(ply_file_path)
 
@@ -45,6 +54,180 @@ def extract_point_and_color_data(ply_file_path):
     return points, colors
 
 
+def spz_sh_dim(sh_degree):
+    if sh_degree == 0:
+        return 0
+    if sh_degree == 1:
+        return 3
+    if sh_degree == 2:
+        return 8
+    if sh_degree == 3:
+        return 15
+    if sh_degree == 4:
+        return 24
+    raise ValueError(f"Unsupported SPZ SH degree: {sh_degree}")
+
+
+def decode_spz_positions(position_data, num_points, fractional_bits):
+    if len(position_data) == num_points * 3 * 2:
+        return np.frombuffer(position_data, dtype="<f2").reshape(num_points, 3).astype(np.float32)
+
+    position_bytes = num_points * 3 * 3
+    if len(position_data) != position_bytes:
+        raise ValueError("Invalid SPZ position stream size")
+
+    packed = np.frombuffer(position_data, dtype=np.uint8).reshape(num_points, 3, 3).astype(np.int32)
+    fixed = packed[:, :, 0] | (packed[:, :, 1] << 8) | (packed[:, :, 2] << 16)
+    fixed = np.where(fixed & 0x800000, fixed | ~0xffffff, fixed)
+    return fixed.astype(np.float32) / float(1 << fractional_bits)
+
+
+def decode_spz_colors(color_data, num_points):
+    if len(color_data) != num_points * 3:
+        raise ValueError("Invalid SPZ color stream size")
+
+    packed = np.frombuffer(color_data, dtype=np.uint8).reshape(num_points, 3).astype(np.float32)
+    sh_dc = ((packed / 255.0) - 0.5) / SPZ_COLOR_SCALE
+    return np.clip(SH2RGB(sh_dc), 0.0, 1.0)
+
+
+def zstd_decompress(data, max_output_size=None):
+    try:
+        import zstandard as zstd
+    except ImportError:
+        zstd = None
+
+    if zstd is not None:
+        if max_output_size is None:
+            return zstd.ZstdDecompressor().decompress(data)
+        return zstd.ZstdDecompressor().decompress(data, max_output_size=max_output_size)
+
+    zstd_path = shutil.which("zstd")
+    if zstd_path is None:
+        raise RuntimeError("SPZ v4 requires the 'zstandard' Python package or the 'zstd' command")
+
+    proc = subprocess.run(
+        [zstd_path, "-d", "-q", "-c"],
+        input=data,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if proc.returncode != 0:
+        message = proc.stderr.decode("utf-8", errors="replace").strip()
+        raise RuntimeError(f"zstd failed to decompress SPZ stream: {message}")
+    return proc.stdout
+
+
+def extract_legacy_spz_point_and_color_data(data):
+    if len(data) < 16:
+        raise ValueError("SPZ file is too small")
+
+    magic, version, num_points, sh_degree, fractional_bits, _flags, _reserved = struct.unpack_from(
+        "<III4B", data, 0)
+    if magic != SPZ_MAGIC:
+        raise ValueError("Invalid SPZ magic")
+    if version not in (1, 2, 3):
+        raise ValueError(f"Unsupported legacy SPZ version: {version}")
+
+    sh_dim = spz_sh_dim(sh_degree)
+    rotation_bytes = 4 if version >= 3 else 3
+    suffix_bytes = (
+        num_points
+        + num_points * 3
+        + num_points * 3
+        + num_points * rotation_bytes
+        + num_points * sh_dim * 3
+    )
+
+    position_bytes = None
+    for candidate in (num_points * 3 * 3, num_points * 3 * 2):
+        expected = 16 + candidate + suffix_bytes
+        if len(data) >= expected:
+            position_bytes = candidate
+            break
+    if position_bytes is None:
+        raise ValueError("SPZ data is truncated")
+
+    offset = 16
+    position_data = data[offset:offset + position_bytes]
+    offset += position_bytes
+
+    offset += num_points  # alpha stream
+    color_data = data[offset:offset + num_points * 3]
+
+    points = decode_spz_positions(position_data, num_points, fractional_bits)
+    colors = decode_spz_colors(color_data, num_points)
+    return points, colors
+
+
+def extract_v4_spz_point_and_color_data(data):
+    if len(data) < 32:
+        raise ValueError("SPZ v4 file is too small")
+
+    magic, version, num_points, sh_degree, fractional_bits, _flags, num_streams, toc_offset = (
+        struct.unpack_from("<III4BI", data, 0)
+    )
+    if magic != SPZ_MAGIC:
+        raise ValueError("Invalid SPZ magic")
+    if version != 4:
+        raise ValueError(f"Unsupported SPZ version: {version}")
+    if num_streams < 3:
+        raise ValueError("SPZ v4 file is missing required attribute streams")
+
+    spz_sh_dim(sh_degree)
+    toc_size = num_streams * 16
+    toc_end = toc_offset + toc_size
+    if toc_offset < 32 or toc_end > len(data):
+        raise ValueError("Invalid SPZ v4 table of contents")
+
+    streams = []
+    compressed_offset = toc_end
+    for i in range(num_streams):
+        entry_offset = toc_offset + i * 16
+        compressed_size, uncompressed_size = struct.unpack_from("<QQ", data, entry_offset)
+        next_offset = compressed_offset + compressed_size
+        if next_offset > len(data):
+            raise ValueError("SPZ v4 compressed stream exceeds file size")
+        streams.append((compressed_offset, next_offset, uncompressed_size))
+        compressed_offset = next_offset
+
+    if compressed_offset != len(data):
+        raise ValueError("Invalid SPZ v4 compressed stream table")
+
+    position_start, position_end, position_size = streams[0]
+    color_start, color_end, color_size = streams[2]
+    position_data = zstd_decompress(
+        data[position_start:position_end], max_output_size=position_size)
+    color_data = zstd_decompress(
+        data[color_start:color_end], max_output_size=color_size)
+
+    if len(position_data) != position_size or len(color_data) != color_size:
+        raise ValueError("SPZ v4 decompressed stream size mismatch")
+
+    points = decode_spz_positions(position_data, num_points, fractional_bits)
+    colors = decode_spz_colors(color_data, num_points)
+    return points, colors
+
+
+def extract_spz_point_and_color_data(spz_file_path):
+    data = Path(spz_file_path).read_bytes()
+    if data.startswith(b"\x1f\x8b"):
+        return extract_legacy_spz_point_and_color_data(gzip.decompress(data))
+    if data.startswith(SPZ_MAGIC_BYTES):
+        return extract_v4_spz_point_and_color_data(data)
+    raise ValueError("Unsupported SPZ container")
+
+
+def extract_point_and_color_data(path):
+    ext = Path(path).suffix.lower()
+    if ext == ".ply":
+        return extract_ply_point_and_color_data(path)
+    if ext == ".spz":
+        return extract_spz_point_and_color_data(path)
+    raise ValueError(f"Unsupported file extension: {ext}")
+
+
 def visualize_point_cloud_with_colors(np_points, np_colors):
     """
     Visualizes a point cloud with a predefined color for each point using an interactive viewer.
@@ -55,11 +238,24 @@ def visualize_point_cloud_with_colors(np_points, np_colors):
     - np_colors: numpy.ndarray, the colors for each point as a NumPy array with shape (3, N),
                  where N is the number of points and each column represents the RGB color in the range [0, 1].
     """
+    np_points = np.asarray(np_points)
+    np_colors = np.asarray(np_colors)
+
     # Ensure the NumPy arrays are in the correct shape (N, 3)
-    if np_points.shape[0] == 3:
-        np_points = np_points.T  # Transpose to get shape (N, 3)
-    if np_colors.shape[0] == 3:
-        np_colors = np_colors.T  # Transpose to get shape (N, 3)
+    if np_points.ndim != 2:
+        raise ValueError("Point data must be a 2D array")
+    if np_points.shape[1] != 3 and np_points.shape[0] == 3:
+        np_points = np_points.T
+    if np_points.shape[1] != 3:
+        raise ValueError("Point data must have 3 columns")
+
+    if np_colors.ndim != 2:
+        raise ValueError("Color data must be a 2D array")
+    if np_colors.shape[1] != 3 and np_colors.shape[0] == 3:
+        np_colors = np_colors.T
+    if np_colors.shape[1] != 3:
+        raise ValueError("Color data must have 3 columns")
+    np_colors = np.clip(np_colors, 0.0, 1.0)
 
     # Convert the NumPy arrays to an open3d point cloud object
     point_cloud = o3d.geometry.PointCloud()
