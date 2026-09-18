@@ -85,7 +85,7 @@ prompt_context() {
   id_postech=a38f10e5e8fd4db29961d482d37b3c32
   suffix=""
 
-  if [[ $(cat /etc/machine-id) == $id_home ]]; then
+  if [[ $(cat /etc/machine-id) == $id_home || $(cat /etc/machine-id) == e9a6eec5e44840aabecca01f0333628d ]]; then
     suffix=🏘️$suffix
   elif [[ $(cat /etc/machine-id) == $id_postech ]]; then
     suffix=🏢$suffix

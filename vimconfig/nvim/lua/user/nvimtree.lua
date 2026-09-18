@@ -34,9 +34,6 @@ require("nvim-tree").setup({
 local previous_win_id = nil
 
 local function nowInTree()
-  -- if vim.g.vimspector_session_windows ~= nil then
-  --   return false
-  -- end
   local buf_id = vim.api.nvim_get_current_buf()
   local win_id = vim.api.nvim_get_current_win()
   local name = vim.api.nvim_buf_get_name(buf_id)

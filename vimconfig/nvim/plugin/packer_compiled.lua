@@ -319,11 +319,6 @@ _G.packer_plugins = {
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
   },
-  vimspector = {
-    loaded = true,
-    path = "/home/comar/.local/share/nvim/site/pack/packer/start/vimspector",
-    url = "https://github.com/puremourning/vimspector"
-  },
   vimtex = {
     loaded = true,
     path = "/home/comar/.local/share/nvim/site/pack/packer/start/vimtex",
