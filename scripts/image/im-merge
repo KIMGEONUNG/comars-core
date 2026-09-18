@@ -15,6 +15,9 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('targets', type=str, nargs='+')
     parser.add_argument('--direction', '-d', type=int, choices=[0, 1], default=1)
+    parser.add_argument('--auto',
+                        action='store_true',
+                        help='automatically resize images when merge sizes do not match')
     return parser.parse_args()
 
 
@@ -46,6 +49,35 @@ def load_image(path):
     return normalize_to_uint8(img)
 
 
+def resize_for_merge(img, target_shape, direction):
+    target_height, target_width = target_shape[:2]
+    height, width = img.shape[:2]
+
+    if direction == 1:
+        if height == target_height:
+            return img
+        scale = target_height / height
+        size = (max(1, round(width * scale)), target_height)
+    else:
+        if width == target_width:
+            return img
+        scale = target_width / width
+        size = (target_width, max(1, round(height * scale)))
+
+    interpolation = cv.INTER_AREA if scale < 1 else cv.INTER_CUBIC
+    return cv.resize(img, size, interpolation=interpolation)
+
+
+def merge_images(xs, direction, auto):
+    if auto and xs:
+        target_shape = xs[0].shape
+        xs = [xs[0]] + [
+            resize_for_merge(img, target_shape, direction) for img in xs[1:]
+        ]
+
+    return np.concatenate(xs, axis=direction)
+
+
 def main(args):
     # define output path
     targets = args.targets
@@ -56,7 +88,7 @@ def main(args):
     groups = [sorted(glob(join(target, '*.*'))) for target in targets]
     for group in tqdm(list(zip(*groups))):
         xs = [load_image(path) for path in group]
-        x = np.concatenate(xs, axis=args.direction)
+        x = merge_images(xs, args.direction, args.auto)
         img = Image.fromarray(x)
         names = [Path(path).stem for path in group]
         name = '_'.join(names)

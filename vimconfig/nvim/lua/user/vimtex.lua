@@ -15,6 +15,7 @@ vim.cmd([[ filetype plugin indent on ]])
 
 -- Viewer options: One may configure the viewer either by specifying a built-in
 vim.g.vimtex_view_method = 'zathura'
+vim.g.vimtex_view_forward_search_on_start = 0
 
 -- This enables Vim's and neovim's syntax-related features. Without this, some
 -- VimTeX features will not work (see ":help vimtex-requirements" for more info).
