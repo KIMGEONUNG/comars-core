@@ -1,9 +1,5 @@
 -- OFF THE UNDERLINE WHEN WARNING OR ERROR EXIT
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  { underline = false }
-)
+vim.diagnostic.config({ underline = false })
 
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>

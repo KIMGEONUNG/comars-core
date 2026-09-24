@@ -43,20 +43,17 @@ alias lg='lazygit'
 alias hi='highlight -O ansi'
 
 if [ -x "$HOME/anaconda3/bin/conda" ]; then
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("$HOME/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/anaconda3/etc/profile.d/conda.sh"
-    else
+    # Use Anaconda's Python by default, preserving any inherited active environment.
+    if [ -z "${CONDA_PREFIX:-}" ]; then
         export PATH="$HOME/anaconda3/bin:$PATH"
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+
+    # Load Conda's shell functions only when first needed, without activating base.
+    conda() {
+        unset -f conda
+        . "$HOME/anaconda3/etc/profile.d/conda.sh" || return
+        conda "$@"
+    }
 fi
 
 PS1="$(echo "$PS1" | sed 's/(base) //')"
